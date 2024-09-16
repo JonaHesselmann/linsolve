@@ -5,11 +5,11 @@ export default{
 </script>
 <template>
     <div>
-       <h1>
+       <h1 class="mainTitle">
            {{ $t('aboutUsHeadline') }}
         </h1>
         <br>
-        <p>   {{$t('aboutUsText')}} 💻
+        <p class="mainText">   {{$t('aboutUsText')}} 💻
         </p>
         <div class="Home">
           <br>
@@ -19,8 +19,11 @@ export default{
     </div>
 </template>
 <style scoped>
-p {
-  font-size: 18px;
+.mainTitle{
+  font-size: large;
+}
+.mainText{
+  font-size: medium;
   color: #333;
 }
 </style>

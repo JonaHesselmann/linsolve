@@ -7,53 +7,53 @@ export default {
 <template>
   <div>
     <header>
-      <h1>{{ $t('gtcsHeadline') }}</h1>
+      <h1 class="mainTitle">{{ $t('gtcsHeadline') }}</h1>
     </header>
 
     <section class="section">
-      <h2>1. {{ $t('scope') }} </h2>
+      <h2 class="secondTitle">1. {{ $t('scope') }} </h2>
       <p>
        {{ $t('scopeText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>2. {{ $t('⁠useOfTheWebsite') }} </h2>
+      <h2 class="secondTitle">2. {{ $t('⁠useOfTheWebsite') }} </h2>
       <p>
        {{ $t('⁠useOfTheWebsiteText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>3. {{ $t('⁠openSourceLicense') }} </h2>
+      <h2 class="secondTitle">3. {{ $t('⁠openSourceLicense') }} </h2>
       <p>
         {{ $t('openSourceLizenzText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>4. {{ $t('disclaimer') }} </h2>
+      <h2 class="secondTitle">4. {{ $t('disclaimer') }} </h2>
       <p>
         {{ $t('disclaimerText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>5. {{ $t('changesAndAvailability') }} </h2>
+      <h2 class="secondTitle">5. {{ $t('changesAndAvailability') }} </h2>
       <p>
        {{ $t('changesAndAvailabilityText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>6. {{ $t('⁠dataProtection') }} </h2>
+      <h2 class="secondTitle">6. {{ $t('⁠dataProtection') }} </h2>
       <p>
         {{ $t('dataProtectionText') }}
       </p>
     </section>
 
     <section class="section">
-      <h2>7.{{ $t('⁠applicableLaw')}} </h2>
+      <h2 class="secondTitle">7.{{ $t('⁠applicableLaw')}} </h2>
       <p>
         {{ $t('⁠applicablaLawText') }}
       </p>
@@ -66,21 +66,17 @@ export default {
 
 <style>
 
-h2{
+.secondTitle{
   font-size: medium;
 }
 
-h1{
+.mainTitle{
   font-size: large;
-}
-
-.section {
-  margin-bottom: 20px;
 }
 
 .action-container {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 5%;
 }
 
 .mainButton {
