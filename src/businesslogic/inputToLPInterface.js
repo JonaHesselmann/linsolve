@@ -46,8 +46,4 @@ function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds
     return lpFile;
 }
 
-
-
-
-
 export {generateLPFile}
