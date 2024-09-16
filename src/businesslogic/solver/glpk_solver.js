@@ -1,68 +1,47 @@
 
-import GLPK from 'glpk.js'
-const glpk = GLPK();
-const options = {
-    msglev: glpk.GLP_MSG_ALL,
-    presol: true,
-    cb: {
-        call: progress => console.log(progress),
-        each: 1
+import {glp_set_print_func,glp_create_prob,glp_read_lp_from_string,glp_scale_prob,GLP_SF_AUTO,SMCP,GLP_ON,glp_simplex,glp_intopt,glp_get_num_cols,glp_mip_obj_val,glp_get_col_name,glp_mip_col_val,glp_get_obj_val,glp_get_col_prim} from './glpk.min.js'
+var lp;
+
+self.addEventListener('message', function(e) {
+    function log(value){
+        self.postMessage({action: 'log', message: value});
     }
-};
 
-const res = glpk.solve({
-    name: 'LP',
-    objective: {
-        direction: glpk.GLP_MAX,
-        name: 'obj',
-        vars: [
-            { name: 'x1', coef: 0.6 },
-            { name: 'x2', coef: 0.5 }
-        ]
-    },
-    subjectTo: [
-        {
-            name: 'cons1',
-            vars: [
-                { name: 'x1', coef: 1.0 },
-                { name: 'x2', coef: 2.0 }
-            ],
-            bnds: { type: glpk.GLP_UP, ub: 1.0, lb: 0.0 }
-        },
-        {
-            name: 'cons2',
-            vars: [
-                { name: 'x1', coef: 3.0 },
-                { name: 'x2', coef: 1.0 }
-            ],
-            bnds: { type: glpk.GLP_UP, ub: 2.0, lb: 0.0 }
-        }
-    ]
-}, options);
+    glp_set_print_func(log);
 
-/**
- * API Referance
- *
- * interface LP {
- *     name: string,
- *     objective: {
- *         direction: number,
- *         name: string,
- *         vars: { name: string, coef: number }[]
- *     },
- *     subjectTo: {
- *         name: string,
- *         vars: { name: string, coef: number }[],
- *         bnds: { type: number, ub: number, lb: number }
- *     }[],
- *     bounds?: {
- *         name: string,
- *         type: number,
- *         ub: number,
- *         lb: number
- *     }[],
- *     binaries?: string[],
- *     generals?: string[],
- *     options?: Options
- * }
- */
+    var obj = e.data;
+    switch (obj.action){
+        case 'load':
+            var result = {}, objective, i;
+            try {
+                lp = glp_create_prob();
+                glp_read_lp_from_string(lp, null, obj.data);
+
+                glp_scale_prob(lp, GLP_SF_AUTO);
+
+                var smcp = new SMCP({presolve: GLP_ON});
+                glp_simplex(lp, smcp);
+
+                if (obj.mip){
+                    glp_intopt(lp);
+                    objective = glp_mip_obj_val(lp);
+                    for(i = 1; i <= glp_get_num_cols(lp); i++){
+                        result[glp_get_col_name(lp, i)] = glp_mip_col_val(lp, i);
+                    }
+                } else {
+                    objective = glp_get_obj_val(lp);
+                    for(i = 1; i <= glp_get_num_cols(lp); i++){
+                        result[glp_get_col_name(lp, i)] = glp_get_col_prim (lp, i);
+                    }
+                }
+
+                lp = null;
+
+            } catch(err) {
+                log(err.message);
+            } finally {
+                self.postMessage({action: 'done', result: result, objective: objective});
+            }
+            break;
+    }
+}, false);
