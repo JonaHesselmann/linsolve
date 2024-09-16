@@ -11,7 +11,7 @@ export default {
   setup() {
     const optimizationStore = useOptimizationStore();
 
-    mathVirtualKeyboard.layouts = ["compact"];
+
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
@@ -63,17 +63,17 @@ export default {
     </div>
 
     <div class="conditionContainer">
-      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"></math-field>
+      <input type="text" class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"> </input>
     </div>
 
     <div id="constraintContainer">
-      <math-field 
+      <input type="text"
         v-for="constraint in optimizationStore.constraints" 
         :key="constraint.id"
         class="constraint"
         placeholder="Constraint"
         @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-      </math-field>
+      </input>
     </div>
 
     <div class="lastRow">
