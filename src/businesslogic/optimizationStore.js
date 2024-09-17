@@ -8,7 +8,7 @@ import { defineStore } from 'pinia';
 export const useOptimizationStore = defineStore('optimization', {
     // `state` function returns an object representing the reactive state of the store
     state: () => ({
-        selectedOptimization: '',
+        selectedOptimization: 'Minimize',
         constraints: [],
         objectiveFunction: '',
     }),
