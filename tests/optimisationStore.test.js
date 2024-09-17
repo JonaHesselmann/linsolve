@@ -14,7 +14,7 @@ describe('useOptimizationStore', () => {
 
     it('should have the correct initial state', () => {
         // Check initial state
-        expect(store.selectedOptimization).toBe('');
+        expect(store.selectedOptimization).toBe('Minimize');
         expect(store.constraints).toEqual([]);
         expect(store.objectiveFunction).toBe('');
     });
