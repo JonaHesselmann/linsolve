@@ -11,7 +11,7 @@ export default {
   setup() {
     const optimizationStore = useOptimizationStore();
 
-
+    mathVirtualKeyboard.layouts = ["compact"];
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
@@ -45,112 +45,135 @@ export default {
 };
 </script>
 
-<template>
-  <div class="inputContainer">
-    <div class="firstRow">
+  <template>
+  <div class="input-container">
+    <div class="input-container__first-row">
       <button 
-        class="selectionOptimization" 
-        :class="{ selected: isMinimizationSelected }"
+        class="input-container__selection-optimization"
+        :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
         @click="optimizationStore.selectOptimization('Minimize')">
         {{ $t('minimization') }}
       </button>
       <button 
-        class="selectionOptimization" 
-        :class="{ selected: isMaximizationSelected }"
+        class="input-container__selection-optimization"
+        :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
         @click="optimizationStore.selectOptimization('Maximize')">
         {{ $t('maximization') }}
       </button>
     </div>
 
-    <div class="conditionContainer">
-      <input type="text" class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"> </input>
+    <div class="input-container__condition-container">
+      <math-field class="input-container__condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"></math-field>
     </div>
 
-    <div id="constraintContainer">
-      <input type="text"
+    <div class="input-container__constraint-container">
+      <math-field 
         v-for="constraint in optimizationStore.constraints" 
         :key="constraint.id"
-        class="constraint"
+        class="input-container__constraint"
         placeholder="Constraint"
         @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-      </input>
+      </math-field>
     </div>
 
-    <div class="lastRow">
-      <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-      <button class="mainButton" @click="solveLP()">{{ $t('solve') }}</button>
+    <div class="input-container__last-row">
+      <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+      <button class="input-container__main-button" @click="solveLP()">{{ $t('solve') }}</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.inputContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-}
 
-.firstRow {
-  display: flex;
-  justify-content: flex-end;
-  width: 40%;
-  margin-bottom: 10px;
-}
-
-.selectionOptimization {
-  font-size: x-small;
-  padding: 5px 10px;
-  cursor: pointer;
-  background-color: #f0f0f0; 
-  border: 1px solid #ccc; 
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.selectionOptimization.selected {
-  background-color: rgba(7, 7, 152, 0.945);
-  color: white;
-}
-
-.conditionContainer,
-#constraintContainer {
+.input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5%;
+  box-sizing: border-box;
 }
 
-.condition {
-  width: 90%;
-  max-width: 600px;
-  margin-top: 10px;
-}
-
-.constraint {
-  width: 70%;
-  max-width: 550px;
-  margin-top: 10px;
-}
-
-.lastRow {
+.input-container__first-row {
   display: flex;
-  justify-content: space-evenly;
-  width: 90%;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.input-container__selection-optimization {
+  flex-grow: 0.5;
+  padding: 5px;
+  font-size: calc(0.5rem + 0.5vw);
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.input-container__selection-optimization--selected {
+  background-color: rgba(7, 7, 152, 0.945);
+  color: white;
+}
+
+.input-container__condition-container,
+.input-container__constraint-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+
+.input-container__condition {
+  width: 100%;
+  height: 4rem;
+  max-width: 600px;
+  padding: 5%;
+  margin-top: 10px;
+  font-size: calc(1rem + 0.3vw);
+  box-sizing: border-box;
+}
+
+.input-container__constraint {
+  width: 100%;
+  max-width: 550px;
+  padding: 5%;
+  margin-top: 10px;
+  font-size: calc(1rem + 0.3vw);
+  box-sizing: border-box;
+}
+
+.input-container__last-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
   max-width: 100%;
   margin-top: 20px;
+  gap: 10px;
 }
 
-.mainButton {
-  font-size: medium;
-  padding: 10px 20px;
+
+.input-container__main-button {
+  flex-grow: 1;
+  padding: calc(5px + 0.5vw);
+  font-size: calc(0.5rem + 0.3vw);
   margin: 0 10px;
   text-align: center;
   background-color: rgb(173, 170, 170);
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s;
 }
+
+.input-container__main-button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
 </style>

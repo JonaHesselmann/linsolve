@@ -1,6 +1,6 @@
 <template>
     <Header></Header>
-    <AboutUs></AboutUs>
+    <AboutUs class="mainContent"></AboutUs>
     <Footer></Footer>
     </template>
     <script>
@@ -16,4 +16,8 @@
     }
     </script>
     <style>
+    .mainContent{
+        margin-top: 15%;
+        margin-bottom: 10%;
+    }
     </style>

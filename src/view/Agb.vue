@@ -17,7 +17,7 @@
     </script>
     <style>
     .mainContent{
-        margin-top: 5%;
-        margin-bottom: 5%;
+        margin-top: 15%;
+        margin-bottom: 10%;
     }
     </style>
