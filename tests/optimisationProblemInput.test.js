@@ -35,13 +35,14 @@ describe('OptimizationProblemInput.vue', () => {
     });
 
     it('renders correctly and has the necessary elements', () => {
-        expect(wrapper.find('.inputContainer').exists()).toBe(true);
-        expect(wrapper.findAll('.selectionOptimization')).toHaveLength(2); // Two buttons for Minimize/Maximize
+        // Updated selector to match the class names in the actual component
+        expect(wrapper.find('.input-container').exists()).toBe(true);
+        expect(wrapper.findAll('.input-container__selection-optimization')).toHaveLength(2); // Two buttons for Minimize/Maximize
     });
 
     it('selects Minimize and Maximize optimization correctly', async () => {
-        const minimizeButton = wrapper.findAll('.selectionOptimization').at(0);
-        const maximizeButton = wrapper.findAll('.selectionOptimization').at(1);
+        const minimizeButton = wrapper.findAll('.input-container__selection-optimization').at(0);
+        const maximizeButton = wrapper.findAll('.input-container__selection-optimization').at(1);
 
         // Click on Minimize button
         await minimizeButton.trigger('click');
@@ -71,7 +72,7 @@ describe('OptimizationProblemInput.vue', () => {
     });
 
     it('adds a new constraint when the Add Constraint button is clicked', async () => {
-        const addConstraintButton = wrapper.findAll('.mainButton').at(0); // First main button (Add Constraint)
+        const addConstraintButton = wrapper.findAll('.input-container__main-button').at(0); // First main button (Add Constraint)
 
         // Click to add a constraint
         await addConstraintButton.trigger('click');
@@ -81,7 +82,7 @@ describe('OptimizationProblemInput.vue', () => {
         expect(store.constraints[0].content).toBe(''); // Empty content initially
 
         // Check that the constraint input appears
-        expect(wrapper.find('.constraint').exists()).toBe(true);
+        expect(wrapper.find('.input-container__constraint').exists()).toBe(true);
     });
 
     it('updates the constraint content on input', async () => {
@@ -89,7 +90,7 @@ describe('OptimizationProblemInput.vue', () => {
         store.addConstraint();
         await nextTick(); // Wait for the store to update
 
-        const constraintInput = wrapper.find('.constraint');
+        const constraintInput = wrapper.find('.input-container__constraint');
 
         // Simulate input for the constraint
         await constraintInput.setValue('x + y <= 10');
@@ -99,7 +100,7 @@ describe('OptimizationProblemInput.vue', () => {
     });
 
     it('calls solveLP with the correct parameters when Solve button is clicked', async () => {
-        const solveButton = wrapper.findAll('.mainButton').at(1); // Second main button (Solve)
+        const solveButton = wrapper.findAll('.input-container__main-button').at(1); // Second main button (Solve)
 
         // Set up store with data
         store.selectedOptimization = 'Minimize';
