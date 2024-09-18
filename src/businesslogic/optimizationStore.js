@@ -10,6 +10,7 @@ export const useOptimizationStore = defineStore('optimization', {
     state: () => ({
         selectedOptimization: 'Minimize',
         constraints: [],
+        variables:['x', 'y' ,'z'], //TODO --> delete the hard Coded Variables 
         objectiveFunction: '',
     }),
 

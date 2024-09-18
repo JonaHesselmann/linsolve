@@ -43,70 +43,115 @@ export default {
   },
 };
 </script>
-
-  <template>
+<template>
   <div class="input-container">
-    <div class="input-container__first-row">
-      <button 
-        class="input-container__selection-optimization"
-        :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
-        @click="optimizationStore.selectOptimization('Minimize')">
-        {{ $t('minimization') }}
-      </button>
-      <button 
-        class="input-container__selection-optimization"
-        :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
-        @click="optimizationStore.selectOptimization('Maximize')">
-        {{ $t('maximization') }}
-      </button>
+    <!-- Bounds section (Beschränkung) -->
+    <div class="input-container__bounds">
+      <div class="bound" v-for="variable in optimizationStore.variables" :key="variable">
+        <input type="number" class="boundTextField">
+        <p class="boundText">≤ {{ variable }} ≤</p>
+        <input type="number" class="boundTextField">
+      </div>
     </div>
 
-    <div class="input-container__condition-container">
-      <input type="text" class="input-container__condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction">
-    </div>
+    <div class="input-container__main-content">
+      <div class="input-container__first-row">
+        <button
+          class="input-container__selection-optimization"
+          :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
+          @click="optimizationStore.selectOptimization('Minimize')">
+          {{ $t('minimization') }}
+        </button>
+        <button
+          class="input-container__selection-optimization"
+          :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
+          @click="optimizationStore.selectOptimization('Maximize')">
+          {{ $t('maximization') }}
+        </button>
+      </div>
 
-    <div class="input-container__constraint-container">
-      <input type="text"
-        v-for="constraint in optimizationStore.constraints" 
-        :key="constraint.id"
-        class="input-container__constraint"
-        placeholder="Constraint"
-        @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      <div class="input-container__condition-container">
+        <input type="text" class="input-container__condition" placeholder="Bedingung"
+          @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction">
+      </div>
 
-    </div>
+      <div class="input-container__constraint-container">
+        <input type="text"
+          v-for="constraint in optimizationStore.constraints"
+          :key="constraint.id"
+          class="input-container__constraint"
+          placeholder="Nebenbedingung"
+          @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      </div>
 
-    <div class="input-container__last-row">
-      <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-      <button class="input-container__main-button" @click="solveLP()">{{ $t('solve') }}</button>
+      <div class="input-container__last-row">
+        <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-
 .input-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  gap: 20px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 5%;
   box-sizing: border-box;
 }
 
+.input-container__bounds {
+  position: sticky;
+  top: 20px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.input-container__bounds .bound {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.boundTextField {
+  width: 80px;
+  padding: 5px;
+  font-size: 0.9rem;
+}
+
+.boundText {
+  margin: 0 10px;
+  font-size: 0.9rem;
+  white-space: nowrap; /* Verhindert das Umbrechen */
+}
+
+.input-container__main-content {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .input-container__first-row {
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 15px;
   gap: 10px;
 }
 
 .input-container__selection-optimization {
-  flex-grow: 0.5;
+  flex-grow: 1;
   padding: 5px;
-  font-size: calc(0.5rem + 0.5vw);
+  font-size: 1.2rem;
   cursor: pointer;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -124,55 +169,69 @@ export default {
 .input-container__constraint-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
   gap: 10px;
 }
 
-
-.input-container__condition {
-  width: 100%;
-  height: 4rem;
-  max-width: 600px;
-  padding: 5%;
-  margin-top: 10px;
-  font-size: calc(1rem + 0.3vw);
-  box-sizing: border-box;
-}
-
+.input-container__condition,
 .input-container__constraint {
   width: 100%;
-  max-width: 550px;
-  padding: 5%;
-  margin-top: 10px;
-  font-size: calc(1rem + 0.3vw);
-  box-sizing: border-box;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
+/* Buttons */
 .input-container__last-row {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 100%;
-  margin-top: 20px;
+  justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
 }
 
-
 .input-container__main-button {
-  flex-grow: 1;
-  padding: calc(5px + 0.5vw);
-  font-size: calc(0.5rem + 0.3vw);
-  margin: 0 10px;
-  text-align: center;
+  padding: 5px;
+  margin: 1%;
+  font-size: 0.8rem;
   background-color: rgb(173, 170, 170);
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
+  width: auto;
 }
 
 .input-container__main-button:hover {
   background-color: rgb(140, 140, 140);
 }
 
+/* Mobile Anpassung */
+@media (max-width: 900px) {
+  .input-container {
+    grid-template-columns: 1fr;
+  }
+
+  .input-container__bounds {
+    order: 1;
+    position: static;
+    margin-bottom: 10px;
+  }
+
+  .input-container__main-content {
+    order: 2;
+  }
+
+  .input-container__last-row {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
 </style>
+
+
+
+
+
+
+
