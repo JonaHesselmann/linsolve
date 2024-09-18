@@ -10,3 +10,4 @@ app.use(router)
 app.use(i18n)
 app.mount('#app')
 //Comment to force github action
+// test workflow
