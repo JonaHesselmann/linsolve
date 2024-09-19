@@ -34,8 +34,8 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
 });
-//TODO: fix text breaking due to mathlive
-describe.skip('Vue Router with Real Instance', () => {
+
+describe('Vue Router with Real Instance', () => {
     beforeEach(async () => {
         // Make sure the router starts at the initial route
         await router.push('/');

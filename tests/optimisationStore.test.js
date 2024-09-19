@@ -17,6 +17,8 @@ describe('useOptimizationStore', () => {
         expect(store.selectedOptimization).toBe('Minimize');
         expect(store.constraints).toEqual([]);
         expect(store.objectiveFunction).toBe('');
+        expect(store.variables).toEqual([]);
+        expect(store.bounds).toEqual([]);
     });
 
     it('should return the correct optimization label', () => {
@@ -40,6 +42,25 @@ describe('useOptimizationStore', () => {
 
         store.selectOptimization('Maximize');
         expect(store.selectedOptimization).toBe('Maximize');
+    });
+
+    it('should add variables from a given condition when addVariables is called', () => {
+        store.addVariables('2x + 3y - sin(z)');
+        expect(store.variables).toEqual(['x', 'y', 'z']); // sin is ignored as it's a known function
+    });
+
+    it('should set and update bounds for variables correctly when addBound is called', () => {
+        // Add a bound for variable 'x'
+        store.addBound(10, 1, 'x');
+        expect(store.bounds).toContain('1 <= x <= 10');
+
+        // Update the bound for variable 'x'
+        store.addBound(15, 5, 'x');
+        expect(store.bounds).toContain('5 <= x <= 15');
+
+        // Add a new bound for variable 'y'
+        store.addBound(20, 2, 'y');
+        expect(store.bounds).toContain('2 <= y <= 20');
     });
 
     it('should add a new constraint when addConstraint is called', () => {

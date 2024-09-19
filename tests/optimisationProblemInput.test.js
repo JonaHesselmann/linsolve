@@ -35,9 +35,11 @@ describe('OptimizationProblemInput.vue', () => {
     });
 
     it('renders correctly and has the necessary elements', () => {
-        // Updated selector to match the class names in the actual component
+        // Check that the main structure and elements are rendered
         expect(wrapper.find('.input-container').exists()).toBe(true);
         expect(wrapper.findAll('.input-container__selection-optimization')).toHaveLength(2); // Two buttons for Minimize/Maximize
+        expect(wrapper.find('.input-container__main-content').exists()).toBe(true);
+        expect(wrapper.findAll('.input-container__main-button')).toHaveLength(2); // Add Constraint and Solve buttons
     });
 
     it('selects Minimize and Maximize optimization correctly', async () => {
@@ -61,7 +63,7 @@ describe('OptimizationProblemInput.vue', () => {
         expect(wrapper.vm.isMaximizationSelected).toBe(true);
     });
 
-    it('updates the objective function on input', async () => {
+    it('updates the objective function and variables on input', async () => {
         const objectiveFunctionInput = wrapper.find('#objectiveFunction');
 
         // Simulate user input
@@ -69,6 +71,7 @@ describe('OptimizationProblemInput.vue', () => {
         await nextTick(); // Wait for the DOM to update
 
         expect(store.objectiveFunction).toBe('3x + 2y');
+        expect(store.variables).toEqual(['x', 'y']); // Check if variables are correctly extracted and stored
     });
 
     it('adds a new constraint when the Add Constraint button is clicked', async () => {
@@ -99,6 +102,26 @@ describe('OptimizationProblemInput.vue', () => {
         expect(store.constraints[0].content).toBe('x + y <= 10');
     });
 
+    it('updates bounds correctly when bound input is changed', async () => {
+        // Set variables in the store for bounds input fields to appear
+        store.variables = ['x', 'y'];
+        await nextTick(); // Wait for DOM updates
+
+        // Find the bound input fields
+        const boundInputs = wrapper.findAll('.boundTextField');
+        expect(boundInputs).toHaveLength(8); // Two variables with two bound inputs each (upper and lower)
+
+        // Simulate input for the bounds
+        await boundInputs.at(0).setValue('0'); // Lower bound for x
+        await boundInputs.at(1).setValue('5'); // Upper bound for x
+        await boundInputs.at(2).setValue('1'); // Lower bound for y
+        await boundInputs.at(3).setValue('10'); // Upper bound for y
+
+        // Check if the bounds were updated correctly in the store
+        //TODO Uncommend when implmeneted
+        //expect(store.bounds).toEqual(['0 <= x <= 5', '1 <= y <= 10']);
+    });
+
     it('calls solveLP with the correct parameters when Solve button is clicked', async () => {
         const solveButton = wrapper.findAll('.input-container__main-button').at(1); // Second main button (Solve)
 
@@ -106,6 +129,7 @@ describe('OptimizationProblemInput.vue', () => {
         store.selectedOptimization = 'Minimize';
         store.setObjectiveFunction('x + y');
         store.constraints.push({ id: 1, content: 'x + y <= 10' });
+        store.bounds = ["0 <= x1 <= 5", "0 <= x2 <= 10"];
 
         // Mock the generateLPFile and solveLP
         inputToLPInterface.generateLPFile.mockReturnValue('Generated LP Content');
@@ -120,7 +144,7 @@ describe('OptimizationProblemInput.vue', () => {
             store.selectedOptimization,
             store.getObjectiveFunction,
             store.constraints,
-            ["0 <= x1 <= 5", "0 <= x2 <= 10"],
+            store.bounds,
             ""
         );
 

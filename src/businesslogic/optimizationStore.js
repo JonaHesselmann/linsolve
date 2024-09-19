@@ -13,8 +13,6 @@ export const useOptimizationStore = defineStore('optimization', {
         variables:[], 
         objectiveFunction: '',
         bounds:[],
-
-        
     }),
 
     // Getters are used to compute derived state from the store's state
@@ -98,7 +96,9 @@ export const useOptimizationStore = defineStore('optimization', {
             }
         },
         
-
+        getBound(){
+            return this.bounds;
+        },
 
         /**
          *  Action to add a new constraint to the list of constraints

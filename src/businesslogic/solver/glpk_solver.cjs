@@ -30,6 +30,7 @@ try{
     glpk.glp_mpl_postsolve(tran, lp, glpk.GLP_MIP);
     var status;
     switch(glpk.glp_mip_status(lp)){
+        //TODO implement other States maybe
         case glpk.GLP_OPT : status = "OPTIMAL"; break;
         case glpk.GLP_UNDEF : status = "UNDEFINED SOLUTION"; break;
         case glpk.GLP_INFEAS : status = "INFEASIBLE SOLUTION"; break;
@@ -47,9 +48,72 @@ try{
 
 }catch(err){
     if(err.line){
-        highlightedLine = err.line-1;
+       console.log(err.line);
     }
     console.log(err.toString());
-    return;
+
 }
+
+/**
+ * Return The table with all the variables
+ * To be rewritten
+ */
+function returnVariableTable(){
+for( var i = 1; i <= glpk.glp_get_num_cols(lp); i++){
+    var colType;
+    switch(glpk.glp_get_col_kind(lp,i)){
+        case glpk.GLP_CV : colType="continuous";break;
+        case glpk.GLP_IV : colType="integer";break;
+        case glpk.GLP_BV : colType="binary";break;
+    }
+    var ub = glpk.glp_get_col_ub(lp, i);
+    if(ub >= Number.MAX_VALUE){
+        ub = "+inf";
+    }
+    var lb = glpk.glp_get_col_lb(lp, i);
+    if(lb <= -Number.MAX_VALUE){
+        lb = "-inf";
+    }
+
+
+    $("#varTable tbody").append("<tr><td>"+glpk.glp_get_col_name(lp, i)
+        +"<td>"+glpk.glp_mip_col_val(lp, i)
+        +"<td>"+colType
+        +"<td>"+lb
+        +"<td>"+ub
+        +"<td>"+glpk.glp_get_obj_coef(lp, i)
+        +"<td>"+glpk.glp_get_col_prim(lp, i)
+        +"<td>"+glpk.glp_get_col_dual(lp, i)
+        +"</tr>");
+}
+}
+
+/**
+ * Returns the Column Table to be Rendered
+ * Needs to be Rewritten
+ */
+function returnConstrainTable(){
+
+    for( var i = 1; i <= glpk.glp_get_num_rows(lp); i++){
+
+        var ub = glpk.glp_get_row_ub(lp, i);
+        if(ub >= Number.MAX_VALUE){
+            ub = "+inf";
+        }
+        var lb = glpk.glp_get_row_lb(lp, i);
+        if(lb <= -Number.MAX_VALUE){
+            lb = "-inf";
+        }
+
+
+        $("#rowTable tbody").append("<tr><td>"+glpk.glp_get_row_name(lp, i)
+            +"<td>"+glpk.glp_mip_row_val(lp, i)
+            +"<td>"+lb
+            +"<td>"+ub
+            +"<td>"+glpk.glp_get_row_prim(lp, i)
+            +"<td>"+glpk.glp_get_row_dual(lp, i)
+            +"</tr>");
+    }
+}
+
 
