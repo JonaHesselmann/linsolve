@@ -14,7 +14,9 @@ export default {
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
+    
 
+    
 
     /**
      * Solve LP
@@ -39,8 +41,8 @@ export default {
       isMinimizationSelected,
       isMaximizationSelected,
       solveLP,
-    };
-  },
+    }
+  }
 };
 </script>
 <template>
@@ -84,16 +86,17 @@ export default {
           placeholder="Nebenbedingung"
           @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
       </div>
-          <div class="input-container__bounds_mobile">
-      <div class="bound" v-for="variable in optimizationStore.variables" :key="variable">
-        <input type="number" class="boundTextField">
-        <p class="boundText">≤ {{ variable }} ≤</p>
-        <input type="number" class="boundTextField">
-      </div>
-          </div>
+      <div class="input-container__bounds_mobile">
+  <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
+    <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
+    <p class="boundText">≤ {{ variable }} ≤</p>
+    <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+  </div>
+</div>
+
       <div class="input-container__last-row">
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
+        <button class="input-container__main-button" @click="getString(),solveLP()">{{ $t('solve')}}</button>
       </div>
     </div>
   </div>

@@ -10,8 +10,10 @@ export const useOptimizationStore = defineStore('optimization', {
     state: () => ({
         selectedOptimization: 'Minimize',
         constraints: [],
-        variables:[], //TODO --> delete the hard Coded Variables 
+        variables:[], 
         objectiveFunction: '',
+        bounds:[],
+
         
     }),
 
@@ -83,6 +85,19 @@ export const useOptimizationStore = defineStore('optimization', {
             const result = [...variables].filter(v => !knownFunctions.includes(v));
             this.variables = result;
         },
+        /**
+         * Function to Add or Update the Bounds of the Variables
+         */
+        addBound(upperBound, lowerBound, variable) {
+            const existingIndex = this.bounds.findIndex(bound => bound.includes(variable));
+        
+            if (existingIndex !== -1) {
+                this.bounds[existingIndex] = `${lowerBound} <= ${variable} <= ${upperBound}`;
+            } else {
+                this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
+            }
+        },
+        
 
 
         /**
