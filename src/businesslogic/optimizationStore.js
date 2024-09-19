@@ -10,8 +10,9 @@ export const useOptimizationStore = defineStore('optimization', {
     state: () => ({
         selectedOptimization: 'Minimize',
         constraints: [],
-        variables:['x', 'y' ,'z'], //TODO --> delete the hard Coded Variables 
+        variables:[], //TODO --> delete the hard Coded Variables 
         objectiveFunction: '',
+        
     }),
 
     // Getters are used to compute derived state from the store's state
@@ -43,13 +44,52 @@ export const useOptimizationStore = defineStore('optimization', {
         selectOptimization(option) {
             this.selectedOptimization = option;
         },
+        /**
+         * Add all Variables that are used in the condition
+         */
+        addVariables(condition){
+            const characters = [...condition]; 
+            let variables = new Set(); 
+            let currentVariable = ''; 
+            let insideVariable = false; 
+          
+            
+            for (let i = 0; i < characters.length; i++) {
+              const char = characters[i];
+          
+             
+              if (/[a-zA-Z_]/.test(char)) {
+                
+                currentVariable += char;
+                insideVariable = true;
+              } else if (/\d/.test(char) && insideVariable) {
+                currentVariable += char;
+              } else {
+               
+                if (insideVariable && currentVariable !== '') {
+                  variables.add(currentVariable);
+                }
+                currentVariable = '';
+                insideVariable = false;
+              }
+            }
+        
+            if (currentVariable !== '') {
+              variables.add(currentVariable);
+            }
+          
+           
+            const knownFunctions = ["sin", "cos", "log", "exp", "sqrt", "tan", "Math"];
+            const result = [...variables].filter(v => !knownFunctions.includes(v));
+            this.variables = result;
+        },
 
 
         /**
          *  Action to add a new constraint to the list of constraints
          */
         addConstraint() {
-            console.log(this.constraints[0])
+            
             this.constraints.push({ id: Date.now(), content: '' });
             
         },

@@ -71,7 +71,9 @@ export default {
 
       <div class="input-container__condition-container">
         <input type="text" class="input-container__condition" placeholder="Bedingung"
-          @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction">
+          @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
+          
+          id="objectiveFunction">
       </div>
 
       <div class="input-container__constraint-container">
