@@ -98,7 +98,7 @@ export default {
 
       <div class="input-container__last-row">
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-        <button class="input-container__main-button" @click="getString(),solveLP()">{{ $t('solve')}}</button>
+        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
       </div>
     </div>
   </div>
