@@ -210,7 +210,7 @@ export default {
 .input-container__main-button {
   padding: 5px;
   margin: 1%;
-  font-size: 0.8rem;
+  font-size: 1rem;
   background-color: rgb(173, 170, 170);
   cursor: pointer;
   border-radius: 4px;
