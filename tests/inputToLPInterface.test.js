@@ -25,7 +25,7 @@ describe('generateLPFile', () => {
 
         const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints, bounds);
 
-        expect(lpFile).toContain('Bounds\n 3x + 4y\n 3x + 4y');
+        expect(lpFile).toContain('Bounds\n x >= 0\n y <= 5');
         expect(lpFile).toContain('End');
     });
 

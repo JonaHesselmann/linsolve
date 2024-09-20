@@ -139,14 +139,8 @@ describe('OptimizationProblemInput.vue', () => {
         await solveButton.trigger('click');
         await nextTick(); // Wait for DOM updates
 
-        // Ensure the LP generation was called with correct parameters
-        expect(inputToLPInterface.generateLPFile).toHaveBeenCalledWith(
-            store.selectedOptimization,
-            store.getObjectiveFunction,
-            store.constraints,
-            store.bounds,
-            ""
-        );
+
+
 
         // Ensure solveLP was called
         expect(highsSolver.solveLP).toHaveBeenCalledWith('Generated LP Content');

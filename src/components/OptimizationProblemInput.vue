@@ -25,7 +25,7 @@ export default {
       try {
         let lpContent;
         console.log(optimizationStore.selectedOptimization);
-        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 40","2 <= x4 <= 3"],"")
+        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,[""],"")
         console.log(lpContent);
         const result = await highsSolver.solveLP(lpContent); // Solve the LP
        console.log(result);
