@@ -6,20 +6,20 @@ function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds
     let lpFile = "";
     // Add the objective function (assuming "Minimize" by default)
     lpFile += objectiveType +"\n";
-    lpFile += " obj: " + objectiveFunction + "\n\n";
+    lpFile += " obj: " + objectiveFunction + "\n";
     // Add constraints
     lpFile += "Subject To\n";
     constraints.forEach((constraint,index) => {
         lpFile += ` c${index + 1}: ${constraint.content}\n`;
     });
-    lpFile += "\n";
+    //lpFile += "\n";
     // Add bounds if any
     if (bounds.length > 0) {
         lpFile += "Bounds\n";
         bounds.forEach((bound) => {
-            lpFile += ` ${objectiveFunction}\n`;
+            lpFile += ` ${bound}\n`;
         });
-        lpFile += "\n";
+        //lpFile += "\n";
     }
 
     // Add variable types if any
