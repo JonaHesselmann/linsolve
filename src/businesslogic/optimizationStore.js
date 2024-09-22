@@ -112,7 +112,7 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
-        //Setter for Objectiv Function
+        //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
          * @param objectiveFunc
