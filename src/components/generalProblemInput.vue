@@ -1,18 +1,40 @@
+
 <script>
+import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
+
+
     export default{
-        name: "GeneralProblemInput"
+        name: "GeneralProblemInput",
+      data() {
+        return {
+          problemInput: '' // This property will store the input of the textarea
+        }
+      },
+      methods: {
+        importProblem() {
+          console.log('Imported Problem:', this.problemInput);
+          // Additional logic for importing the problem
+        },
+        solve() {
+          console.log('Solving Problem:', this.problemInput);
+          console.log(glpk.solveLP(this.problemInput));
+        }
+      }
     }
 </script>
-
 <template>
-    <div class="mainContent">
-        <h2 class="mainTitel">{{ $t("gernerallProblem") }}</h2>
-        <textarea class="problemInput">{{ $t("writeHere") }}</textarea>
-        <div class="buttoncontainer">
-            <button class="mainButton">{{ $t("importProblem") }}</button>
-            <button class="mainButton">{{ $t("solve") }}</button>
-        </div>
+  <div class="mainContent">
+    <h2 class="mainTitel">{{ $t("gerneralProblem") }}</h2>
+    <textarea
+        class="problemInput"
+        v-model="problemInput"
+        placeholder= "Write here"> // add Localisation
+        </textarea>
+    <div class="buttoncontainer">
+      <button class="mainButton" @click="importProblem">{{ $t("importProblem") }}</button>
+      <button class="mainButton" @click="solve">{{ $t("solve") }}</button>
     </div>
+  </div>
 </template>
 <style scoped>
 

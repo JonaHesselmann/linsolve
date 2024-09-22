@@ -1,6 +1,8 @@
-var glpk = require('../../../public/glpk.cjs')
+//var glpk = require('../../../public/glpk.cjs')
+const glpk = '../../../public/glpk.cjs'
+
 // Helper functions
-function solveLP(lpContent){
+export function solveLP(lpContent){
     var output = 0;
 
     // glpk.glp_set_print_func(log);
@@ -52,7 +54,7 @@ function solveLP(lpContent){
  * Return The table with all the variables
  * To be rewritten
  */
-function returnVariableTable(){
+export function returnVariableTable(){
 for( var i = 1; i <= glpk.glp_get_num_cols(lp); i++){
     var colType;
     switch(glpk.glp_get_col_kind(lp,i)){
@@ -86,7 +88,7 @@ for( var i = 1; i <= glpk.glp_get_num_cols(lp); i++){
  * Returns the Column Table to be Rendered
  * Needs to be Rewritten
  */
-function returnConstrainTable(){
+export function returnConstrainTable(){
 
     for( var i = 1; i <= glpk.glp_get_num_rows(lp); i++){
 
