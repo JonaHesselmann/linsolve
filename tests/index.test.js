@@ -4,18 +4,34 @@ import { createTestingPinia } from '@pinia/testing';
 import { createRouter, createWebHistory } from 'vue-router';
 import 'mathlive';
 
-// Import your components and router configuration
-import Homepage from '../src/view/Homepage.vue';
+/**
+ * Import your components and router configuration
+ */
+import SelectionPage from '../src/view/selectionPage.vue';
+import GeneralProblemPage from '../src/view/generalProblemPage.vue';
+import SpezificProblemPage from '../src/view/spezificProblemPage.vue';
 import Agb from '../src/view/Agb.vue';
 import About from '../src/view/About.vue';
-import App from '../src/App.vue'; // Main App component that uses the router
+import App from '../src/App.vue'; /** Main App component that uses the router */
 
-// Define routes as they are in the actual router configuration
+/** 
+ * Define routes as they are in the actual router configuration 
+ * */
 const routes = [
     {
         path: '/',
-        name: 'Homepage',
-        component: Homepage,
+        name: 'SelectionPage',
+        component: SelectionPage,
+    },
+    {
+        path: '/spezifischesProblem',
+        name: 'SpecificProblemPage',
+        component: SpezificProblemPage,
+    },
+    {
+        path: '/allgemeinesProblem',
+        name: 'GernalProblemPage',
+        component: GeneralProblemPage,
     },
     {
         path: '/agb',
@@ -29,7 +45,9 @@ const routes = [
     },
 ];
 
-// Create a real router instance
+/**
+ * Create a real router instance
+ */
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
@@ -37,26 +55,56 @@ const router = createRouter({
 
 describe('Vue Router with Real Instance', () => {
     beforeEach(async () => {
-        // Make sure the router starts at the initial route
+        /**
+         * Make sure the router starts at the initial route
+         */
         await router.push('/');
         await router.isReady();
-
     });
 
-
-    it('renders Homepage component for the / route', async () => {
+    it('renders SelectionPage component for the / route', async () => {
         const wrapper = mount(App, {
             global: {
                 plugins: [router, createTestingPinia()],
                 mocks: {
-                    $t: (msg) => msg // Simple mock for translation function
+                    $t: (msg) => msg /** Simple mock for translation function */
                 },
             },
         });
 
         await router.push('/');
         await router.isReady();
-        expect(wrapper.findComponent(Homepage).exists()).toBe(true);
+        expect(wrapper.findComponent(SelectionPage).exists()).toBe(true);
+    });
+
+    it('renders SpecificProblemPage component for the /spezifischesProblem route', async () => {
+        const wrapper = mount(App, {
+            global: {
+                plugins: [router, createTestingPinia()],
+                mocks: {
+                    $t: (msg) => msg /** Simple mock for translation function */
+                },
+            },
+        });
+
+        await router.push('/spezifischesProblem');
+        await router.isReady();
+        expect(wrapper.findComponent(SpezificProblemPage).exists()).toBe(true);
+    });
+
+    it('renders GeneralProblemPage component for the /allgemeinesProblem route', async () => {
+        const wrapper = mount(App, {
+            global: {
+                plugins: [router, createTestingPinia()],
+                mocks: {
+                    $t: (msg) => msg /** Simple mock for translation function */
+                },
+            },
+        });
+
+        await router.push('/allgemeinesProblem');
+        await router.isReady();
+        expect(wrapper.findComponent(GeneralProblemPage).exists()).toBe(true);
     });
 
     it('renders Agb component for the /agb route', async () => {
@@ -64,15 +112,13 @@ describe('Vue Router with Real Instance', () => {
             global: {
                 plugins: [router, createTestingPinia()],
                 mocks: {
-                    $t: (msg) => msg // Simple mock for translation function
+                    $t: (msg) => msg /** Simple mock for translation function */
                 },
-
             },
         });
 
         await router.push('/agb');
         await router.isReady();
-
         expect(wrapper.findComponent(Agb).exists()).toBe(true);
     });
 
@@ -81,14 +127,13 @@ describe('Vue Router with Real Instance', () => {
             global: {
                 plugins: [router, createTestingPinia()],
                 mocks: {
-                    $t: (msg) => msg // Simple mock for translation function
+                    $t: (msg) => msg /** Simple mock for translation function */
                 },
             },
         });
 
         await router.push('/about');
         await router.isReady();
-
         expect(wrapper.findComponent(About).exists()).toBe(true);
     });
 
@@ -96,6 +141,8 @@ describe('Vue Router with Real Instance', () => {
         const routePaths = router.getRoutes().map(route => route.path);
 
         expect(routePaths).toContain('/');
+        expect(routePaths).toContain('/spezifischesProblem');
+        expect(routePaths).toContain('/allgemeinesProblem');
         expect(routePaths).toContain('/agb');
         expect(routePaths).toContain('/about');
     });
