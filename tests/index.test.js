@@ -7,9 +7,9 @@ import 'mathlive';
 /**
  * Import your components and router configuration
  */
-import SelectionPage from '../src/view/selectionPage.vue';
-import GeneralProblemPage from '../src/view/generalProblemPage.vue';
-import SpezificProblemPage from '../src/view/spezificProblemPage.vue';
+import SelectionPage from '../src/view/SelectionPage.vue';
+import GeneralProblemPage from '../src/view/GeneralProblemPage.vue';
+import SpezificProblemPage from '../src/view/SpezificProblemPage.vue';
 import Agb from '../src/view/Agb.vue';
 import About from '../src/view/About.vue';
 import App from '../src/App.vue'; /** Main App component that uses the router */

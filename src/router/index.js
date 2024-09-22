@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Agb from '../view/Agb.vue'
 import About from '../view/About.vue'
-import GeneralProblemPage from '../view/generalProblemPage.vue'
-import SpezificProblemPage from '../view/spezificProblemPage.vue'
-import SelectionPage from '../view/selectionPage.vue'
+import GeneralProblemPage from '../view/GeneralProblemPage.vue'
+import SpezificProblemPage from '../view/SpezificProblemPage.vue'
+import SelectionPage from '../view/SelectionPage.vue'
 
 
 

@@ -32,6 +32,13 @@ export const useOptimizationStore = defineStore('optimization', {
         getObjectiveFunction(){
             return this.objectiveFunction;
         },
+        /**
+         * Get Bounds
+         * @returns {Array}
+         */
+        getProblemBounds(){
+            return this.bounds;
+        },
     },
 
     // Actions section: methods that allow modifying the state or performing logic
@@ -95,10 +102,7 @@ export const useOptimizationStore = defineStore('optimization', {
                 this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
             }
         },
-        
-        getBound(){
-            return this.bounds;
-        },
+
 
         /**
          *  Action to add a new constraint to the list of constraints
