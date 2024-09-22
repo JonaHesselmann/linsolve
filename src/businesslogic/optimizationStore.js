@@ -9,7 +9,7 @@ export const useOptimizationStore = defineStore('optimization', {
     // `state` function returns an object representing the reactive state of the store
     state: () => ({
         selectedOptimization: 'Minimize',
-        constraints: [],
+        constraints: [{0:''}],
         variables:[], 
         objectiveFunction: '',
         bounds:[],
