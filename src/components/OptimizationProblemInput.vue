@@ -79,7 +79,7 @@ export default {
       </div>
 
       <div class="input-container__constraint-container">
-        <input type="text" key="1" class="input-container__constraint_fix" :placeholder="[[$t('constraint')]]" @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+        <input type="text" key="1" class="input-container__constraint_fix" :placeholder="[[$t('constraint')]]" @input="optimizationStore.addConstraint(),optimizationStore.updateConstraint(constraint.id, $event.target.value)">
         <input type="text"
           v-for="constraint in optimizationStore.constraints"
           :key="constraint.id"
