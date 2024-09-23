@@ -139,9 +139,6 @@ describe('OptimizationProblemInput.vue', () => {
         await solveButton.trigger('click');
         await nextTick(); // Wait for DOM updates
 
-
-
-
         // Ensure solveLP was called
         expect(highsSolver.solveLP).toHaveBeenCalledWith('Generated LP Content');
     });
