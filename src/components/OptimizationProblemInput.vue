@@ -5,18 +5,13 @@ import { computed } from 'vue';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
 
-
 export default {
   name: 'OptimizationProblemInput',
   setup() {
     const optimizationStore = useOptimizationStore();
 
-
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
-    
-
-    
 
     /**
      * Solve LP
@@ -25,14 +20,18 @@ export default {
       try {
         let lpContent;
         console.log(optimizationStore.selectedOptimization);
-        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,optimizationStore.getProblemBounds,"")
+        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization, optimizationStore.getObjectiveFunction, optimizationStore.constraints, optimizationStore.getProblemBounds, "")
         console.log(lpContent);
         const result = await highsSolver.solveLP(lpContent); // Solve the LP
-       console.log(result);
-       //TODO: Here we can apply the move to the solved results via router
+        console.log(result);
+        //TODO: Here we can apply the move to the solved results via router
       } catch (error) {
         console.error('Fehler beim Lösen des LP-Problems:', error);
       }
+    };
+
+    const deleteConstraint = (id) => {
+      optimizationStore.removeConstraint(id);
     };
 
     return {
@@ -40,18 +39,20 @@ export default {
       isMinimizationSelected,
       isMaximizationSelected,
       solveLP,
+      deleteConstraint,
     }
   }
 };
 </script>
+
 <template>
   <div class="input-container">
     <div class="input-container__bounds">
       <p>{{ $t('bounds') }}:</p>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-        <input type="number" class="boundTextField"@input="firstInput = $event.target.value">
+        <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
         <p class="boundText">≤ {{ variable }} ≤</p>
-        <input type="number" class="boundTextField"@input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+        <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
       </div>
     </div>
 
@@ -74,27 +75,27 @@ export default {
       <div class="input-container__condition-container">
         <input type="text" class="input-container__condition" placeholder="Bedingung"
           @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
-          
           id="objectiveFunction">
       </div>
 
       <div class="input-container__constraint-container">
-        
-        <input type="text"
-          v-for="constraint in optimizationStore.constraints"
-          :key="constraint.id"
-          class="input-container__constraint"
-          placeholder="Nebenbedingung"
-          @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+        <div v-for="constraint in optimizationStore.constraints" :key="constraint.id" class="constraint-wrapper">
+          <input type="text"
+            class="input-container__constraint"
+            placeholder="Nebenbedingung"
+            @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+          <img src="../assets/trash.png" class="delete-icon" @click="deleteConstraint(constraint.id)" alt="Delete">
+        </div>
       </div>
+
       <div class="input-container__bounds_mobile">
         <p>{{ $t('bounds') }}:</p>
-  <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-    <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
-    <p class="boundText">≤ {{ variable }} ≤</p>
-    <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
-  </div>
-</div>
+        <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
+          <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
+          <p class="boundText">≤ {{ variable }} ≤</p>
+          <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+        </div>
+      </div>
 
       <div class="input-container__last-row">
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
@@ -102,7 +103,6 @@ export default {
       </div>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
@@ -134,8 +134,9 @@ export default {
   justify-content: space-between;
   gap: 10px;
 }
-.input-container__bounds_mobile{
-  display:none
+
+.input-container__bounds_mobile {
+  display: none;
 }
 
 .boundTextField {
@@ -199,7 +200,6 @@ export default {
   border-radius: 4px;
 }
 
-
 .input-container__last-row {
   display: flex;
   justify-content: flex-end;
@@ -222,6 +222,22 @@ export default {
   background-color: rgb(140, 140, 140);
 }
 
+.constraint-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.delete-icon {
+  cursor: pointer;
+  width: 24px; /* Größe des Icons */
+  height: 24px;
+}
+
+.delete-icon:hover {
+  opacity: 0.7; /* Visueller Effekt beim Hovern */
+}
 
 @media (max-width: 900px) {
   .input-container {
@@ -270,7 +286,6 @@ export default {
     gap: 10px;
   }
 }
-
 </style>
 
 

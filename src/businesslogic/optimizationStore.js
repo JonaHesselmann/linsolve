@@ -113,6 +113,10 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
+
+        removeConstraint(id) {
+            this.constraints = this.constraints.filter(constraint => constraint.id !== id);
+          },
         //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
