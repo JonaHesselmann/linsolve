@@ -8,6 +8,7 @@
     import Agbs from '../components/Agbs.vue';
     import Footer from '../components/Footer.vue';
     export default{
+        name: 'Agb',
         components:{
             Header, 
             Footer, 

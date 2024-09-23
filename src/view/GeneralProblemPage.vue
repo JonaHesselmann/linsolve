@@ -1,24 +1,20 @@
 <template>
     <Header></Header>
-    <AboutUs class="mainContent"></AboutUs>
+    <GeneralProblemInput></GeneralProblemInput>
     <Footer></Footer>
     </template>
     <script>
     import Header from '../components/Header.vue';
-    import AboutUs from '../components/About_us.vue';
     import Footer from '../components/Footer.vue';
+    import GeneralProblemInput from '../components/generalProblemInput.vue';
     export default{
-        name:'About',
+        name:"GerneralProblemPage",
         components:{
             Header, 
             Footer, 
-            AboutUs
+            GeneralProblemInput
         }
     }
     </script>
     <style>
-    .mainContent{
-        margin-top: 15%;
-        margin-bottom: 10%;
-    }
     </style>

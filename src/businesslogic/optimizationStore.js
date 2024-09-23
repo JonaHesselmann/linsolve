@@ -9,7 +9,7 @@ export const useOptimizationStore = defineStore('optimization', {
     // `state` function returns an object representing the reactive state of the store
     state: () => ({
         selectedOptimization: 'Minimize',
-        constraints: [],
+        constraints: [{0:''}],
         variables:[], 
         objectiveFunction: '',
         bounds:[],
@@ -31,6 +31,13 @@ export const useOptimizationStore = defineStore('optimization', {
          */
         getObjectiveFunction(){
             return this.objectiveFunction;
+        },
+        /**
+         * Get Bounds
+         * @returns {Array}
+         */
+        getProblemBounds(){
+            return this.bounds;
         },
     },
 
@@ -95,10 +102,7 @@ export const useOptimizationStore = defineStore('optimization', {
                 this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
             }
         },
-        
-        getBound(){
-            return this.bounds;
-        },
+
 
         /**
          *  Action to add a new constraint to the list of constraints
@@ -108,7 +112,7 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
-        //Setter for Objectiv Function
+        //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
          * @param objectiveFunc

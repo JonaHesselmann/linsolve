@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Homepage from '../view/Homepage.vue'
 import Agb from '../view/Agb.vue'
 import About from '../view/About.vue'
+import GeneralProblemPage from '../view/GeneralProblemPage.vue'
+import SpezificProblemPage from '../view/SpezificProblemPage.vue'
+import SelectionPage from '../view/SelectionPage.vue'
 
 
 
@@ -10,8 +12,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Homepage',
-      component: Homepage,
+      name: 'SelectionPage',
+      component: SelectionPage,
+    },
+    {
+      path: '/spezifischesProblem',
+      name: 'SpecificProblemPage',
+      component: SpezificProblemPage,
+    },
+    {
+      path: '/allgemeinesProblem',
+      name: 'GernalProblemPage',
+      component: GeneralProblemPage,
     },
     {
       path: '/agb',

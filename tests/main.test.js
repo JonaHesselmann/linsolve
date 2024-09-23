@@ -4,6 +4,9 @@ import { mount } from '@vue/test-utils';
 import App from '../src/main.js';
 import { createPinia } from 'pinia';
 import i18n from '../src/businesslogic/i18n.js';
+import SelectionPage from '../src/view/SelectionPage.vue';
+import GeneralProblemPage from '../src/view/GeneralProblemPage.vue';
+import SpezificProblemPage from '../src/view/SpezificProblemPage.vue';
 
 describe('App Initialization', () => {
     let app;
