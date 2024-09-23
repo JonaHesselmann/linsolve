@@ -26,7 +26,12 @@
     "⁠dataProtection":"Data Protection",
     "dataProtectionText":"LinSolve does not collect personal data unless you voluntarily contact us via feedback forms. In this case, the data will only be used to respond to your inquiries and will not be shared with third parties.",
     "⁠applicableLaw": "⁠Applicable Law",
-    "⁠applicablaLawText":"These GTC are governed by German law."
+    "⁠applicablaLawText":"These GTC are governed by German law.",
+    "bounds": "Bounds",
+    "gernerallProblem": "Generall Problem",
+    "specificProblem": "Specific Problem", 
+    "importProblem":"Import Task",
+    "writeHere":"Write here"
      
 
 }

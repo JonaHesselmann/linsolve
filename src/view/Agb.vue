@@ -8,6 +8,7 @@
     import Agbs from '../components/Agbs.vue';
     import Footer from '../components/Footer.vue';
     export default{
+        name: 'Agb',
         components:{
             Header, 
             Footer, 
@@ -17,7 +18,7 @@
     </script>
     <style>
     .mainContent{
-        margin-top: 5%;
-        margin-bottom: 5%;
+        margin-top: 15%;
+        margin-bottom: 10%;
     }
     </style>

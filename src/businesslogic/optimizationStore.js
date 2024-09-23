@@ -8,9 +8,11 @@ import { defineStore } from 'pinia';
 export const useOptimizationStore = defineStore('optimization', {
     // `state` function returns an object representing the reactive state of the store
     state: () => ({
-        selectedOptimization: '',
-        constraints: [],
+        selectedOptimization: 'Minimize',
+        constraints: [{0:''}],
+        variables:[], 
         objectiveFunction: '',
+        bounds:[],
     }),
 
     // Getters are used to compute derived state from the store's state
@@ -30,6 +32,13 @@ export const useOptimizationStore = defineStore('optimization', {
         getObjectiveFunction(){
             return this.objectiveFunction;
         },
+        /**
+         * Get Bounds
+         * @returns {Array}
+         */
+        getProblemBounds(){
+            return this.bounds;
+        },
     },
 
     // Actions section: methods that allow modifying the state or performing logic
@@ -42,17 +51,68 @@ export const useOptimizationStore = defineStore('optimization', {
         selectOptimization(option) {
             this.selectedOptimization = option;
         },
+        /**
+         * Add all Variables that are used in the condition
+         */
+        addVariables(condition){
+            const characters = [...condition]; 
+            let variables = new Set(); 
+            let currentVariable = ''; 
+            let insideVariable = false; 
+          
+            
+            for (let i = 0; i < characters.length; i++) {
+              const char = characters[i];
+          
+             
+              if (/[a-zA-Z_]/.test(char)) {
+                
+                currentVariable += char;
+                insideVariable = true;
+              } else if (/\d/.test(char) && insideVariable) {
+                currentVariable += char;
+              } else {
+               
+                if (insideVariable && currentVariable !== '') {
+                  variables.add(currentVariable);
+                }
+                currentVariable = '';
+                insideVariable = false;
+              }
+            }
+        
+            if (currentVariable !== '') {
+              variables.add(currentVariable);
+            }
+          
+           
+            const knownFunctions = ["sin", "cos", "log", "exp", "sqrt", "tan", "Math"];
+            const result = [...variables].filter(v => !knownFunctions.includes(v));
+            this.variables = result;
+        },
+        /**
+         * Function to Add or Update the Bounds of the Variables
+         */
+        addBound(upperBound, lowerBound, variable) {
+            const existingIndex = this.bounds.findIndex(bound => bound.includes(variable));
+        
+            if (existingIndex !== -1) {
+                this.bounds[existingIndex] = `${lowerBound} <= ${variable} <= ${upperBound}`;
+            } else {
+                this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
+            }
+        },
 
 
         /**
          *  Action to add a new constraint to the list of constraints
          */
         addConstraint() {
-            console.log(this.constraints[0])
+            
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
-        //Setter for Objectiv Function
+        //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
          * @param objectiveFunc

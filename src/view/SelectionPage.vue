@@ -1,24 +1,20 @@
 <template>
     <Header></Header>
-    <AboutUs class="mainContent"></AboutUs>
+    <SelectionProblemButtons></SelectionProblemButtons>
     <Footer></Footer>
     </template>
     <script>
     import Header from '../components/Header.vue';
-    import AboutUs from '../components/About_us.vue';
     import Footer from '../components/Footer.vue';
+    import SelectionProblemButtons from '../components/selectionProblemButtons.vue';
     export default{
-        name:'About',
+        name: 'SelectionPage',
         components:{
             Header, 
             Footer, 
-            AboutUs
+            SelectionProblemButtons
         }
     }
     </script>
     <style>
-    .mainContent{
-        margin-top: 15%;
-        margin-bottom: 10%;
-    }
     </style>

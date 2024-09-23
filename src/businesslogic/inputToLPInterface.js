@@ -6,20 +6,20 @@ function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds
     let lpFile = "";
     // Add the objective function (assuming "Minimize" by default)
     lpFile += objectiveType +"\n";
-    lpFile += " obj: " + convertLatexToBasic(objectiveFunction) + "\n\n";
+    lpFile += " obj: " + objectiveFunction + "\n";
     // Add constraints
     lpFile += "Subject To\n";
     constraints.forEach((constraint,index) => {
-        lpFile += ` c${index + 1}: ${convertLatexToBasic(constraint.content)}\n`;
+        lpFile += ` c${index + 1}: ${constraint.content}\n`;
     });
-    lpFile += "\n";
+    //lpFile += "\n";
     // Add bounds if any
     if (bounds.length > 0) {
         lpFile += "Bounds\n";
         bounds.forEach((bound) => {
-            lpFile += ` ${convertLatexToBasic(objectiveFunction)}\n`;
+            lpFile += ` ${bound}\n`;
         });
-        lpFile += "\n";
+        //lpFile += "\n";
     }
 
     // Add variable types if any
@@ -46,23 +46,4 @@ function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds
     return lpFile;
 }
 
-/**
- * Helper Function to convert Latex to basic expressions
- * @param expression
- * @returns {String}
- */
-function convertLatexToBasic(expression) {
-    // Define a mapping of LaTeX commands to their basic representations
-    const latexToBasicMap = {
-        'ge': '>=',
-        'le': '<=',
-    };
-    // Use a regular expression to find and replace all LaTeX commands
-    const regex = new RegExp(Object.keys(latexToBasicMap).join("|"), "g");
-
-    // Replace each LaTeX command in the expression
-    return expression.replace(regex, (matched) => latexToBasicMap[matched]);
-}
-
-
-export {generateLPFile, convertLatexToBasic}
+export {generateLPFile}

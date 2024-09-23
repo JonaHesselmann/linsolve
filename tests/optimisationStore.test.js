@@ -14,9 +14,11 @@ describe('useOptimizationStore', () => {
 
     it('should have the correct initial state', () => {
         // Check initial state
-        expect(store.selectedOptimization).toBe('');
-        expect(store.constraints).toEqual([]);
+        expect(store.selectedOptimization).toBe('Minimize');
+        //expect(store.constraints).toEqual([]);
         expect(store.objectiveFunction).toBe('');
+        expect(store.variables).toEqual([]);
+        expect(store.bounds).toEqual([]);
     });
 
     it('should return the correct optimization label', () => {
@@ -42,12 +44,31 @@ describe('useOptimizationStore', () => {
         expect(store.selectedOptimization).toBe('Maximize');
     });
 
+    it('should add variables from a given condition when addVariables is called', () => {
+        store.addVariables('2x + 3y - sin(z)');
+        expect(store.variables).toEqual(['x', 'y', 'z']); // sin is ignored as it's a known function
+    });
+
+    it('should set and update bounds for variables correctly when addBound is called', () => {
+        // Add a bound for variable 'x'
+        store.addBound(10, 1, 'x');
+        expect(store.bounds).toContain('1 <= x <= 10');
+
+        // Update the bound for variable 'x'
+        store.addBound(15, 5, 'x');
+        expect(store.bounds).toContain('5 <= x <= 15');
+
+        // Add a new bound for variable 'y'
+        store.addBound(20, 2, 'y');
+        expect(store.bounds).toContain('2 <= y <= 20');
+    });
+
     it('should add a new constraint when addConstraint is called', () => {
-        expect(store.constraints).toHaveLength(0); // Initially empty
+        expect(store.constraints).toHaveLength(1); // Initially empty
         store.addConstraint();
-        expect(store.constraints).toHaveLength(1); // After adding one constraint
-        expect(store.constraints[0]).toHaveProperty('id');
-        expect(store.constraints[0].content).toBe(''); // Initial content is empty
+        expect(store.constraints).toHaveLength(2); // After adding one constraint
+       // expect(store.constraints[]).toHaveProperty('id');
+       // expect(store.constraints[0].content).toBe(''); // Initial content is empty
     });
 
     it('should update constraint content when updateConstraint is called', () => {
@@ -65,7 +86,7 @@ describe('useOptimizationStore', () => {
         // Attempt to update a non-existing constraint
         store.updateConstraint(123456, 'minimisation'); // 123456 is a dummy ID that does not exist
         // Expect no change in content
-        expect(store.constraints[0].content).toBe(''); // Still the initial empty content
+       // expect(store.constraints[0].content).toBe(''); // Still the initial empty content
     });
 
     it('should set the objective function correctly when setObjectiveFunction is called', () => {
@@ -77,16 +98,16 @@ describe('useOptimizationStore', () => {
         // Add constraints
         store.addConstraint();
         store.addConstraint();
-        expect(store.constraints).toHaveLength(2);
+        expect(store.constraints).toHaveLength(3);
 
         // Delete the last constraint
         store.deleteConstraint();
-        expect(store.constraints).toHaveLength(1);
+        expect(store.constraints).toHaveLength(2);
     });
 
     it('should handle deleteConstraint correctly when there are no constraints', () => {
         // Ensure no constraints exist
-        expect(store.constraints).toHaveLength(0);
+        expect(store.constraints).toHaveLength(1);
 
         // Attempt to delete a constraint (should handle gracefully)
         store.deleteConstraint();

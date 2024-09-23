@@ -11,11 +11,12 @@ export default {
   setup() {
     const optimizationStore = useOptimizationStore();
 
-    mathVirtualKeyboard.layouts = ["compact"];
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
+    
 
+    
 
     /**
      * Solve LP
@@ -24,8 +25,7 @@ export default {
       try {
         let lpContent;
         console.log(optimizationStore.selectedOptimization);
-        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,["0 <= x1 <= 5",
-          "0 <= x2 <= 10"],"")
+        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,optimizationStore.getProblemBounds,"")
         console.log(lpContent);
         const result = await highsSolver.solveLP(lpContent); // Solve the LP
        console.log(result);
@@ -40,117 +40,242 @@ export default {
       isMinimizationSelected,
       isMaximizationSelected,
       solveLP,
-    };
-  },
+    }
+  }
 };
 </script>
-
 <template>
-  <div class="inputContainer">
-    <div class="firstRow">
-      <button 
-        class="selectionOptimization" 
-        :class="{ selected: isMinimizationSelected }"
-        @click="optimizationStore.selectOptimization('Minimize')">
-        {{ $t('minimization') }}
-      </button>
-      <button 
-        class="selectionOptimization" 
-        :class="{ selected: isMaximizationSelected }"
-        @click="optimizationStore.selectOptimization('Maximize')">
-        {{ $t('maximization') }}
-      </button>
+  <div class="input-container">
+    <div class="input-container__bounds">
+      <p>{{ $t('bounds') }}:</p>
+      <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
+        <input type="number" class="boundTextField"@input="firstInput = $event.target.value">
+        <p class="boundText">≤ {{ variable }} ≤</p>
+        <input type="number" class="boundTextField"@input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+      </div>
     </div>
 
-    <div class="conditionContainer">
-      <math-field class="condition" placeholder="Objective Function" @input="optimizationStore.setObjectiveFunction($event.target.value)" id="objectiveFunction"></math-field>
-    </div>
+    <div class="input-container__main-content">
+      <div class="input-container__first-row">
+        <button
+          class="input-container__selection-optimization"
+          :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
+          @click="optimizationStore.selectOptimization('Minimize')">
+          {{ $t('minimization') }}
+        </button>
+        <button
+          class="input-container__selection-optimization"
+          :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
+          @click="optimizationStore.selectOptimization('Maximize')">
+          {{ $t('maximization') }}
+        </button>
+      </div>
 
-    <div id="constraintContainer">
-      <math-field 
-        v-for="constraint in optimizationStore.constraints" 
-        :key="constraint.id"
-        class="constraint"
-        placeholder="Constraint"
-        @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-      </math-field>
-    </div>
+      <div class="input-container__condition-container">
+        <input type="text" class="input-container__condition" placeholder="Bedingung"
+          @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
+          
+          id="objectiveFunction">
+      </div>
 
-    <div class="lastRow">
-      <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-      <button class="mainButton" @click="solveLP()">{{ $t('solve') }}</button>
+      <div class="input-container__constraint-container">
+        
+        <input type="text"
+          v-for="constraint in optimizationStore.constraints"
+          :key="constraint.id"
+          class="input-container__constraint"
+          placeholder="Nebenbedingung"
+          @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      </div>
+      <div class="input-container__bounds_mobile">
+        <p>{{ $t('bounds') }}:</p>
+  <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
+    <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
+    <p class="boundText">≤ {{ variable }} ≤</p>
+    <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+  </div>
+</div>
+
+      <div class="input-container__last-row">
+        <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
+        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
+      </div>
     </div>
   </div>
+  
 </template>
 
 <style scoped>
-.inputContainer {
+.input-container {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  gap: 150px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5%;
+  box-sizing: border-box;
+}
+
+.input-container__bounds {
+  position: sticky;
+  top: 20px;
+  height: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
+  justify-content: flex-start;
+  gap: 10px;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
-.firstRow {
+.input-container__bounds .bound {
   display: flex;
-  justify-content: flex-end;
-  width: 40%;
-  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.input-container__bounds_mobile{
+  display:none
 }
 
-.selectionOptimization {
-  font-size: x-small;
-  padding: 5px 10px;
+.boundTextField {
+  width: 80px;
+  padding: 5px;
+  font-size: 0.9rem;
+}
+
+.boundText {
+  margin: 0 10px;
+  font-size: 0.9rem;
+  white-space: nowrap; 
+}
+
+.input-container__main-content {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-container__first-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input-container__selection-optimization {
+  padding: 5px;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   cursor: pointer;
-  background-color: #f0f0f0; 
-  border: 1px solid #ccc; 
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  text-align: center;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.selectionOptimization.selected {
+.input-container__selection-optimization--selected {
   background-color: rgba(7, 7, 152, 0.945);
   color: white;
 }
 
-.conditionContainer,
-#constraintContainer {
+.input-container__condition-container,
+.input-container__constraint-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
+}
+
+.input-container__condition,
+.input-container__constraint {
   width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.condition {
-  width: 90%;
-  max-width: 600px;
-  margin-top: 10px;
-}
 
-.constraint {
-  width: 70%;
-  max-width: 550px;
-  margin-top: 10px;
-}
-
-.lastRow {
+.input-container__last-row {
   display: flex;
-  justify-content: space-evenly;
-  width: 90%;
-  max-width: 100%;
+  justify-content: flex-end;
+  gap: 10px;
   margin-top: 20px;
 }
 
-.mainButton {
-  font-size: medium;
-  padding: 10px 20px;
-  margin: 0 10px;
-  text-align: center;
+.input-container__main-button {
+  padding: 5px;
+  margin: 1%;
+  font-size: 1rem;
   background-color: rgb(173, 170, 170);
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s;
+  width: auto;
 }
+
+.input-container__main-button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+
+@media (max-width: 900px) {
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .input-container__bounds_mobile {
+    display: block;
+  }
+
+  .input-container__bounds_mobile .bound {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .boundTextField {
+    flex: 1;
+    min-width: 50px;
+    padding: 5px;
+    font-size: 1rem;
+  }
+
+  .boundText {
+    margin: 0 10px;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .input-container__bounds {
+    display: none;
+  }
+
+  .input-container__bounds_mobile .bound {
+    flex-direction: row; 
+  }
+
+  .input-container__bounds_mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 </style>
+
+
+
+
+
+
+

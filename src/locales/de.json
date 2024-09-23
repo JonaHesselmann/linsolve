@@ -26,5 +26,10 @@
     "⁠dataProtection":"Datenschutz",
     "dataProtectionText":"LinSolve erhebt keine personenbezogenen Daten, es sei denn, du kontaktierst uns freiwillig über Feedback-Formulare oder E-Mail. In diesem Fall werden die Daten ausschließlich zur Beantwortung deiner Anfragen genutzt und nicht an Dritte weitergegeben.", 
     "⁠applicableLaw": "Anwendbares Recht", 
-    "⁠applicablaLawText": "Diese AGB unterliegen dem deutschen Recht."
+    "⁠applicablaLawText": "Diese AGB unterliegen dem deutschen Recht.",
+    "bounds": "Beschränkungen",
+    "gernerallProblem": "Allgemeines Problem", 
+    "specificProblem": "Spezifisches Problem",
+    "importProblem":"Aufgabe Hochladen", 
+    "writeHere":"Schreibe hier"
 }

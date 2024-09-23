@@ -8,10 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint": "eslint --no-warn-ignored"
+    "lint": "eslint --no-warn-ignored",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@vue/test-utils": "^2.4.6",
+    "glpk.js": "^4.0.2",
     "highs": "^1.0.1",
     "mathlive": "^0.101.0",
     "pinia": "^2.2.2",
@@ -28,6 +31,7 @@
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.27.0",
+    "gh-pages": "^6.1.1",
     "globals": "^15.9.0",
     "happy-dom": "^15.7.0",
     "jsdom": "^25.0.0",

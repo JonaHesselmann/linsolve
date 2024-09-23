@@ -19,8 +19,6 @@ let highs;
 
 
 //console.log(lpString);
-
-
 /**
  * Löst das LP-Problem mit Highs.
  * @param {string} lpContent - Der Inhalt der LP-Datei im CPLEX-Format.

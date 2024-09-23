@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateLPFile, convertLatexToBasic } from '../src/businesslogic/inputToLPInterface.js'; // Update the path as necessary
+import { generateLPFile } from '../src/businesslogic/inputToLPInterface.js'; // Update the path as necessary
 
 describe('generateLPFile', () => {
     it('should generate the correct LP file with the objective function and constraints', () => {
@@ -25,7 +25,7 @@ describe('generateLPFile', () => {
 
         const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints, bounds);
 
-        expect(lpFile).toContain('Bounds\n 3x + 4y\n 3x + 4y');
+        expect(lpFile).toContain('Bounds\n x >= 0\n y <= 5');
         expect(lpFile).toContain('End');
     });
 
@@ -54,31 +54,5 @@ describe('generateLPFile', () => {
         expect(lpFile).toContain('Maximize\n obj: x');
         expect(lpFile).toContain('Subject To\n');
         expect(lpFile).toContain('End');
-    });
-
-    it('should handle LaTeX expressions in the objective function and constraints', () => {
-        const objectiveType = 'Minimize';
-        const objectiveFunction = 'x * y';
-        const constraints = [
-            { content: 'x \ge y' },
-            { content: 'y \le 10' }
-        ];
-
-        const lpFile = generateLPFile(objectiveType, objectiveFunction, constraints);
-
-        expect(lpFile).toContain('Minimize\n obj: x * y');
-        expect(lpFile).toContain('Subject To\n c1: x >= y\n c2: y <= 10');
-        expect(lpFile).toContain('End');
-    });
-});
-
-describe('convertLatexToBasic', () => {
-    it('should convert LaTeX expressions to basic format', () => {
-        expect(convertLatexToBasic('x \ge y')).toBe('x >= y');
-        expect(convertLatexToBasic('x \le y')).toBe('x <= y');
-    });
-
-    it('should handle expressions without LaTeX formatting', () => {
-        expect(convertLatexToBasic('x + y')).toBe('x + y');
     });
 });
