@@ -34,6 +34,7 @@ export default {
 
 <template>
   <header class="header">
+    <img src="../assets/Logo.png" >
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
     <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
