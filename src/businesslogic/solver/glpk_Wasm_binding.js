@@ -1,3 +1,4 @@
+
 import SMCPPtr from 'glpk-wasm'
 import IOCPPtr from 'glpk-wasm'
 import glpkWasm from 'glpk-wasm'
@@ -9,30 +10,30 @@ import glpkWasm from 'glpk-wasm'
  * @constructor
  * @return {String}
  */
-function CalculateGMPL( LPContent){
-glpkWasm().then(mod => {
-    // Assuming the model file is 'transportationgmpl.mod' in the current working directory.
-    const modelPath = 'transportationgmpl.mod';
-    mod.FS.writeFile(modelPath, LPContent);
-    const pathPtr = mod._malloc(modelPath.length + 1);
-    mod.stringToUTF8(modelPath, pathPtr, modelPath.length + 1);
 
-    mod._glp_term_out(1);
-    // Load the model file into the WASM virtual file system.
+
+export async function CalculateGMPL(LPContent) {
     try {
-        // Get GLPK version
-        const ver = mod._glp_version();
-        const verStr = mod.UTF8ToString(ver);
-        console.log('GLPK version:', verStr);
-        // Create Problem
+        // Load the GLPK WASM module
+        const mod = await glpkWasm();
+        const modelPath = '/transportationgmpl.mod';
+
+        // Write the model content to the virtual filesystem
+        mod.FS.writeFile(modelPath, LPContent);
+
+        // Convert the path to a UTF-8 pointer
+        const pathPtr = mod._malloc(modelPath.length + 1);
+        mod.stringToUTF8(modelPath, pathPtr, modelPath.length + 1);
+
+        // Set verbosity to silent
+        mod._glp_term_out(1);
+
+        // Create Problem and Workspace
         const lp = mod._glp_create_prob();
-        // Allocate Workspace
         const tran = mod._glp_mpl_alloc_wksp();
-        ;
 
         // Read and generate the model from the file
-
-        let ret = mod._glp_mpl_read_model(tran,pathPtr, 0);
+        const ret = mod._glp_mpl_read_model(tran, pathPtr, 0);
         if (ret !== 0) {
             throw new Error("Failed to read model.");
         }
@@ -52,15 +53,18 @@ glpkWasm().then(mod => {
         // Postsolve to retrieve solution
         mod._glp_mpl_postsolve(tran, lp, 3);
 
-        // Free workspace
-        mod._glp_mpl_free_wksp(tran);
+        // Retrieve the objective value as an example result
+        const objVal = mod._glp_get_obj_val(lp);
 
-    } catch (err) {
-        if (err.line) {
-            console.log('Error line:', err.line);
-        }
-        console.error('Error:', err.toString());
+        // Free allocated memory and workspace
+        mod._glp_mpl_free_wksp(tran);
+        mod._free(pathPtr);
+
+        // Return the result
+        return `Optimal Objective Value: ${objVal}`;
+
+    } catch (error) {
+        console.error('Error during GLPK calculation:', error);
+        throw error; // Propagate the error
     }
-}).catch(error => {
-    console.error('Failed to load glpk-wasm:', error);
-});}
+}
