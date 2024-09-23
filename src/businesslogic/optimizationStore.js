@@ -53,6 +53,7 @@ export const useOptimizationStore = defineStore('optimization', {
         },
         /**
          * Add all Variables that are used in the condition
+         * @param {String} condition - the Condition to be added
          */
         addVariables(condition){
             const characters = [...condition]; 
@@ -138,6 +139,9 @@ export const useOptimizationStore = defineStore('optimization', {
             }
             console.log(this.constraints[0]);
         },
+        /**
+         * Deletes the Constraint on the stack
+         */
         deleteConstraint(){
             this.constraints.pop()
         },

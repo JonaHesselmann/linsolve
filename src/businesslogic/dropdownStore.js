@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 /**
  * Definition for Store
  * @type {StoreDefinition<"dropdown", {isOpen: boolean}, {}, {toggleDropdown(): void}>}
+ * @description This inits the Dropdownstore with the preset state
  */
 export const useDropdownStore = defineStore('dropdown', {
   // The `state` function returns an object representing the reactive state of the store

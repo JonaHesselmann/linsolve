@@ -1,5 +1,10 @@
 /**
  * Wandelt die Eingaben in das CPLEX-Format um.
+ * @param {String} objectiveType - Minimisation or Maximisation
+ * @param {string} objectiveFunction - The Function which is to be Maximised
+ * @param {constraint[]} constraints - The constraints of the problem
+ * @param {string[]} bounds - The Bounds of the problem
+ * @param {string[]} variableTypes - to be included
  * @returns {string} - Das LP-Problem im CPLEX-Format.
  */
 function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds = [], variableTypes = {}) {
