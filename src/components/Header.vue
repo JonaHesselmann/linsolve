@@ -119,8 +119,8 @@ export default {
 }
 
 .logo {
-  height: 2%;
-  width: 2%;
+  height: 3%;
+  width: 3%;
   margin-left: auto;
   cursor: pointer;
 }
