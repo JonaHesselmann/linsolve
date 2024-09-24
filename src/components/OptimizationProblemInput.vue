@@ -78,13 +78,21 @@ export default {
           id="objectiveFunction">
       </div>
 
-      <div class="input-container__constraint-container">
-        <div v-for="constraint in optimizationStore.constraints" :key="constraint.id" class="constraint-wrapper">
+      <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="input-container__constraint-wrapper">
+        <div class="constraint-wrapper">
           <input type="text"
             class="input-container__constraint"
             placeholder="Nebenbedingung"
-            @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
-          <img src="../assets/trash.png" class="delete-icon" @click="deleteConstraint(constraint.id)" alt="Delete">
+            @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
+          >
+          <!-- Platzhalter-Image für die erste Nebenbedingung -->
+          <img 
+            :class="{ hidden: index === 0 }" 
+            src="../assets/trash.png" 
+            @click="deleteConstraint(constraint.id)" 
+            alt="Löschen" 
+            class="delete-icon"
+          />
         </div>
       </div>
 
@@ -231,12 +239,16 @@ export default {
 
 .delete-icon {
   cursor: pointer;
-  width: 24px; /* Größe des Icons */
+  width: 24px;
   height: 24px;
 }
 
+.delete-icon.hidden {
+  visibility: hidden;
+}
+
 .delete-icon:hover {
-  opacity: 0.7; /* Visueller Effekt beim Hovern */
+  opacity: 0.7;
 }
 
 @media (max-width: 900px) {
@@ -287,6 +299,8 @@ export default {
   }
 }
 </style>
+
+
 
 
 
