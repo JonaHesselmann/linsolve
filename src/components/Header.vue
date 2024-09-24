@@ -34,7 +34,7 @@ export default {
 
 <template>
   <header class="header">
-    <img src="../assets/Logo.png" >
+    <img src="../assets/Logo.png" class="logo">
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
     <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
@@ -116,6 +116,13 @@ export default {
 
 .header:hover .dropdown-menu {
   display: block;
+}
+
+.logo {
+  height: calc(40px + 1vw);
+  width: calc(40px + 1vw);
+  margin-left: auto;
+  cursor: pointer;
 }
 
 </style>
