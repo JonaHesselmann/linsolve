@@ -119,8 +119,8 @@ export default {
 }
 
 .logo {
-  height: calc(40px + 1vw);
-  width: calc(40px + 1vw);
+  height: 2%;
+  width: 2%;
   margin-left: auto;
   cursor: pointer;
 }
