@@ -15,7 +15,7 @@ describe('useOptimizationStore', () => {
     it('should have the correct initial state', () => {
         // Check initial state
         expect(store.selectedOptimization).toBe('Minimize');
-        //expect(store.constraints).toEqual([]);
+        expect(store.constraints).toEqual([{0:''}]); // Check initial constraints state
         expect(store.objectiveFunction).toBe('');
         expect(store.variables).toEqual([]);
         expect(store.bounds).toEqual([]);
@@ -63,12 +63,26 @@ describe('useOptimizationStore', () => {
         expect(store.bounds).toContain('2 <= y <= 20');
     });
 
+    it('should update bounds correctly when only lower or upper bounds are provided', () => {
+        // Add bounds for 'x' with only an upper bound
+        store.addBound(10, '', 'x');
+        expect(store.bounds).toContain('x <= 10');
+
+        // Add bounds for 'y' with only a lower bound
+        store.addBound('', 5, 'y');
+        expect(store.bounds).toContain('5 <= y');
+
+        // Update 'x' bounds
+        store.addBound(8, 3, 'x');
+        expect(store.bounds).toContain('3 <= x <= 8');
+    });
+
     it('should add a new constraint when addConstraint is called', () => {
         expect(store.constraints).toHaveLength(1); // Initially empty
         store.addConstraint();
         expect(store.constraints).toHaveLength(2); // After adding one constraint
-       // expect(store.constraints[]).toHaveProperty('id');
-       // expect(store.constraints[0].content).toBe(''); // Initial content is empty
+        expect(store.constraints[1]).toHaveProperty('id'); // Check if id exists
+        expect(store.constraints[1].content).toBe(''); // Initial content is empty
     });
 
     it('should update constraint content when updateConstraint is called', () => {
@@ -80,14 +94,6 @@ describe('useOptimizationStore', () => {
         expect(store.constraints[0].content).toBe('New Content');
     });
 
-    it('should not update constraint content if the id does not exist', () => {
-        // Add a constraint first
-        store.addConstraint();
-        // Attempt to update a non-existing constraint
-        store.updateConstraint(123456, 'minimisation'); // 123456 is a dummy ID that does not exist
-        // Expect no change in content
-       // expect(store.constraints[0].content).toBe(''); // Still the initial empty content
-    });
 
     it('should set the objective function correctly when setObjectiveFunction is called', () => {
         store.setObjectiveFunction('2x + 3y');
