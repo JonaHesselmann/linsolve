@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest';
-import { solveLP } from '../src/businesslogic/solver/highsSolver.js'; // Adjust the import path accordingly
+import { solveLP, returnVariables, returnOptimalResult } from '../src/businesslogic/solver/highsSolver.js';
 import highs_loader from 'highs';
 
-// Mock the `highs_loader` to simulate loading the `highs` library
+
 vi.mock('highs', () => {
     let mockSolve = vi.fn();
 
@@ -16,7 +16,7 @@ vi.mock('highs', () => {
     };
 });
 
-describe('solveLP', () => {
+describe('highsSolver Module', () => {
     let highsMock;
 
     // Load the highs library mock before running tests
@@ -26,7 +26,14 @@ describe('solveLP', () => {
 
     it('should solve an LP problem and return the result', async () => {
         // Mock result that would be returned by highs.solve
-        const mockResult = { status: 'optimal', objectiveValue: 42, solution: { x: 1, y: 2 } };
+        const mockResult = {
+            Status: 'optimal',
+            ObjectiveValue: 42,
+            Columns: {
+                x1: { Primal: 10, Name: 'x1' },
+                x2: { Primal: 5, Name: 'x2' }
+            }
+        };
 
         // Mock the solve function to return the mock result
         highsMock.solve.mockResolvedValueOnce(mockResult);
@@ -46,6 +53,17 @@ End
 
         // Verify that highs.solve was called with the correct content
         expect(highsMock.solve).toHaveBeenCalledWith(lpContent);
+
+        // Test returnOptimalResult
+        const optimalResult = returnOptimalResult();
+        expect(optimalResult).toEqual(['optimal', 42]);
+
+        // Test returnVariables
+        const variables = returnVariables();
+        expect(variables).toEqual([
+            ['x1', 10],
+            ['x2', 5]
+        ]);
     });
 
     it('should throw an error when the highs.solve function fails', async () => {
@@ -79,5 +97,45 @@ End
 
         // Verify that highs.solve was called with the correct content
         expect(highsMock.solve).toHaveBeenCalledWith(lpContent);
+    });
+
+    it('should return correct variables and optimal result from a valid LP solve', async () => {
+        // Mock result for more complex LP problem
+        const mockResult = {
+            Status: 'optimal',
+            ObjectiveValue: 100,
+            Columns: {
+                x1: { Primal: 20, Name: 'x1' },
+                x2: { Primal: 30, Name: 'x2' },
+                x3: { Primal: 50, Name: 'x3' }
+            }
+        };
+
+        // Mock the solve function
+        highsMock.solve.mockResolvedValueOnce(mockResult);
+
+        const lpContent = `Minimize
+ obj: 5 x1 + 10 x2 + 15 x3
+
+Subject To
+ c1: x1 + x2 + x3 <= 100
+
+End
+`;
+
+        // Solve the LP problem
+        await solveLP(lpContent);
+
+        // Test returnOptimalResult
+        const optimalResult = returnOptimalResult();
+        expect(optimalResult).toEqual(['optimal', 100]);
+
+        // Test returnVariables
+        const variables = returnVariables();
+        expect(variables).toEqual([
+            ['x1', 20],
+            ['x2', 30],
+            ['x3', 50]
+        ]);
     });
 });
