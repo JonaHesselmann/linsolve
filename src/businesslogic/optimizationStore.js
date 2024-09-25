@@ -95,12 +95,31 @@ export const useOptimizationStore = defineStore('optimization', {
          * Function to Add or Update the Bounds of the Variables
          */
         addBound(upperBound, lowerBound, variable) {
+            // Debug logging to ensure the method is being called
+            console.log(`Adding bound: upperBound=${upperBound}, lowerBound=${lowerBound}, variable=${variable}`);
+
             const existingIndex = this.bounds.findIndex(bound => bound.includes(variable));
-        
-            if (existingIndex !== -1) {
-                this.bounds[existingIndex] = `${lowerBound} <= ${variable} <= ${upperBound}`;
+
+            // Initialize the newBound variable based on the provided bounds
+            let newBound = '';
+            if (lowerBound !== '' && upperBound !== '') {
+                newBound = `${lowerBound} <= ${variable} <= ${upperBound}`;
+            } else if (lowerBound !== '') {
+                newBound = `${lowerBound} <= ${variable}`;
+            } else if (upperBound !== '') {
+                newBound = `${variable} <= ${upperBound}`;
             } else {
-                this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
+                console.log("Both bounds are null, nothing to add.");
+                return; // No bounds to add if both are null
+            }
+
+            // Check if there's already a bound for the variable
+            if (existingIndex !== -1) {
+                console.log(`Updating existing bound for ${variable}`);
+                this.bounds[existingIndex] = newBound;
+            } else {
+                console.log(`Adding new bound for ${variable}: ${newBound}`);
+                this.bounds.push(newBound);
             }
         },
 

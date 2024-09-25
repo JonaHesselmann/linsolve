@@ -41,6 +41,42 @@ export default {
       solveLP,
       deleteConstraint,
     }
+  },
+  watch: {
+    // Initialize bounds when variables are loaded
+    'optimizationStore.variables': {
+      handler(newVariables) {
+        // Initialize an empty bounds array for each variable
+        this.bounds = newVariables.map(() => ({
+          lowerBound: null,
+          upperBound: null
+        }));
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    updateLowerBound(index, variable) {
+      const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
+      const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
+
+      // Log for debugging
+      console.log(`Updating lower bound for ${variable}: ${lowerBound}`);
+
+      // Update the bounds in the store
+      this.optimizationStore.addBound(upperBound, lowerBound, variable);
+    },
+
+    updateUpperBound(index, variable) {
+      const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
+      const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
+
+      // Log for debugging
+      console.log(`Updating upper bound for ${variable}: ${upperBound}`);
+
+      // Update the bounds in the store
+      this.optimizationStore.addBound(upperBound, lowerBound, variable);
+    }
   }
 };
 </script>
@@ -99,9 +135,22 @@ export default {
       <div class="input-container__bounds_mobile">
         <p>{{ $t('bounds') }}:</p>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-          <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
+          <!-- Lower Bound Input -->
+          <input
+              type="number"
+              class="boundTextField"
+              v-model="bounds[index].lowerBound"
+              @input="updateBound(index, variable)"
+          >
           <p class="boundText">≤ {{ variable }} ≤</p>
-          <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+
+          <!-- Upper Bound Input -->
+          <input
+              type="number"
+              class="boundTextField"
+              v-model="bounds[index].upperBound"
+              @input="updateBound(index, variable)"
+          >
         </div>
       </div>
 
