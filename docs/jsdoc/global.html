@@ -98,13 +98,13 @@
 
         
             
-<h4 class="name" id="actions"><span class="type-signature"></span>actions<span class="type-signature"></span></h4>
+<h4 class="name" id="highs"><span class="type-signature"></span>highs<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    <p>Actions section: Methods that modify the state or perform logic.</p>
+    <p>Läd den Solver</p>
 </div>
 
 
@@ -142,69 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimizationStore.js.html">optimizationStore.js</a>, <a href="optimizationStore.js.html#line79">line 79</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="getters"><span class="type-signature"></span>getters<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Getters to derive state information from the store's state.</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimizationStore.js.html">optimizationStore.js</a>, <a href="optimizationStore.js.html#line46">line 46</a>
+        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -227,6 +165,10 @@
 
 
 
+<div class="description">
+    <p>Constructor of i18n</p>
+</div>
+
 
 
 
@@ -262,7 +204,69 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="i18n.js.html">i18n.js</a>, <a href="i18n.js.html#line35">line 35</a>
+        <a href="i18n.js.html">i18n.js</a>, <a href="i18n.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="languageStore"><span class="type-signature">(constant) </span>languageStore<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Defines a new languageStore</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="languageStore.js.html">languageStore.js</a>, <a href="languageStore.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -286,7 +290,7 @@
 
 
 <div class="description">
-    <p>Solves the LP problem using the Highs solver.</p>
+    <p>Löst das LP-Problem mit Highs.</p>
 </div>
 
 
@@ -324,7 +328,79 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line28">line 28</a>
+        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useDropdownStore"><span class="type-signature">(constant) </span>useDropdownStore<span class="type-signature"> :StoreDefinition.&lt;"dropdown", {isOpen: boolean}, {}, {toggleDropdown(): void}></span></h4>
+
+
+
+
+<div class="description">
+    <p>This inits the Dropdownstore with the preset state</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">StoreDefinition.&lt;"dropdown", {isOpen: boolean}, {}, {toggleDropdown(): void}></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dropdownStore.js.html">dropdownStore.js</a>, <a href="dropdownStore.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -348,8 +424,7 @@
 
 
 <div class="description">
-    <p>A store for managing optimization problems, including state and actions related to
-objective functions, constraints, and variable bounds.</p>
+    <p>Defining a new store to manage the state and actions related to optimization problems</p>
 </div>
 
 
@@ -387,7 +462,7 @@ objective functions, constraints, and variable bounds.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimizationStore.js.html">optimizationStore.js</a>, <a href="optimizationStore.js.html#line28">line 28</a>
+        <a href="optimizationStore.js.html">optimizationStore.js</a>, <a href="optimizationStore.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -408,207 +483,6 @@ objective functions, constraints, and variable bounds.</p>
 
     
         <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="CalculateGMPL"><span class="type-signature">(async) </span>CalculateGMPL<span class="signature">(LPContent)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Calculates the solution for a GLPK model using WebAssembly bindings.
-This function reads a GMPL (GNU Math Programming Language) model from the provided content,
-solves it using the GLPK solver, and manages workspace allocation and deallocation.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>LPContent</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The content of the GMPL model file to be solved.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="solver_glpk_Wasm_binding.js.html">solver/glpk_Wasm_binding.js</a>, <a href="solver_glpk_Wasm_binding.js.html#line16">line 16</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://github.com/wotzlaff/glpk-wasm">https://github.com/wotzlaff/glpk-wasm</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <ul>
-<li>Throws an error if there is an issue reading the model or during the solving process.</li>
-</ul>
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <ul>
-<li>A promise that resolves when the calculation is complete.</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;void></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
 
         
             
@@ -869,149 +743,6 @@ solves it using the GLPK solver, and manages workspace allocation and deallocati
     
 
     
-    <h4 class="name" id="loadHighs"><span class="type-signature">(async) </span>loadHighs<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Loads the Highs Solver library.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <ul>
-<li>If the Highs library fails to load.</li>
-</ul>
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <ul>
-<li>A promise that resolves when the Highs library is successfully loaded.</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;void></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="returnOptimalResult"><span class="type-signature"></span>returnOptimalResult<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -1020,7 +751,7 @@ solves it using the GLPK solver, and manages workspace allocation and deallocati
 
 
 <div class="description">
-    <p>Returns the status and the objective value of the result.</p>
+    <p>Returns the Status and the Value of the Result</p>
 </div>
 
 
@@ -1064,7 +795,7 @@ solves it using the GLPK solver, and manages workspace allocation and deallocati
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line46">line 46</a>
+        <a href="solver_highsSolver.js.html">solver/highsSolver.js</a>, <a href="solver_highsSolver.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -1114,7 +845,7 @@ solves it using the GLPK solver, and manages workspace allocation and deallocati
 
 
 <div class="description">
-    <p>Returns an array of tuples with the names of the variables and their primal values.</p>
+    <p>Returns an Array of tuples with the name of the Variable and its primal vaule</p>
 </div>
 
 
@@ -1195,1279 +926,8 @@ solves it using the GLPK solver, and manages workspace allocation and deallocati
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id="state"><span class="type-signature"></span>state<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>State of the optimization store, containing the selected optimization type,
-constraints, variables, objective function, and bounds.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="optimizationStore.js.html">optimizationStore.js</a>, <a href="optimizationStore.js.html#line35">line 35</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <ul>
-<li>The state object with properties.</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="useLanguageStore"><span class="type-signature"></span>useLanguageStore<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="global.html#LanguageStore">LanguageStore</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>A composable function that provides a reactive language store.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="languageStore.js.html">languageStore.js</a>, <a href="languageStore.js.html#line26">line 26</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <ul>
-<li>A reactive language store with state and methods.</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#LanguageStore">LanguageStore</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-<h4 class="name" id="LanguageStore">LanguageStore</h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#LocaleOptions">LocaleOptions</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The current language options state.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>methods</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#LanguageStoreMethods">LanguageStoreMethods</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Methods to manipulate language options.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="languageStore.js.html">languageStore.js</a>, <a href="languageStore.js.html#line15">line 15</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-            
-                
-<h4 class="name" id="LanguageStoreMethods">LanguageStoreMethods</h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>setLocale</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Function to set the current language.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="languageStore.js.html">languageStore.js</a>, <a href="languageStore.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-            
-                
-<h4 class="name" id="LocaleOptions">LocaleOptions</h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>locale</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">"de"</span>
-|
-
-<span class="param-type">"en"</span>
-|
-
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The current language code.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="languageStore.js.html">languageStore.js</a>, <a href="languageStore.js.html#line5">line 5</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-            
-                
-<h4 class="name" id="TranslationMessages">TranslationMessages</h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>de</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>language</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>documentation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>aboutUs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gtcs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>minimization</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maximization</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>condition</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>constraint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>addConstraint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>solve</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>en</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>language</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>documentation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>aboutUs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gtcs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>minimization</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maximization</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>condition</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>constraint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>addConstraint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>solve</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="i18n.js.html">i18n.js</a>, <a href="i18n.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
     
-
-    
-
-    
-</dl>
-
-
-
-
-
 
-            
     
 
     
@@ -2481,13 +941,13 @@ constraints, variables, objective function, and bounds.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DropdownStore.html">DropdownStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CalculateGMPL">CalculateGMPL</a></li><li><a href="global.html#actions">actions</a></li><li><a href="global.html#generateLPFile">generateLPFile</a></li><li><a href="global.html#getters">getters</a></li><li><a href="global.html#i18n">i18n</a></li><li><a href="global.html#loadHighs">loadHighs</a></li><li><a href="global.html#result">result</a></li><li><a href="global.html#returnOptimalResult">returnOptimalResult</a></li><li><a href="global.html#returnVariables">returnVariables</a></li><li><a href="global.html#state">state</a></li><li><a href="global.html#useLanguageStore">useLanguageStore</a></li><li><a href="global.html#useOptimizationStore">useOptimizationStore</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalculateGMPL.html">CalculateGMPL</a></li></ul><h3>Global</h3><ul><li><a href="global.html#generateLPFile">generateLPFile</a></li><li><a href="global.html#highs">highs</a></li><li><a href="global.html#i18n">i18n</a></li><li><a href="global.html#languageStore">languageStore</a></li><li><a href="global.html#result">result</a></li><li><a href="global.html#returnOptimalResult">returnOptimalResult</a></li><li><a href="global.html#returnVariables">returnVariables</a></li><li><a href="global.html#useDropdownStore">useDropdownStore</a></li><li><a href="global.html#useOptimizationStore">useOptimizationStore</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Sep 26 2024 09:08:18 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Sep 26 2024 15:56:40 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
