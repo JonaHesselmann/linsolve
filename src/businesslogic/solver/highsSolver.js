@@ -1,11 +1,8 @@
 import highs_loader from "highs";
 
+
 /**
- * Loads the Highs Solver library.
- * @async
- * @function loadHighs
- * @returns {Promise<void>} - A promise that resolves when the Highs library is successfully loaded.
- * @throws {Error} - If the Highs library fails to load.
+ * Läd den Solver
  */
 let highs;
 (async () => {
@@ -17,44 +14,47 @@ let highs;
     } catch (error) {
         console.error("Failed to load the Highs library:", error);
     }
+
 })();
 
+
+//console.log(lpString);
 /**
- * Solves the LP problem using the Highs solver.
- * @param {string} lpContent - The content of the LP file in CPLEX format.
- * @returns {Promise<void>} - A promise that resolves when the LP problem has been solved.
- * @throws {Error} - If there is an error during the solving process.
+ * Löst das LP-Problem mit Highs.
+ * @param {string} lpContent - Der Inhalt der LP-Datei im CPLEX-Format.
+ * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn das Problem gelöst ist.
  */
-var result = 0;
+var result =0;
 
 async function solveLP(lpContent) {
-    try {
-        // Load the LP model into the solver and solve the LP problem
-        result = await highs.solve(lpContent); // Solve the LP problem
-        console.log(result);
-        return result; // Return the result
-    } catch (error) {
-        console.error("Error while solving the LP problem:", error);
-        throw error;
-    }
+  try {
+    // Das LP-Modell in den Solver laden
+     result = await highs.solve(lpContent); // Löst das LP-Problem
+      console.log(result)
+    return result; // Ergebnis zurückgeben
+  } catch (error) {
+    console.error("Fehler beim Lösen des LP-Problems:", error);
+    throw error;
+  }
 }
 
 /**
- * Returns the status and the objective value of the result.
- * @returns {[string, number]} - An array containing the status and the objective value of the result.
+ * Returns the Status and the Value of the Result
+ * @returns {*[]}
  */
-function returnOptimalResult() {
+function returnOptimalResult(){
     const { Status, ObjectiveValue } = result;
-    
+
     return [Status, ObjectiveValue];
+
 }
 
 /**
- * Returns an array of tuples with the names of the variables and their primal values.
- * @returns {[string, number][]} - An array of tuples, where each tuple contains the variable name and its primal value.
+ * Returns an Array of tuples with the name of the Variable and its primal vaule
+ * @returns {*[]}
  */
-function returnVariables() {
-    const returns = [];
+function returnVariables(){
+  const returns = [];
     for (const columnKey in result.Columns) {
         const column = result.Columns[columnKey];
         returns.push([column.Name, column.Primal]);
@@ -62,7 +62,6 @@ function returnVariables() {
     return returns;
 }
 
-// Export the functions for use in other modules
-export { solveLP, returnVariables, returnOptimalResult };
 
+export { solveLP,returnVariables,returnOptimalResult }; // Exportiert die Funktion zur Verwendung in anderen Modulen
 

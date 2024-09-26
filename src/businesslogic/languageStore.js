@@ -1,48 +1,27 @@
-// languageStore.js
-
-import { reactive } from 'vue';
-
-/**
- * @typedef {Object} LocaleOptions
- * @property {"de" | "en" | string} locale - The current language code.
- */
+import { defineStore } from 'pinia'; 
+import i18n from './i18n';
 
 /**
- * @typedef {Object} LanguageStoreMethods
- * @property {Function} setLocale - Function to set the current language.
+ * Defines a new languageStore
+ * @type {StoreDefinition<"i18n", {locale: "de" | "en" | string | WritableComputedRef<string extends string ? string : Locale extends Locale ? (IsNever<PickupLocales<NonNullable<{de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} extends Record<string, unknown> ? {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] : {}>>> extends true ? Locale : (PickupLocales<NonNullable<{de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} extends Record<string, unknown> ? {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] : {}>>)) : (string extends string ? string : Locale | PickupLocales<NonNullable<{de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} extends Record<string, unknown> ? {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}} : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["datetimeFormats"] : {}>> | PickupLocales<NonNullable<{messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] extends Record<string, unknown> ? {messages: {de: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}, en: {language: string, documentation: string, aboutUs: string, gtcs: string, minimization: string, maximization: string, condition: string, constraint: string, addConstraint: string, solve: string}}, fallbackLocale: string, locale: string}["numberFormats"] : {}>>)>}, {}, {setLocale(locale): void}>}
  */
-
-/**
- * @typedef {Object} LanguageStore
- * @property {LocaleOptions} state - The current language options state.
- * @property {LanguageStoreMethods} methods - Methods to manipulate language options.
- */
-
-/**
- * A composable function that provides a reactive language store.
- * 
- * @returns {LanguageStore} - A reactive language store with state and methods.
- */
-export function useLanguageStore() {
-    const state = reactive({
-        locale: 'de' // Default set to German
-    });
-
+export const languageStore = defineStore('i18n', {
+  // The `state` function returns an object that represents the reactive state of the store
+  state: () => ({
+    locale: i18n.global.locale, 
+  }),
+  
+  // Actions section: methods that can modify the state or perform other logic
+  actions: {
+    // This action sets the new locale for both the store and the global i18n instance
     /**
-     * Sets the current language.
-     * 
-     * @param {string} locale - The new language code, e.g., 'de' or 'en'.
+     * setter for the locale
+     * @param locale {locale}
      */
-    function setLocale(locale) {
-        state.locale = locale;
-    }
-
-    return {
-        state,
-        methods: {
-            setLocale
-        }
-    };
-}
-
+    setLocale(locale) {
+      this.locale = locale; 
+      i18n.global.locale = locale; 
+    },
+  },
+});
 
