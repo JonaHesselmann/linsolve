@@ -85,7 +85,7 @@ export default {
     </div>
 
     <div class="input-container__main-content">
-      <div class="input-container__first-row">
+      <div class="input-container__first-row sticky-buttons">
         <button
           class="input-container__selection-optimization"
           :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
@@ -163,16 +163,17 @@ export default {
   margin: 0 auto;
   padding: 5%;
   box-sizing: border-box;
+  padding-top: 75px;
 }
 
 .input-container__bounds {
   position: sticky;
-  top: 20px;
+  top: 60px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
 }
@@ -206,6 +207,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-top: 60px;
 }
 
 .input-container__first-row {
@@ -292,6 +294,18 @@ export default {
 .delete-icon:hover {
   opacity: 0.7;
 }
+
+.sticky-buttons {
+  position: sticky;
+  top: 0;
+  background-color: white; 
+  z-index: 10;
+  height: 60px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 @media (max-width: 900px) {
   .input-container {
