@@ -4,7 +4,7 @@ import About from '../view/About.vue'
 import GeneralProblemPage from '../view/GeneralProblemPage.vue'
 import SpezificProblemPage from '../view/SpezificProblemPage.vue'
 import SelectionPage from '../view/SelectionPage.vue'
-
+import Result from '../view/Result.vue'
 
 
 const router = createRouter({
@@ -14,6 +14,11 @@ const router = createRouter({
       path: '/',
       name: 'SelectionPage',
       component: SelectionPage,
+    },
+    {
+      path: '/result',
+      name: 'Result',
+      component: Result,
     },
     {
       path: '/spezifischesProblem',

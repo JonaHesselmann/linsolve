@@ -1,14 +1,15 @@
 <script>
 import 'mathlive';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
-import { computed } from 'vue';
-import * as highsSolver from "../businesslogic/solver/highsSolver.js";
-import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-
+import { computed } from 'vue'; 
+import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
+import { useRouter } from 'vue-router';
 export default {
   name: 'OptimizationProblemInput',
   setup() {
     const optimizationStore = useOptimizationStore();
+    const mathematicalSolutionStore = useMathematicalSolution()
+   
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
@@ -17,17 +18,8 @@ export default {
      * Solve LP
      */
     const solveLP = async () => {
-      try {
-        let lpContent;
-        console.log(optimizationStore.selectedOptimization);
-        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization, optimizationStore.getObjectiveFunction, optimizationStore.constraints, optimizationStore.getProblemBounds, "")
-        console.log(lpContent);
-        const result = await highsSolver.solveLP(lpContent); // Solve the LP
-        console.log(result);
-        //TODO: Here we can apply the move to the solved results via router
-      } catch (error) {
-        console.error('Fehler beim Lösen des LP-Problems:', error);
-      }
+     await mathematicalSolutionStore.solveProblem('spezific'); 
+     
     };
 
     const deleteConstraint = (id) => {
@@ -156,7 +148,7 @@ export default {
 
       <div class="input-container__last-row">
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
+        <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
     </div>
   </div>
@@ -273,6 +265,7 @@ export default {
   border-radius: 4px;
   transition: background-color 0.3s;
   width: auto;
+  color: white;
 }
 
 .input-container__main-button:hover {

@@ -44,7 +44,7 @@ async function solveLP(lpContent) {
  */
 function returnOptimalResult(){
     const { Status, ObjectiveValue } = result;
-
+    
     return [Status, ObjectiveValue];
 
 }

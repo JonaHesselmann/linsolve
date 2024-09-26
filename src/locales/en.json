@@ -28,10 +28,14 @@
     "⁠applicableLaw": "⁠Applicable Law",
     "⁠applicablaLawText":"These GTC are governed by German law.",
     "bounds": "Bounds",
-    "gernerallProblem": "Generall Problem",
+    "gerneralProblem": "Generall Problem",
     "specificProblem": "Specific Problem", 
     "importProblem":"Import Task",
-    "writeHere":"Write here"
-     
+    "writeHere":"Write here", 
+    "variable": "Variable",
+    "optimalValue": "Optimal value",
+    "mathematicallySolution": "Mathematically solution",
+    "objectiveFunctionValue":"Objective function value", 
+    "solutionErrorMessage":"This problem cannot be solved"
 
 }

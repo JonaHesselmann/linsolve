@@ -7,7 +7,7 @@ export default {
 <template>
     <div class="mainButton_container">
         <div class="rowButton">
-            <router-link to="/allgemeinesProblem" tag="button" class="mainButton">{{ $t("gernerallProblem") }}</router-link>
+            <router-link to="/allgemeinesProblem" tag="button" class="mainButton">{{ $t("gerneralProblem") }}</router-link>
             <img src="../assets/questionmark.png" class="questionmark">
         </div>
         <div class="rowButton">

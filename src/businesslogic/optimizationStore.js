@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-
 /**
  * Defining a new store to manage the state and actions related to optimization problems
  * @type {StoreDefinition<"optimization", {objectiveFunction: string, selectedOptimization: string, constraints: []}, {getObjectiveFunction(): *, selectedOptimizationLabel(*): string}, {setObjectiveFunction(*): void, updateConstraint(*, string): void, selectOptimization(*): void, addConstraint(): void}>}
