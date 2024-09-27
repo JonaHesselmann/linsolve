@@ -8,13 +8,21 @@ You should have received a copy of the GNU General Public License along with Lin
 <script>
     export default{
         name:'Footer',
+        methods: {
+    openDocumentation(event) {
+        event.preventDefault();
+      // This will open the documentation in a new tab when the "Documentation" link is clicked
+      window.open('/linsolve/docs/jsdoc/index.html', '_blank');
+    }
+  }
     }
 </script>
 <template>
     <footer class="footer">
-        <a class="footer-link">{{ $t('documentation') }}</a>
+        <a href="/docs/jsdoc/index.html" @click="openDocumentation($event)" class="footer-link">{{ $t('documentation') }}</a>
         <router-link to="/about" class="footer-link">{{ $t('aboutUs') }}</router-link>
         <router-link to="/agb" class="footer-link">{{ $t('gtcs') }}</router-link>
+
     </footer>
 </template>
 <style>
