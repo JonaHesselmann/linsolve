@@ -36,5 +36,6 @@
     "optimalValue": "Optimaler Wert", 
     "mathematicallySolution": "Mathematische Lösung:", 
     "objectiveFunctionValue":"Zielfunktionwert", 
-    "solutionErrorMessage":"Dieses Problem ist nicht Lösbar"
+    "solutionErrorMessage":"Dieses Problem ist nicht Lösbar", 
+    "goHome":"Hauptmenü"
 }

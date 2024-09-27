@@ -6,6 +6,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
     <Header></Header>
+    <GoToHomepage></GoToHomepage>
     <GeneralProblemInput></GeneralProblemInput>
     <Footer></Footer>
     </template>
@@ -13,12 +14,14 @@ You should have received a copy of the GNU General Public License along with Lin
     import Header from '../components/Header.vue';
     import Footer from '../components/Footer.vue';
     import GeneralProblemInput from '../components/generalProblemInput.vue';
+import GoToHomepage from '../components/goToHomepage.vue';
     export default{
         name:"GerneralProblemPage",
         components:{
             Header, 
             Footer, 
-            GeneralProblemInput
+            GeneralProblemInput, 
+            GoToHomepage,
         }
     }
     </script>

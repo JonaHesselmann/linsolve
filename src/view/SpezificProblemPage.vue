@@ -7,6 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
 <Header></Header>
+<GoToHomepage></GoToHomepage>
 <OptimizationProblemInput></OptimizationProblemInput>
 <Footer></Footer>
 </template>
@@ -14,12 +15,15 @@ You should have received a copy of the GNU General Public License along with Lin
 import Header from '../components/Header.vue';
 import OptimizationProblemInput from '../components/OptimizationProblemInput.vue';
 import Footer from '../components/Footer.vue';
+import GoToHomepage from '../components/goToHomepage.vue';
+
 export default{
     name:'SpezificProlemPage',
     components:{
         Header, 
         Footer, 
-        OptimizationProblemInput
+        OptimizationProblemInput, 
+        GoToHomepage
     }
 }
 </script>
