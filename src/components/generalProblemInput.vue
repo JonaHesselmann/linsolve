@@ -1,3 +1,10 @@
+<!-- 
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+-->
+
+
 
 <script>
 import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
@@ -33,7 +40,7 @@ import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
     <textarea
         class="problemInput"
         v-model="problemInput"
-        placeholder= "Write here"> // add Localisation
+        :placeholder= "$t('writeHere')"> // add Localisation
         </textarea>
     <div class="buttoncontainer">
       <button class="mainButton" @click="importProblem">{{ $t("importProblem") }}</button>
@@ -102,8 +109,3 @@ import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
 </style>
 
 
-<!-- 
-This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
--->
