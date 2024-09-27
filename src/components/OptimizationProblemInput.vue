@@ -108,7 +108,7 @@ export default {
       </div>
 
       <div class="input-container__condition-container">
-        <input type="text" class="input-container__condition" placeholder="Bedingung"
+        <input type="text" class="input-container__condition" :placeholder="$t('condition')"
           @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
           id="objectiveFunction">
       </div>
@@ -117,7 +117,7 @@ export default {
         <div class="constraint-wrapper">
           <input type="text"
             class="input-container__constraint"
-            placeholder="Nebenbedingung"
+            :placeholder="$t('constraint')"
             @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
           <!-- Platzhalter-Image für die erste Nebenbedingung -->

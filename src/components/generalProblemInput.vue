@@ -40,7 +40,7 @@ import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
     <textarea
         class="problemInput"
         v-model="problemInput"
-        placeholder= "Write here"> // add Localisation
+        :placeholder= "$t('writeHere')"> // add Localisation
         </textarea>
     <div class="buttoncontainer">
       <button class="mainButton" @click="importProblem">{{ $t("importProblem") }}</button>
