@@ -1,3 +1,9 @@
+<!-- 
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+-->
+
 
 <script>
 import { languageStore } from '../businesslogic/languageStore.js'; 
@@ -34,6 +40,7 @@ export default {
 
 <template>
   <header class="header">
+    <img src="../assets/Logo.png" class="logo">
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
     <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
@@ -117,4 +124,13 @@ export default {
   display: block;
 }
 
+.logo {
+  height: 3%;
+  width: 3%;
+  margin-left: auto;
+  cursor: pointer;
+}
+
 </style>
+
+

@@ -1,3 +1,10 @@
+/*
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+*/
+
+
 import highs_loader from "highs";
 
 
@@ -24,11 +31,13 @@ let highs;
  * @param {string} lpContent - Der Inhalt der LP-Datei im CPLEX-Format.
  * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn das Problem gelöst ist.
  */
+var result =0;
 
 async function solveLP(lpContent) {
   try {
     // Das LP-Modell in den Solver laden
-    const result = await highs.solve(lpContent); // Löst das LP-Problem
+     result = await highs.solve(lpContent); // Löst das LP-Problem
+      console.log(result)
     return result; // Ergebnis zurückgeben
   } catch (error) {
     console.error("Fehler beim Lösen des LP-Problems:", error);
@@ -36,7 +45,30 @@ async function solveLP(lpContent) {
   }
 }
 
+/**
+ * Returns the Status and the Value of the Result
+ * @returns {*[]}
+ */
+function returnOptimalResult(){
+    const { Status, ObjectiveValue } = result;
+
+    return [Status, ObjectiveValue];
+
+}
+
+/**
+ * Returns an Array of tuples with the name of the Variable and its primal vaule
+ * @returns {*[]}
+ */
+function returnVariables(){
+  const returns = [];
+    for (const columnKey in result.Columns) {
+        const column = result.Columns[columnKey];
+        returns.push([column.Name, column.Primal]);
+    }
+    return returns;
+}
 
 
-export { solveLP }; // Exportiert die Funktion zur Verwendung in anderen Modulen
+export { solveLP,returnVariables,returnOptimalResult }; // Exportiert die Funktion zur Verwendung in anderen Modulen
 

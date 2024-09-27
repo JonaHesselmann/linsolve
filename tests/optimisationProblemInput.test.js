@@ -1,3 +1,10 @@
+/*
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+*/
+
+
 import { mount } from '@vue/test-utils';
 import OptimizationProblemInput from '../src/components/OptimizationProblemInput.vue'; // Update the path as necessary
 import { createTestingPinia } from '@pinia/testing';
@@ -26,8 +33,7 @@ describe('OptimizationProblemInput.vue', () => {
                     stubActions: false, // Ensure that actions like `selectOptimization` work
                 })],
                 mocks: {
-                    // Mock the `$t` translation function
-                    $t: (msg) => msg, // Simply return the key for simplicity
+                    $t: (msg) => msg, // Mock translation
                 },
             },
         });
@@ -40,6 +46,7 @@ describe('OptimizationProblemInput.vue', () => {
         expect(wrapper.findAll('.input-container__selection-optimization')).toHaveLength(2); // Two buttons for Minimize/Maximize
         expect(wrapper.find('.input-container__main-content').exists()).toBe(true);
         expect(wrapper.findAll('.input-container__main-button')).toHaveLength(2); // Add Constraint and Solve buttons
+        expect(wrapper.find('.input-container__bounds').exists()).toBe(true); // Bounds container
     });
 
     it('selects Minimize and Maximize optimization correctly', async () => {
@@ -48,17 +55,15 @@ describe('OptimizationProblemInput.vue', () => {
 
         // Click on Minimize button
         await minimizeButton.trigger('click');
-        await nextTick(); // Wait for the DOM to update
+        await nextTick();
 
-        // Check if the store was updated correctly
         expect(store.selectedOptimization).toBe('Minimize');
         expect(wrapper.vm.isMinimizationSelected).toBe(true);
 
         // Click on Maximize button
         await maximizeButton.trigger('click');
-        await nextTick(); // Wait for the DOM to update
+        await nextTick();
 
-        // Check if the store was updated correctly
         expect(store.selectedOptimization).toBe('Maximize');
         expect(wrapper.vm.isMaximizationSelected).toBe(true);
     });
@@ -68,7 +73,7 @@ describe('OptimizationProblemInput.vue', () => {
 
         // Simulate user input
         await objectiveFunctionInput.setValue('3x + 2y');
-        await nextTick(); // Wait for the DOM to update
+        await nextTick();
 
         expect(store.objectiveFunction).toBe('3x + 2y');
         expect(store.variables).toEqual(['x', 'y']); // Check if variables are correctly extracted and stored
@@ -79,25 +84,22 @@ describe('OptimizationProblemInput.vue', () => {
 
         // Click to add a constraint
         await addConstraintButton.trigger('click');
-        await nextTick(); // Wait for DOM updates
+        await nextTick();
 
         expect(store.constraints).toHaveLength(2); // One constraint should be added
-        //expect(store.constraints[0].content).toBe(''); // Empty content initially
-
-        // Check that the constraint input appears
-        expect(wrapper.find('.input-container__constraint').exists()).toBe(true);
+        expect(wrapper.find('.input-container__constraint-wrapper').exists()).toBe(true); // Check if constraint input appears
     });
 
     it('updates the constraint content on input', async () => {
         // Add a constraint
         store.addConstraint();
-        await nextTick(); // Wait for the store to update
+        await nextTick();
 
         const constraintInput = wrapper.find('.input-container__constraint');
 
         // Simulate input for the constraint
         await constraintInput.setValue('x + y <= 10');
-        await nextTick(); // Wait for DOM updates
+        await nextTick();
 
         expect(store.constraints[0].content).toBe('x + y <= 10');
     });
@@ -105,7 +107,7 @@ describe('OptimizationProblemInput.vue', () => {
     it('updates bounds correctly when bound input is changed', async () => {
         // Set variables in the store for bounds input fields to appear
         store.variables = ['x', 'y'];
-        await nextTick(); // Wait for DOM updates
+        await nextTick();
 
         // Find the bound input fields
         const boundInputs = wrapper.findAll('.boundTextField');
@@ -118,8 +120,10 @@ describe('OptimizationProblemInput.vue', () => {
         await boundInputs.at(3).setValue('10'); // Upper bound for y
 
         // Check if the bounds were updated correctly in the store
-        //TODO Uncommend when implmeneted
-        //expect(store.bounds).toEqual(['0 <= x <= 5', '1 <= y <= 10']);
+        expect(store.bounds).toEqual([
+            "0 <= x <= 5",
+             "1 <= y <= 10"
+        ]);
     });
 
     it('calls solveLP with the correct parameters when Solve button is clicked', async () => {
@@ -129,7 +133,10 @@ describe('OptimizationProblemInput.vue', () => {
         store.selectedOptimization = 'Minimize';
         store.setObjectiveFunction('x + y');
         store.constraints.push({ id: 1, content: 'x + y <= 10' });
-        store.bounds = ["0 <= x1 <= 5", "0 <= x2 <= 10"];
+        store.bounds = [
+            { lowerBound: '0', upperBound: '5', variable: 'x' },
+            { lowerBound: '1', upperBound: '10', variable: 'y' }
+        ];
 
         // Mock the generateLPFile and solveLP
         inputToLPInterface.generateLPFile.mockReturnValue('Generated LP Content');
@@ -137,12 +144,11 @@ describe('OptimizationProblemInput.vue', () => {
 
         // Click Solve
         await solveButton.trigger('click');
-        await nextTick(); // Wait for DOM updates
-
-
-
+        await nextTick();
 
         // Ensure solveLP was called
         expect(highsSolver.solveLP).toHaveBeenCalledWith('Generated LP Content');
     });
 });
+
+

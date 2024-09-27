@@ -1,38 +1,36 @@
+<!-- 
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+-->
+
+
 <script>
 import 'mathlive';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
-import { computed } from 'vue';
-import * as highsSolver from "../businesslogic/solver/highsSolver.js";
-import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-
-
+import { computed } from 'vue'; 
+import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
+import { useRouter } from 'vue-router';
 export default {
   name: 'OptimizationProblemInput',
   setup() {
     const optimizationStore = useOptimizationStore();
-
+    const mathematicalSolutionStore = useMathematicalSolution()
+   
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
-    
-
-    
 
     /**
      * Solve LP
      */
     const solveLP = async () => {
-      try {
-        let lpContent;
-        console.log(optimizationStore.selectedOptimization);
-        lpContent = inputToLPInterface.generateLPFile(optimizationStore.$state.selectedOptimization,optimizationStore.getObjectiveFunction,optimizationStore.constraints,optimizationStore.getProblemBounds,"")
-        console.log(lpContent);
-        const result = await highsSolver.solveLP(lpContent); // Solve the LP
-       console.log(result);
-       //TODO: Here we can apply the move to the solved results via router
-      } catch (error) {
-        console.error('Fehler beim Lösen des LP-Problems:', error);
-      }
+     await mathematicalSolutionStore.solveProblem('spezific'); 
+     
+    };
+
+    const deleteConstraint = (id) => {
+      optimizationStore.removeConstraint(id);
     };
 
     return {
@@ -40,23 +38,61 @@ export default {
       isMinimizationSelected,
       isMaximizationSelected,
       solveLP,
+      deleteConstraint,
+    }
+  },
+  watch: {
+    // Initialize bounds when variables are loaded
+    'optimizationStore.variables': {
+      handler(newVariables) {
+        // Initialize an empty bounds array for each variable
+        this.bounds = newVariables.map(() => ({
+          lowerBound: null,
+          upperBound: null
+        }));
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    updateLowerBound(index, variable) {
+      const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
+      const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
+
+      // Log for debugging
+      console.log(`Updating lower bound for ${variable}: ${lowerBound}`);
+
+      // Update the bounds in the store
+      this.optimizationStore.addBound(upperBound, lowerBound, variable);
+    },
+
+    updateUpperBound(index, variable) {
+      const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
+      const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
+
+      // Log for debugging
+      console.log(`Updating upper bound for ${variable}: ${upperBound}`);
+
+      // Update the bounds in the store
+      this.optimizationStore.addBound(upperBound, lowerBound, variable);
     }
   }
 };
 </script>
+
 <template>
   <div class="input-container">
     <div class="input-container__bounds">
       <p>{{ $t('bounds') }}:</p>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-        <input type="number" class="boundTextField"@input="firstInput = $event.target.value">
+        <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
         <p class="boundText">≤ {{ variable }} ≤</p>
-        <input type="number" class="boundTextField"@input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+        <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
       </div>
     </div>
 
     <div class="input-container__main-content">
-      <div class="input-container__first-row">
+      <div class="input-container__first-row sticky-buttons">
         <button
           class="input-container__selection-optimization"
           :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
@@ -72,37 +108,57 @@ export default {
       </div>
 
       <div class="input-container__condition-container">
-        <input type="text" class="input-container__condition" placeholder="Bedingung"
+        <input type="text" class="input-container__condition" :placeholder="$t('condition')"
           @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
-          
           id="objectiveFunction">
       </div>
 
-      <div class="input-container__constraint-container">
-        
-        <input type="text"
-          v-for="constraint in optimizationStore.constraints"
-          :key="constraint.id"
-          class="input-container__constraint"
-          placeholder="Nebenbedingung"
-          @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)">
+      <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="input-container__constraint-wrapper">
+        <div class="constraint-wrapper">
+          <input type="text"
+            class="input-container__constraint"
+            :placeholder="$t('constraint')"
+            @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
+          >
+          <!-- Platzhalter-Image für die erste Nebenbedingung -->
+          <img 
+            :class="{ hidden: index === 0 }" 
+            src="../assets/trash.png" 
+            @click="deleteConstraint(constraint.id)" 
+            alt="Löschen" 
+            class="delete-icon"
+          />
+        </div>
       </div>
+
       <div class="input-container__bounds_mobile">
         <p>{{ $t('bounds') }}:</p>
-  <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-    <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
-    <p class="boundText">≤ {{ variable }} ≤</p>
-    <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
-  </div>
-</div>
+        <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
+          <!-- Lower Bound Input -->
+          <input
+              type="number"
+              class="boundTextField"
+              v-model="bounds[index].lowerBound"
+              @input="updateBound(index, variable)"
+          >
+          <p class="boundText">≤ {{ variable }} ≤</p>
+
+          <!-- Upper Bound Input -->
+          <input
+              type="number"
+              class="boundTextField"
+              v-model="bounds[index].upperBound"
+              @input="updateBound(index, variable)"
+          >
+        </div>
+      </div>
 
       <div class="input-container__last-row">
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-        <button class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</button>
+        <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
@@ -114,16 +170,17 @@ export default {
   margin: 0 auto;
   padding: 5%;
   box-sizing: border-box;
+  padding-top: 75px;
 }
 
 .input-container__bounds {
   position: sticky;
-  top: 20px;
+  top: 60px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
 }
@@ -134,8 +191,9 @@ export default {
   justify-content: space-between;
   gap: 10px;
 }
-.input-container__bounds_mobile{
-  display:none
+
+.input-container__bounds_mobile {
+  display: none;
 }
 
 .boundTextField {
@@ -156,6 +214,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-top: 60px;
 }
 
 .input-container__first-row {
@@ -199,7 +258,6 @@ export default {
   border-radius: 4px;
 }
 
-
 .input-container__last-row {
   display: flex;
   justify-content: flex-end;
@@ -216,10 +274,43 @@ export default {
   border-radius: 4px;
   transition: background-color 0.3s;
   width: auto;
+  color: white;
 }
 
 .input-container__main-button:hover {
   background-color: rgb(140, 140, 140);
+}
+
+.constraint-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.delete-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.delete-icon.hidden {
+  visibility: hidden;
+}
+
+.delete-icon:hover {
+  opacity: 0.7;
+}
+
+.sticky-buttons {
+  position: sticky;
+  top: 0;
+  background-color: white; 
+  z-index: 10;
+  height: 60px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -270,8 +361,9 @@ export default {
     gap: 10px;
   }
 }
-
 </style>
+
+
 
 
 

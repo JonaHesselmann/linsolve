@@ -1,5 +1,18 @@
+/*
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+*/
+
+
+
 /**
  * Wandelt die Eingaben in das CPLEX-Format um.
+ * @param {String} objectiveType - Minimisation or Maximisation
+ * @param {string} objectiveFunction - The Function which is to be Maximised
+ * @param {constraint[]} constraints - The constraints of the problem
+ * @param {string[]} bounds - The Bounds of the problem
+ * @param {string[]} variableTypes - to be included
  * @returns {string} - Das LP-Problem im CPLEX-Format.
  */
 function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds = [], variableTypes = {}) {
@@ -47,3 +60,4 @@ function generateLPFile(objectiveType,objectiveFunction, constraints =[], bounds
 }
 
 export {generateLPFile}
+
