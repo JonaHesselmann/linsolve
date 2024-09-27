@@ -23,12 +23,15 @@ import GoToHomepage from '../components/goToHomepage.vue';
     </script>
 <template>
     <Header></Header>
-    <GoToHomepage></GoToHomepage>
+    <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <Result_math></Result_math>
     <Footer></Footer>
 </template>
     
 <style>
+.GoToHomepage{
+         margin-top: 5%;
+    }
 </style>
 
 

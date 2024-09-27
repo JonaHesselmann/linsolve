@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
     <Header></Header>
-    <GoToHomepage></GoToHomepage>
+    <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <Agbs class="mainContent"></Agbs>
     <Footer></Footer>
     </template>
@@ -31,6 +31,9 @@ import GoToHomepage from '../components/goToHomepage.vue';
     .mainContent{
         margin-top: 15%;
         margin-bottom: 10%;
+    }
+    .GoToHomepage{
+         margin-top: 5%;
     }
     </style>
 

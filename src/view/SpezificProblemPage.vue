@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
 <Header></Header>
-<GoToHomepage></GoToHomepage>
+<GoToHomepage class="GoToHomepage"></GoToHomepage>
 <OptimizationProblemInput></OptimizationProblemInput>
 <Footer></Footer>
 </template>
@@ -28,6 +28,9 @@ export default{
 }
 </script>
 <style>
+.GoToHomepage{
+         margin-top: 5%;
+    }
 </style>
 
 

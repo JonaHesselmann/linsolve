@@ -6,7 +6,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
     <Header></Header>
-    <GoToHomepage></GoToHomepage>
+    <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <GeneralProblemInput></GeneralProblemInput>
     <Footer></Footer>
     </template>
@@ -26,6 +26,9 @@ import GoToHomepage from '../components/goToHomepage.vue';
     }
     </script>
     <style>
+    .GoToHomepage{
+         margin-top: 5%;
+    }
     </style>
 
 
