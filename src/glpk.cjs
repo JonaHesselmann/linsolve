@@ -4255,6 +4255,7 @@ var glp_mpl_generate = exports["glp_mpl_generate"] = function(tran, name, callba
     return ret;
 };
 
+
 var glp_mpl_build_prob = exports["glp_mpl_build_prob"] = function(tran, prob){
     /* build LP/MIP problem instance from the model */
     var m, n, i, j, t, kind, type, len, ind;

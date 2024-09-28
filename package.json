@@ -18,6 +18,7 @@
     "highs": "^1.0.1",
     "mathlive": "^0.101.0",
     "pinia": "^2.2.2",
+    "vite-plugin-commonjs": "^0.10.3",
     "vue": "^3.4.37",
     "vue-i18n": "^9.14.0",
     "vue-router": "^4.0.13"

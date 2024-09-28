@@ -1,4 +1,4 @@
-var glpk = require('../public/glpk.cjs')
+var glpk = require('../src/glpk.cjs')
 import { describe, it, expect, beforeEach } from 'vitest'
 
 describe('GLPK Solver Test', () => {

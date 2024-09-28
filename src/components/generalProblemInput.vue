@@ -1,5 +1,6 @@
 
 <script>
+
 import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
 
 
