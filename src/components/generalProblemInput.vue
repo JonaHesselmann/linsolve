@@ -7,9 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 <script>
-import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
-
-
+import Worker from './webworker.worker.js?worker'
     export default{
         name: "GeneralProblemInput",
       data() {
@@ -22,14 +20,22 @@ import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
           console.log('Imported Problem:', this.problemInput);
           // Additional logic for importing the problem
         },
-         async solve() {
-           try {
-             const result = CalculateGMPL(this.problemInput);
-             console.log(result); // Handle the result as needed
-           } catch (error) {
-             console.error('Failed to solve the optimization problem:', error);
-             // Handle the error as needed (e.g., show a message to the user)
-           }
+        async solve() {
+          try {
+            const worker = new Worker(new URL('src/components/webworker.worker.js', import.meta.url))
+            worker.postMessage({ problemInput: this.problemInput });
+
+            worker.onmessage = (event) => {
+              const result = event.data;
+              if (result.error) {
+                console.error("Worker Error:", result.error);
+              } else {
+                console.log("Worker Result:", result);
+              }
+            };
+          } catch (error) {
+            console.error("Failed to solve the optimization problem:", error);
+          }
         }
       }
     }
