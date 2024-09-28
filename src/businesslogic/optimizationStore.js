@@ -1,3 +1,10 @@
+/*
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+*/
+
+
 import { defineStore } from 'pinia';
 
 
@@ -53,6 +60,7 @@ export const useOptimizationStore = defineStore('optimization', {
         },
         /**
          * Add all Variables that are used in the condition
+         * @param {String} condition - the Condition to be added
          */
         addVariables(condition){
             const characters = [...condition]; 
@@ -94,12 +102,31 @@ export const useOptimizationStore = defineStore('optimization', {
          * Function to Add or Update the Bounds of the Variables
          */
         addBound(upperBound, lowerBound, variable) {
+            // Debug logging to ensure the method is being called
+            console.log(`Adding bound: upperBound=${upperBound}, lowerBound=${lowerBound}, variable=${variable}`);
+
             const existingIndex = this.bounds.findIndex(bound => bound.includes(variable));
-        
-            if (existingIndex !== -1) {
-                this.bounds[existingIndex] = `${lowerBound} <= ${variable} <= ${upperBound}`;
+
+            // Initialize the newBound variable based on the provided bounds
+            let newBound = '';
+            if (lowerBound !== '' && upperBound !== '') {
+                newBound = `${lowerBound} <= ${variable} <= ${upperBound}`;
+            } else if (lowerBound !== '') {
+                newBound = `${lowerBound} <= ${variable}`;
+            } else if (upperBound !== '') {
+                newBound = `${variable} <= ${upperBound}`;
             } else {
-                this.bounds.push(`${lowerBound} <= ${variable} <= ${upperBound}`);
+                console.log("Both bounds are null, nothing to add.");
+                return; // No bounds to add if both are null
+            }
+
+            // Check if there's already a bound for the variable
+            if (existingIndex !== -1) {
+                console.log(`Updating existing bound for ${variable}`);
+                this.bounds[existingIndex] = newBound;
+            } else {
+                console.log(`Adding new bound for ${variable}: ${newBound}`);
+                this.bounds.push(newBound);
             }
         },
 
@@ -112,6 +139,10 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
+
+        removeConstraint(id) {
+            this.constraints = this.constraints.filter(constraint => constraint.id !== id);
+          },
         //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
@@ -138,9 +169,13 @@ export const useOptimizationStore = defineStore('optimization', {
             }
             console.log(this.constraints[0]);
         },
+        /**
+         * Deletes the Constraint on the stack
+         */
         deleteConstraint(){
             this.constraints.pop()
         },
 
     },
 });
+

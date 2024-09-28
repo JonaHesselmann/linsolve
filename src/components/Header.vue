@@ -1,3 +1,9 @@
+<!-- 
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+-->
+
 
 <script>
 import { languageStore } from '../businesslogic/languageStore.js'; 
@@ -34,6 +40,7 @@ export default {
 
 <template>
   <header class="header">
+    <img src="../assets/Logo.png" class="logo">
     <h1 class="title">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
     <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
@@ -42,30 +49,34 @@ export default {
        <p class="dropdown-link" @click="changeLocale('en')">English</p>
     </div>
   </header>
+  
       
 </template>
 
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  padding-top: 5rem; 
+}
 
 .header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; 
+  width: 100%;
   display: flex;
-  align-items: center; 
+  align-items: center;
   padding: 1rem 2rem;
   background-color: rgba(7, 7, 152, 0.945);
   color: white;
   z-index: 1000;
 }
+
 
 
 .title {
@@ -75,7 +86,6 @@ export default {
   margin: 0 auto;
 }
 
-
 .globe {
   height: calc(10px + 1vw);
   width: calc(10px + 1vw);
@@ -83,22 +93,20 @@ export default {
   cursor: pointer;
 }
 
-
 .language {
   padding-left: 3px;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 20px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  display: none; 
+  display: none;
 }
-
 
 .dropdown-link {
   display: block;
@@ -112,9 +120,18 @@ export default {
   background-color: #f1f1f1;
 }
 
-
 .header:hover .dropdown-menu {
   display: block;
 }
 
+.logo {
+  height: 3%;
+  width: 3%;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+
 </style>
+
+

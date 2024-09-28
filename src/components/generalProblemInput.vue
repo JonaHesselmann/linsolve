@@ -1,7 +1,13 @@
+<!-- 
+This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
+-->
+
+
 
 <script>
-
-import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
+import {CalculateGMPL} from "../businesslogic/solver/glpk_Wasm_binding.js";
 
 
     export default{
@@ -16,9 +22,14 @@ import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
           console.log('Imported Problem:', this.problemInput);
           // Additional logic for importing the problem
         },
-        solve() {
-          console.log('Solving Problem:', this.problemInput);
-          console.log(glpk.solveLP(this.problemInput));
+         async solve() {
+           try {
+             const result = CalculateGMPL(this.problemInput);
+             console.log(result); // Handle the result as needed
+           } catch (error) {
+             console.error('Failed to solve the optimization problem:', error);
+             // Handle the error as needed (e.g., show a message to the user)
+           }
         }
       }
     }
@@ -29,11 +40,11 @@ import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
     <textarea
         class="problemInput"
         v-model="problemInput"
-        placeholder= "Write here"> // add Localisation
+        :placeholder= "$t('writeHere')"> // add Localisation
         </textarea>
     <div class="buttoncontainer">
       <button class="mainButton" @click="importProblem">{{ $t("importProblem") }}</button>
-      <button class="mainButton" @click="solve">{{ $t("solve") }}</button>
+      <button class="mainButton" @click="  solve">{{ $t("solve") }}</button>
     </div>
   </div>
 </template>
@@ -96,3 +107,5 @@ import * as glpk from "../businesslogic/solver/glpk_solver.cjs"
 }
 
 </style>
+
+

@@ -28,8 +28,14 @@
     "⁠applicableLaw": "Anwendbares Recht", 
     "⁠applicablaLawText": "Diese AGB unterliegen dem deutschen Recht.",
     "bounds": "Beschränkungen",
-    "gernerallProblem": "Allgemeines Problem", 
+    "gerneralProblem": "Allgemeines Problem", 
     "specificProblem": "Spezifisches Problem",
     "importProblem":"Aufgabe Hochladen", 
-    "writeHere":"Schreibe hier"
+    "writeHere":"Schreibe hier", 
+    "variable": "Variable",
+    "optimalValue": "Optimaler Wert", 
+    "mathematicallySolution": "Mathematische Lösung:", 
+    "objectiveFunctionValue":"Zielfunktionwert", 
+    "solutionErrorMessage":"Dieses Problem ist nicht Lösbar", 
+    "goHome":"Hauptmenü"
 }
