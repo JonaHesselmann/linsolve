@@ -9,7 +9,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { createRouter, createWebHistory } from 'vue-router';
-import 'mathlive';
+
 
 /**
  * Import your components and router configuration

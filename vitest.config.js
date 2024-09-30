@@ -15,7 +15,8 @@ export default defineConfig({
         globals: true,
         coverage: {
             //changed so that it does not include node_modules and glpk.min.cjs
-            include: ['src/**']
+            include: ['src/**'],
+            exclude:['**/glpk.js']
         },
          },
 });
