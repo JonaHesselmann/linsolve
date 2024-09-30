@@ -65,9 +65,7 @@ export default {
         {{ $t('⁠applicablaLawText') }}
       </p>
     </section>
-    <div class="action-container">
-      <button class="mainButton" @click="">{{ $t('solve') }}</button>
-    </div>
+    
   </div>
 </template>
 
