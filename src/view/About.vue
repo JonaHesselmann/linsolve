@@ -33,7 +33,7 @@ import GoToHomepage from '../components/goToHomepage.vue';
         margin-bottom: 10%;
     }
     .GoToHomepage{
-         margin-top: 5%;
+         margin-top: 1%;
     }
     </style>
 

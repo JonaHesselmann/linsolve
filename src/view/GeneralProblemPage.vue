@@ -27,7 +27,7 @@ import GoToHomepage from '../components/goToHomepage.vue';
     </script>
     <style>
     .GoToHomepage{
-         margin-top: 5%;
+         margin-top: 1%;
     }
     </style>
 
