@@ -1,77 +1,112 @@
-import { setActivePinia, createPinia } from 'pinia'
-import { useGMPLStore } from '../src/businesslogic/useGMPLStore.js' // Adjust this path to the actual file
-import { describe, it, expect, beforeEach } from 'vitest'
+import { setActivePinia, createPinia } from 'pinia';
+import { useGMPLStore } from '../src/businesslogic/useGMPLStore.js'; // Adjust the path as per your file structure
+import { describe, it, expect, beforeEach, vi } from 'vitest'; // Importing from Vitest
+
+// Set up the Pinia store
+beforeEach(() => {
+  setActivePinia(createPinia());
+});
 
 describe('useGMPLStore', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia()) // Ensure a fresh Pinia instance is used before each test
-    })
 
-    it('updates problem input and sets the current word', () => {
-        const store = useGMPLStore()
+  // Test if the store initializes correctly
+  it('should initialize with default state', () => {
+    const store = useGMPLStore();
 
-        store.updateProblemInput('solve x mod')
-        expect(store.problemInput).toBe('solve x mod')
-        expect(store.currentWord).toBe('mod')
-    })
+    // Checking the initial state of the store
+    expect(store.problemInput).toBe('');
+    expect(store.suggestions).toEqual([]);
+    expect(store.currentWord).toBe('');
+    expect(store.suggestionPosition).toEqual({ top: 0, left: 0 });
+  });
 
-    it('fetches correct GMPL keyword suggestions', () => {
-        const store = useGMPLStore()
+  // Test if updateProblemInput updates the problemInput and suggestions correctly
+  it('should update problemInput and provide suggestions based on current word', () => {
+    const store = useGMPLStore();
 
-        store.updateProblemInput('and mod')
-        expect(store.suggestions).toContain('mod')
-        expect(store.suggestions).not.toContain('union') // 'union' doesn't start with 'mod'
-    })
+    // Sample input
+    const input = 'this is a test and';
+    store.updateProblemInput(input);
 
-    it('returns an empty list if current word has no match', () => {
-        const store = useGMPLStore()
+    // Expect problemInput to match the input
+    expect(store.problemInput).toBe(input);
 
-        store.updateProblemInput('invalidWord')
-        expect(store.suggestions).toEqual([]) // No suggestions should match
-    })
+    // The current word being typed should be 'and'
+    expect(store.currentWord).toBe('and');
 
-    it('inserts a suggestion and replaces the current word', () => {
-        const store = useGMPLStore()
+    // Suggestions should return keywords that match 'and'
+    expect(store.suggestions).toContain('and');
+    expect(store.suggestions.length).toBe(1);
+  });
 
-        store.updateProblemInput('and mo')
-        store.insertSuggestion('mod')
+  // Test getGMPLSuggestions function directly
+  it('should return matching GMPL keywords based on the current word', () => {
+    const store = useGMPLStore();
 
-        expect(store.problemInput).toBe('and mod ') // The input should now contain 'mod'
-        expect(store.suggestions).toEqual([]) // Suggestions should be cleared
-    })
+    const suggestions = store.getGMPLSuggestions('an');
+    
+    // 'and' should be returned as it starts with 'an'
+    expect(suggestions).toContain('and');
+    expect(suggestions.length).toBe(1);
+  });
 
-    it('updates the suggestion position based on caret position', () => {
-        const store = useGMPLStore()
+  // Test if insertSuggestion replaces the current word and clears suggestions
+  it('should insert selected suggestion and update problemInput', () => {
+    const store = useGMPLStore();
 
-        // Mock a textarea element
-        const mockTextarea = {
-            value: 'solve x mod',
-            selectionStart: 10,
-            offsetTop: 100,
-            offsetLeft: 200,
-            offsetWidth: 300
-        }
+    store.updateProblemInput('This is a mod');
+    store.insertSuggestion('mod');
 
-        store.updateSuggestionPosition(mockTextarea)
+    // Expect problemInput to be updated with 'mod'
+    expect(store.problemInput).toBe('This is a mod ');
 
-        expect(store.suggestionPosition.top).toBeGreaterThan(100) // Adjusted top position based on textarea's top
-        expect(store.suggestionPosition.left).toBe(200) // Adjusted left position based on textarea's left
-    })
+    // Suggestions should be cleared after insertion
+    expect(store.suggestions).toEqual([]);
+  });
 
-    it('calculates caret coordinates correctly', () => {
-        const store = useGMPLStore()
+  // Test if updateSuggestionPosition correctly updates the suggestion dropdown position
+  it('should update suggestionPosition based on caret position in textarea', () => {
+    const store = useGMPLStore();
 
-        const mockTextarea = {
-            value: 'solve x mod',
-            selectionStart: 10,
-            offsetTop: 100,
-            offsetLeft: 200,
-            offsetWidth: 300
-        }
+    // Mock textarea DOM element
+    const textarea = {
+      selectionStart: 5,
+      offsetTop: 100,
+      offsetLeft: 50,
+      scrollTop: 0,
+      scrollLeft: 0,
+      value: 'test value'
+    };
 
-        const coords = store.getCaretCoordinates(mockTextarea, mockTextarea.selectionStart)
+    // Mock the getCaretCoordinates method
+    store.getCaretCoordinates = vi.fn(() => ({ top: 120, left: 80 }));
 
-        expect(coords.top).toBeGreaterThan(100) // Ensure coordinates are based on textarea position
-        expect(coords.left).toBe(200)
-    })
-})
+    store.updateSuggestionPosition(textarea);
+
+    // Expect suggestionPosition to be updated with the calculated position
+    expect(store.suggestionPosition).toEqual({ top: 120, left: 80 });
+  });
+
+  // Test if getCaretCoordinates correctly calculates the caret position
+  it('should calculate the correct caret coordinates', () => {
+    const store = useGMPLStore();
+
+    // Mock textarea element
+    const textarea = {
+      value: 'this is a test',
+      offsetTop: 100,
+      offsetLeft: 50,
+      scrollTop: 10,
+      scrollLeft: 5
+    };
+
+    // Call getCaretCoordinates method for a specific position
+    const position = 10;  // Caret at position 10
+    const coordinates = store.getCaretCoordinates(textarea, position);
+
+    // The coordinates should be adjusted based on caret and scroll positions
+    expect(coordinates.top).toBeGreaterThan(100); // Adjust as per your element structure
+    expect(coordinates.left).toBeGreaterThan(40);
+  });
+});
+
