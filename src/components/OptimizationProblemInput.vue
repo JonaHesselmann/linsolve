@@ -84,7 +84,7 @@ export default {
     <div class="input-container__bounds">
       <p>{{ $t('bounds') }}:</p>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-        <input type="number" class="boundTextField" @input="firstInput = $event.target.value">
+        <input type="number" class="boundTextField" @input="firstInput = $event.target.value, optimizationStore.addBound('', $event.target.value, variable )">
         <p class="boundText">≤ {{ variable }} ≤</p>
         <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
       </div>

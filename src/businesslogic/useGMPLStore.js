@@ -3,6 +3,7 @@ This file is part of LinSolve. LinSolve is free software: you can redistribute i
 LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 */
+
 import { defineStore } from 'pinia';
 
 const GMPL_KEYWORDS = [
@@ -71,7 +72,12 @@ export const useGMPLStore = defineStore('gmpLStore', {
     updateSuggestionPosition(textarea) {
       const caretPosition = textarea.selectionStart;
       const { top, left } = this.getCaretCoordinates(textarea, caretPosition);
-      this.suggestionPosition = { top, left };
+      
+      
+      this.suggestionPosition = { 
+        top: top - textarea.scrollTop,    
+        left: left - textarea.scrollLeft  
+      };
     },
 
     /**
@@ -92,29 +98,36 @@ export const useGMPLStore = defineStore('gmpLStore', {
 
       div.style.position = 'absolute';
       div.style.visibility = 'hidden';
-      div.style.whiteSpace = 'pre-wrap';
-      div.style.wordWrap = 'break-word';
-      div.style.width = `${element.offsetWidth}px`;
+      div.style.whiteSpace = 'pre-wrap';  
+      div.style.wordWrap = 'break-word';  
+      div.style.width = `${element.offsetWidth}px`;  
 
       // Insert the text up to the caret position
       const textBeforeCaret = element.value.substring(0, position);
       const textAfterCaret = element.value.substring(position);
       div.textContent = textBeforeCaret;
 
-      // Place a span where the caret is
+      
       const span = document.createElement('span');
-      span.textContent = textAfterCaret || '.';
+      span.textContent = textAfterCaret || '.';  
       div.appendChild(span);
 
+     
       document.body.appendChild(div);
+
+      
       const { offsetTop, offsetLeft } = span;
+
+    
       document.body.removeChild(div);
 
+     
       return {
-        top: offsetTop + element.offsetTop + 20, // Adjust for height of textarea line
-        left: offsetLeft + element.offsetLeft
+        top: offsetTop + element.offsetTop - element.scrollTop + 20,  
+        left: offsetLeft + element.offsetLeft - element.scrollLeft   
       };
     }
   }
 });
+
 
