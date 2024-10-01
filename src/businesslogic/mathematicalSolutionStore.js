@@ -20,27 +20,10 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   
   // Actions section: methods to modify the state or perform other logic
   actions: {
-      
-    prettyPrintTable(array) {
-      const header = array[0];
-      const columnWidths = header.map((_, colIndex) => 
-        Math.max(...array.map(row => row[colIndex].toString().length))
-      );
-      const formatRow = (row) => 
-        row.map((item, index) => item.toString().padEnd(columnWidths[index], ' ')).join(' | ');
-    
-      // Build the formatted table
-      const formattedTable = [];
-      
-      // Add header and separator
-      formattedTable.push(formatRow(header));
-      formattedTable.push('-'.repeat(formatRow(header).length));
-    
-      // Add each row of data
-      array.slice(1).forEach(row => formattedTable.push(formatRow(row)));
-    
-      return formattedTable;
-    },
+      getRawArray(array){
+        return array
+      },
+
     
     /**
      * Calles the right Solverfunction and sets the Solutions
@@ -74,7 +57,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
           console.error('Keine Lösung vorhanden:', error);
         }
       } else if (problemKind === 'general') {
-        this.solution = this.prettyPrintTable(data.get('VariableTable'))
+        this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
