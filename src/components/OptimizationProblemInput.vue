@@ -6,7 +6,6 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 <script>
-import 'mathlive';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import { computed } from 'vue'; 
 import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';

@@ -36,7 +36,8 @@
     "optimalValue": "Optimal value",
     "mathematicallySolution": "Mathematically solution",
     "objectiveFunctionValue":"Objective function value", 
-    "solutionErrorMessage":"This problem cannot be solved"
+    "solutionErrorMessage":"This problem cannot be solved", 
+    "goHome":"Homepage"
 
 }
 

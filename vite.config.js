@@ -8,17 +8,22 @@ You should have received a copy of the GNU General Public License along with Lin
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    include: ['src/businesslogic/solver/glpk.min.cjs'],
+  },
+  build: {
+    commonjsOptions: {
+
+    },
+  },
   plugins: [vue({
     template: {
-      compilerOptions: {
-        isCustomElement: (tag) => {
-          return tag.startsWith('math-') // (return true)
-        }
-      }
     }
-  })],
+  }, ),
+],
   base: '/linsolve/'  
 })
 

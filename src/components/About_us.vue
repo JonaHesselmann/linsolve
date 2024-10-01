@@ -18,11 +18,7 @@ export default{
         <br>
         <p class="mainText">   {{$t('aboutUsText')}} 💻
         </p>
-        <div class="Home">
-          <br>
-          <button class="mainButton" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
-         
-      </div>
+        
     </div>
 </template>
 <style scoped>

@@ -4,34 +4,48 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
 
-
-<script>
-    import Header from '../components/Header.vue';
-    import Result_math from '../components/Result_math.vue';
-    import Footer from '../components/Footer.vue';
-import GoToHomepage from '../components/goToHomepage.vue';
-
-    export default{
-        name:'Result',
-        components:{
-            Header, 
-            Footer, 
-            Result_math, 
-            GoToHomepage,
-        }
-    }
-    </script>
 <template>
-    <Header></Header>
-    <GoToHomepage class="GoToHomepage"></GoToHomepage>
-    <Result_math></Result_math>
-    <Footer></Footer>
+    <div class="arrow-container">
+        <router-link to="/" class="arrow-link">
+            <img src="../assets/arrow.png" alt="Go to Homepage" class="arrow">
+            <p>{{ $t('goHome') }}</p>
+        </router-link>
+    </div>
 </template>
-    
-<style>
-.GoToHomepage{
-         margin-top: 1%;
-    }
+
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 5rem;
+}
+
+.arrow-container {
+  position: absolute;
+  top: calc(5rem + 1rem); 
+  left: 2rem; 
+}
+
+.arrow-link {
+  display: inline-flex; 
+  align-items: center; 
+  text-decoration: none; 
+  color: blackx;
+}
+
+.arrow {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem; 
+}
+
+p {
+  font-size: 1rem;
+  margin: 0;
+  color: black;
+}
 </style>
-
-
