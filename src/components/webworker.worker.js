@@ -31,15 +31,15 @@ self.onmessage = async function solveALP(msg) {
                     break;
                 case GLP_UNDEF :
                     status = "UNDEFINED SOLUTION";
-                    Status[status,'0']
+                    Status.push(status,'0')
                     break;
                 case GLP_INFEAS :
                     status = "INFEASIBLE SOLUTION";
-                    Status[status,'0']
+                    Status.push(status,'0')
                     break;
                 case GLP_NOFEAS :
                     status = "NO FEASIBLE SOLUTION";
-                    Status[status,'0']
+                    Status.push(status,'0')
                     break;
                 case GLP_FEAS :
                     status = "FEASIBLE SOLUTION";
@@ -47,12 +47,12 @@ self.onmessage = async function solveALP(msg) {
                     break;
                 case GLP_UNBND :
                     status = "UNBOUNDED SOLUTION";
-                    Status[status,'0']
+                    Status.push(status,'0')
                     break;
             }
             if (status == "OPTIMAL") {
                 console.log("OPTIMAL");
-                Status["OPTIMAL",glp_mip_obj_val(lp)]
+                Status.push("Optimal",glp_mip_obj_val(lp));
                 console.log(glp_mip_obj_val(lp));
 
             } else {
