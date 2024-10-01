@@ -1,9 +1,3 @@
-/*
-This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
-*/
-
 import { defineStore } from 'pinia';
 
 const GMPL_KEYWORDS = [
@@ -36,7 +30,16 @@ export const useGMPLStore = defineStore('gmpLStore', {
      */
     updateProblemInput(inputText) {
       this.problemInput = inputText;
-      const words = inputText.split(/\s+/); // Split by spaces or new lines
+
+      // Check if the current line is a comment (starts with '#') and skip auto-completion
+      const currentLine = inputText.split('\n').pop(); // Get the last line of input
+
+      if (currentLine.trim().startsWith('#')) {
+        this.suggestions = []; // Disable suggestions if it's a comment line
+        return;
+      }
+
+      const words = currentLine.split(/\s+/); // Split by spaces or new lines
       this.currentWord = words[words.length - 1]; // Get the last word being typed
 
       this.suggestions = this.getGMPLSuggestions(this.currentWord);
@@ -72,11 +75,10 @@ export const useGMPLStore = defineStore('gmpLStore', {
     updateSuggestionPosition(textarea) {
       const caretPosition = textarea.selectionStart;
       const { top, left } = this.getCaretCoordinates(textarea, caretPosition);
-      
-      
-      this.suggestionPosition = { 
-        top: top - textarea.scrollTop,    
-        left: left - textarea.scrollLeft  
+
+      this.suggestionPosition = {
+        top: top - textarea.scrollTop,
+        left: left - textarea.scrollLeft
       };
     },
 
@@ -107,27 +109,20 @@ export const useGMPLStore = defineStore('gmpLStore', {
       const textAfterCaret = element.value.substring(position);
       div.textContent = textBeforeCaret;
 
-      
       const span = document.createElement('span');
       span.textContent = textAfterCaret || '.';  
       div.appendChild(span);
 
-     
       document.body.appendChild(div);
 
-      
       const { offsetTop, offsetLeft } = span;
 
-    
       document.body.removeChild(div);
 
-     
       return {
-        top: offsetTop + element.offsetTop - element.scrollTop + 20,  
-        left: offsetLeft + element.offsetLeft - element.scrollLeft   
+        top: offsetTop + element.offsetTop - element.scrollTop + 20,
+        left: offsetLeft + element.offsetLeft - element.scrollLeft
       };
     }
   }
 });
-
-
