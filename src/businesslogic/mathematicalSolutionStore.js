@@ -18,6 +18,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // The `state` function returns an object representing the reactive state of the store
   state: () => ({
     solution: [], 
+    constraints:[],
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
   }),
@@ -71,6 +72,8 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
       } else if (problemKind === 'general') {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
+        this.constraints =data.get('ConstrainTable')
+        console.log(this.constraints)
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }

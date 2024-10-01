@@ -13,11 +13,12 @@ export default {
     const mathematicalSolutionStore = useMathematicalSolution();
 
     // Assuming tableData is a prop passed from the parent or can be directly accessed
-    const tableData = mathematicalSolutionStore.solution; // Assuming this contains your 2D array
-
+    const variableTableData = mathematicalSolutionStore.solution; // Assuming this contains your 2D array
+    const constraintTableData =mathematicalSolutionStore.constraints;
     return {
       mathematicalSolutionStore,
-      tableData,
+      variableTableData,
+      constraintTableData
     };
   }
 }
@@ -28,14 +29,30 @@ export default {
     <h2>{{ $t('mathematicallySolution') }}</h2>
 
     <div>
-      <table v-if="tableData.length" class="solution-table">
+      <p>{{ $t('variable') }}</p>
+      <table v-if="variableTableData.length" class="solution-table">
         <thead>
         <tr>
-          <th v-for="(header, index) in tableData[0]" :key="index">{{ header }}</th>
+          <th v-for="(header, index) in variableTableData[0]" :key="index">{{ header }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(row, rowIndex) in tableData.slice(1)" :key="rowIndex">
+        <tr v-for="(row, rowIndex) in variableTableData.slice(1)" :key="rowIndex">
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p>{{ $t('constraint') }}</p>
+      <table v-if="constraintTableData.length" class="solution-table">
+        <thead>
+        <tr>
+          <th v-for="(header, index) in constraintTableData[0]" :key="index">{{ header }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(row, rowIndex) in constraintTableData.slice(1)" :key="rowIndex">
           <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
         </tr>
         </tbody>
