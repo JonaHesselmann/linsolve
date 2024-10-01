@@ -21,6 +21,7 @@ self.onmessage = async function solveALP(msg) {
         //Return back to the mpl model
          self.postMessage(glp_mpl_postsolve(tran, lp, GLP_MIP));
          self.postMessage(returnVariableTable());
+         self.postMessage(returnConstrainTable());
             var status;
             switch (glp_mip_status(lp)) {
                 //TODO implement other States maybe
@@ -133,27 +134,47 @@ self.onmessage = async function solveALP(msg) {
      * Returns the Column Table to be Rendered
      * Needs to be Rewritten
      */
-function returnConstrainTable() {
+    function returnConstrainTable() {
+        // Array to store the result, starting with the headers
+        var result = [
+            ["Constraint Name", "MIP Value", "Lower Bound", "Upper Bound", "Primal Value", "Dual Value"]
+        ];
 
+        // Loop through all rows (constraints)
         for (var i = 1; i <= glp_get_num_rows(lp); i++) {
-
+            // Get the upper and lower bounds, converting large bounds to infinity
             var ub = glp_get_row_ub(lp, i);
             if (ub >= Number.MAX_VALUE) {
                 ub = "+inf";
             }
+
             var lb = glp_get_row_lb(lp, i);
             if (lb <= -Number.MAX_VALUE) {
                 lb = "-inf";
             }
 
+            // Get the constraint name and other values
+            var rowName = glp_get_row_name(lp, i);    // Constraint name
+            var mipVal = glp_mip_row_val(lp, i);      // MIP value
+            var primVal = glp_get_row_prim(lp, i);    // Primal value
+            var dualVal = glp_get_row_dual(lp, i);    // Dual value
 
-            $("#rowTable tbody").append("<tr><td>" + glp_get_row_name(lp, i)
-                + "<td>" + glp_mip_row_val(lp, i)
-                + "<td>" + lb
-                + "<td>" + ub
-                + "<td>" + glp_get_row_prim(lp, i)
-                + "<td>" + glp_get_row_dual(lp, i)
-                + "</tr>");
+            // Create the row for the current constraint
+            var row = [
+                rowName,    // Constraint Name
+                mipVal,     // MIP Value
+                lb,         // Lower Bound
+                ub,         // Upper Bound
+                primVal,    // Primal Value
+                dualVal     // Dual Value
+            ];
+
+            // Add the row to the result array
+            result.push(row);
         }
+
+        // Return the 2D array with headers and values
+        return result;
     }
+
 }
