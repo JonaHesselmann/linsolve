@@ -86,7 +86,7 @@ export const useGMPLStore = defineStore('gmpLStore', {
       const style = getComputedStyle(element);
 
       // Copy styles from the textarea to the div
-      for (const prop of style) {
+      for (const prop in style) {
         div.style[prop] = style[prop];
       }
 

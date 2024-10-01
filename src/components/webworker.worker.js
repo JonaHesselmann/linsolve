@@ -1,6 +1,6 @@
 
 importScripts('./glpk.js')
-self.onmessage = async function solveLP(msg) {
+self.onmessage = async function solveALP(msg) {
     console.log("Message received in worker:");
         var output = 0;
         const model = msg.data;
