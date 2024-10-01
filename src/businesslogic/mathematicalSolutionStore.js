@@ -21,26 +21,27 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // Actions section: methods to modify the state or perform other logic
   actions: {
       
-     prettyPrintTable(array) {
-      // Extract the header row
+    prettyPrintTable(array) {
       const header = array[0];
-    
-      // Determine the width for each column by finding the longest string length for each column
       const columnWidths = header.map((_, colIndex) => 
         Math.max(...array.map(row => row[colIndex].toString().length))
       );
-    
-      // Function to format a row with padded columns
       const formatRow = (row) => 
         row.map((item, index) => item.toString().padEnd(columnWidths[index], ' ')).join(' | ');
     
-      // Print the header
-      console.log(formatRow(header));
-      console.log('-'.repeat(formatRow(header).length));
+      // Build the formatted table
+      const formattedTable = [];
+      
+      // Add header and separator
+      formattedTable.push(formatRow(header));
+      formattedTable.push('-'.repeat(formatRow(header).length));
     
-      // Print each row of the data
-      array.slice(1).forEach(row => console.log(formatRow(row)));
+      // Add each row of data
+      array.slice(1).forEach(row => formattedTable.push(formatRow(row)));
+    
+      return formattedTable;
     },
+    
     /**
      * Calles the right Solverfunction and sets the Solutions
      */
@@ -69,12 +70,12 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
           this.solution = highsSolver.returnVariables(); 
           console.log(this.solution);
           this.optimalResult = highsSolver.returnOptimalResult();
-          console.log('TEST' + this.optimalResult);
         } catch (error) {
           console.error('Keine Lösung vorhanden:', error);
         }
       } else if (problemKind === 'general') {
-        this.prettyPrintTable()
+        this.solution = this.prettyPrintTable(data.get('VariableTable'))
+        this.optimalResult =  data.get('Result')
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }

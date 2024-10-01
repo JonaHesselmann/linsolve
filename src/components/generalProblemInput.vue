@@ -4,13 +4,16 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
 <script>
+import { useMathematicalSolution } from "../businesslogic/mathematicalSolutionStore.js";
 import { useGMPLStore } from "../businesslogic/useGMPLStore.js";
-
+import { useRouter } from 'vue-router';
 
 export default {
   name: "GeneralProblemInput",
   setup() {
     const gmplStore = useGMPLStore();
+    const router = useRouter();
+    const mathematicalSolutionStore = useMathematicalSolution()
     let data
     const solve = async () => {
       // Create a new web worker
@@ -22,7 +25,8 @@ export default {
         // Log the data received from the worker
         console.log(e.data);
         data =  e.data;
-
+        mathematicalSolutionStore.solveProblem('general', data); 
+        router.push("/result");
       };
       // Handle errors from the worker
       workwork.onerror = (e) => {
@@ -31,7 +35,7 @@ export default {
       // Send the problem input directly to the worker
       workwork.postMessage(problemInput);
      
-      await mathematicalSolutionStore.solveProblem('gerneral'); 
+      
     };
 
     return {

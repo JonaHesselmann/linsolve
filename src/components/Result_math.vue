@@ -13,28 +13,30 @@ export default{
       const mathematicalSolutionStore = useMathematicalSolution()
       return {
       mathematicalSolutionStore,
+      tableData: mathematicalSolutionStore.solution
+  
     };
-    }
+  }
   }
 </script>
 <template>
 <div>
     <h2> {{ $t('mathematicallySolution') }} </h2>
-    <p v-if="mathematicalSolutionStore.optimalResult[0]!='Optimal'">{{ $t('solutionErrorMessage') }}</p>
-    <table class="solution-table" v-if="mathematicalSolutionStore.optimalResult[0] ==='Optimal'">
+    
+    <div>
+    <table v-if="tableData.length">
       <thead>
         <tr>
-          <th>{{ $t('variable') }}</th>
-          <th>{{ $t('optimalValue') }}</th>
+          <th v-for="(header, index) in tableData[0]" :key="index">{{ header }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(solution, index) in mathematicalSolutionStore.solution" :key="index">
-          <td>{{ solution[0] }}</td>
-          <td>{{ solution[1] }}</td>
+        <tr v-for="(row, rowIndex) in tableData.slice(1)" :key="rowIndex">
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
         </tr>
       </tbody>
     </table>
+  </div>
     <div class="results-container" v-if="mathematicalSolutionStore.optimalResult[0] ==='Optimal'">
   <div class="result-card" >
     <h3>{{ $t('objectiveFunctionValue') }}</h3>
