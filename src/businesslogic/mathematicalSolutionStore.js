@@ -9,7 +9,11 @@ import { defineStore } from 'pinia';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-// Defining a new store for managing the state of the mathematical solution 
+
+/**
+ * Constructor for the Store
+ * @type {StoreDefinition<"mathematicalSolution", {solution: [], optimizationStore: *, optimalResult: []}, {}, {getRawArray(*): *, solveProblem(String, String): Promise<void>}>}
+ */
 export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // The `state` function returns an object representing the reactive state of the store
   state: () => ({
@@ -20,13 +24,21 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   
   // Actions section: methods to modify the state or perform other logic
   actions: {
+    /**
+     * Returns the Array
+     * @param array
+     * @returns {*}
+     */
       getRawArray(array){
         return array
       },
 
-    
+
     /**
-     * Calles the right Solverfunction and sets the Solutions
+     * Solves the Problem
+     * @param {String }problemKind Chooses the Solver
+     * @param {String }data The Problem to be solved
+     * @returns {Promise<void>}
      */
     async solveProblem (problemKind, data) {
       if (problemKind === 'spezific') {
