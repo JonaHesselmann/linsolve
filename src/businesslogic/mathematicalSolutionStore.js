@@ -20,10 +20,31 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   
   // Actions section: methods to modify the state or perform other logic
   actions: {
+      
+     prettyPrintTable(array) {
+      // Extract the header row
+      const header = array[0];
+    
+      // Determine the width for each column by finding the longest string length for each column
+      const columnWidths = header.map((_, colIndex) => 
+        Math.max(...array.map(row => row[colIndex].toString().length))
+      );
+    
+      // Function to format a row with padded columns
+      const formatRow = (row) => 
+        row.map((item, index) => item.toString().padEnd(columnWidths[index], ' ')).join(' | ');
+    
+      // Print the header
+      console.log(formatRow(header));
+      console.log('-'.repeat(formatRow(header).length));
+    
+      // Print each row of the data
+      array.slice(1).forEach(row => console.log(formatRow(row)));
+    },
     /**
      * Calles the right Solverfunction and sets the Solutions
      */
-    async solveProblem (problemKind) {
+    async solveProblem (problemKind, data) {
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -53,7 +74,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
           console.error('Keine Lösung vorhanden:', error);
         }
       } else if (problemKind === 'general') {
-        // TODO: Put the Logic for gernal Problems
+        this.prettyPrintTable()
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }

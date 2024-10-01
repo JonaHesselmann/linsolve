@@ -11,7 +11,7 @@ export default {
   name: "GeneralProblemInput",
   setup() {
     const gmplStore = useGMPLStore();
-
+    let data
     const solve = async () => {
       // Create a new web worker
       const workwork = new Worker(new URL('./webworker.worker.js', import.meta.url));
@@ -21,6 +21,8 @@ export default {
       workwork.onmessage = (e) => {
         // Log the data received from the worker
         console.log(e.data);
+        data =  e.data;
+
       };
       // Handle errors from the worker
       workwork.onerror = (e) => {
@@ -28,6 +30,8 @@ export default {
       };
       // Send the problem input directly to the worker
       workwork.postMessage(problemInput);
+     
+      await mathematicalSolutionStore.solveProblem('gerneral'); 
     };
 
     return {
