@@ -19,9 +19,11 @@ self.onmessage = async function solveALP(msg) {
         var iocp = new IOCP({presolve: GLP_ON});
         glp_intopt(lp, iocp);
         //Return back to the mpl model
-         self.postMessage(glp_mpl_postsolve(tran, lp, GLP_MIP));
-         self.postMessage(returnVariableTable());
-         self.postMessage(returnConstrainTable());
+            const map = new Map();
+            map.set('Result',glp_mpl_postsolve(tran, lp, GLP_MIP));
+            map.set('VariableTable',returnVariableTable())
+            map.set('ConstrainTable',returnConstrainTable())
+            self.postMessage(map);
             var status;
             switch (glp_mip_status(lp)) {
                 //TODO implement other States maybe
