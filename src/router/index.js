@@ -12,7 +12,7 @@ import GeneralProblemPage from '../view/GeneralProblemPage.vue'
 import SpezificProblemPage from '../view/SpezificProblemPage.vue'
 import SelectionPage from '../view/SelectionPage.vue'
 import Result from '../view/Result.vue'
-
+import Imprint from '../view/Imprint.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +46,11 @@ const router = createRouter({
       path: '/about',
       name: 'About',
       component: About,
+    },
+    {
+      path: '/imprint',
+      name: 'Imprint',
+      component: Imprint,
     },
 
   ]

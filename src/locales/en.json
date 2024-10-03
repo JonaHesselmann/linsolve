@@ -37,7 +37,16 @@
     "mathematicallySolution": "Mathematically solution",
     "objectiveFunctionValue":"Objective function value", 
     "solutionErrorMessage":"This problem cannot be solved", 
-    "goHome":"Homepage"
+    "goHome":"Homepage",
+    "imprint":"Imprint",
+    "imprintTitle":"Responsible for the content:",
+    "imprintName":"Nele Hensel",
+    "imprintStudent":"Student in the Business Informatics department",
+    "imprintHS":"Hochschule Osnabrück",
+    "imprintAddressTitle":"Address of the university:",
+    "imprintStreet":"Albrechtstraße 30",
+    "imprintCity": "49076 Osnabrück",
+    "imprintContact":"nele.hensel@hs-osnabrueck.de "
 
 }
 

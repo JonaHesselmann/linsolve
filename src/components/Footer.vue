@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Lin
         <a href="/docs/jsdoc/index.html" @click="openDocumentation($event)" class="footer-link">{{ $t('documentation') }}</a>
         <router-link to="/about" class="footer-link">{{ $t('aboutUs') }}</router-link>
         <router-link to="/agb" class="footer-link">{{ $t('gtcs') }}</router-link>
-
+        <router-link to="/imprint" class="footer-link">{{ $t('imprint') }}</router-link>
     </footer>
 </template>
 <style>
