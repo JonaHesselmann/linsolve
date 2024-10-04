@@ -43,7 +43,8 @@ export default{
       <h3>{{ $t('hoster') }}</h3>
       <p><strong>{{ $t('hosterName') }}</strong></p>
       <p>{{ $t('hosterAddress') }}</p>
-      <p>{{ $t('hosterstreet') }}, {{ $t('hosterCity') }}</p>
+      <p>{{ $t('hosterstreet') }} </p>
+      <p>{{ $t('hosterCity') }}</p>
       <p>{{ $t('hosterNumber') }}</p>
       <p>{{ $t('hosterEmail') }}</p>
     </section>
