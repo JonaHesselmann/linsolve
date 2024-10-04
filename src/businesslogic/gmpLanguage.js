@@ -10,60 +10,61 @@ const gmplParser = StreamLanguage.define({
     // Handle strings
     if (state.inString) {
       if (stream.skipTo('"')) {
-        stream.next(); // Consume the closing quote
+        stream.next(); 
         state.inString = false;
       } else {
-        stream.skipToEnd(); // String continues to the end of the line
+        stream.skipToEnd(); 
       }
-      return "string"; // Return the string token
+      return "string"; 
     }
 
     // Detect strings starting
     if (stream.match('"')) {
       state.inString = true;
-      return "string"; // Start string
+      return "string"; 
     }
 
     // Detect comments starting with #
     if (stream.match("#")) {
-      stream.skipToEnd(); // Ignore the rest of the line
-      return "comment"; // Return comment token
+      stream.skipToEnd();
+      return "comment"; 
     }
 
     // GMPL Keywords (expanded list)
-    if (stream.match(/(var|maximize|minimize|subject to|solve|data|parameter|end|set|display|model)\b/)) {
-      return "keyword"; // Return keyword token
-    }
+    if (stream.match(/\b(and|else|mod|union|by|if|not|within|cross|in|or|diff|inter|symdiff|div|less|then)\b/)) {
+      return "keyword"; 
+}
+
 
     // GMPL Operators and punctuation
     if (stream.match(/[+\-*/=<>]/)) {
-      return "operator"; // Return operator token
+      return "operator"; 
     }
 
     // Numbers (both integers and decimals)
     if (stream.match(/^\d+(\.\d+)?/)) {
-      return "number"; // Return number token
+      return "number"; 
     }
 
     // Variables (e.g., anything not a keyword, number, or operator)
     if (stream.match(/^[a-zA-Z_]\w*/)) {
-      return "variableName"; // Return variable token
+      return "variableName"; 
     }
 
     // Skip any non-matching characters
     stream.next();
-    return null; // Continue to the next token
+    return null; 
   },
 });
 
 // Define custom syntax highlighting
 const gmplHighlighting = styleTags({
-  keyword: tags.keyword,         // Keywords like 'var', 'maximize', etc.
-  operator: tags.operator,       // Operators like '+', '-', '*', '/'
-  string: tags.string,           // Strings wrapped in quotes
-  comment: tags.comment,         // Comments starting with #
-  number: tags.number,           // Numbers (integers or decimals)
-  variableName: tags.variableName, // Variable names
+  keyword: tags.keyword,         
+  operator: tags.operator,      
+  string: tags.string,          
+  comment: tags.comment,         
+  number: tags.number,          
+  variableName: tags.variableName, 
 });
 
 // Export a function to use GMPL language

@@ -7,7 +7,10 @@ import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { tags } from '@codemirror/highlight';
 
 // GMPL keywords for autocompletion
-const gmplKeywords = ['var', 'maximize', 'subject to', 'solve', 'data', 'end'];
+const gmplKeywords = 
+['and', 'else', 'mod', 'union', 'by', 'if', 'not', 'within',
+'cross', 'in', 'or', 'diff', 'inter', 'symdiff', 'div', 'less', 'then'
+];
 
 // Define custom GMPL keyword colors for syntax highlighting
 const gmplCustomHighlight = HighlightStyle.define([

@@ -5,7 +5,7 @@ You should have received a copy of the GNU General Public License along with Lin
 -->
 <script>
 import { useMathematicalSolution } from "../businesslogic/mathematicalSolutionStore.js";
-import { useEditorStore } from "../businesslogic/useGMPLStore.js";
+import { useEditorStore } from "../businesslogic/useEditorStore.js";
 import { useRouter } from 'vue-router';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
