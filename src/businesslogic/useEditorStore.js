@@ -14,15 +14,20 @@ import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { tags } from '@codemirror/highlight';
 
 // GMPL keywords for autocompletion
-const gmplKeywords = 
-['and', 'else', 'mod', 'union', 'by', 'if', 'not', 'within',
-'cross', 'in', 'or', 'diff', 'inter', 'symdiff', 'div', 'less', 'then'
+
+const gmplKeywords = [
+  'and', 'by', 'cross', 'data', 'diff', 'div', 'else', 'end', 'for', 'if', 'in', 
+  'integer', 'inter', 'less', 'maximize', 'minimize', 'mod', 'model', 'not', 'or', 
+  'param', 'printf', 's.t.', 'set', 'solve', 'sum', 'symdiff', 'then', 'to', 'union', 'var', 'within'
 ];
+
+
 
 // Define custom GMPL keyword colors for syntax highlighting
 const gmplCustomHighlight = HighlightStyle.define([
-  { tag: tags.keyword, color: "#FF4500", fontWeight: "bold" },  // GMPL keywords in orange
-  { tag: tags.string, color: "#228B22" },                       // Strings in green
+  { tag: tags.keyword, color: "#3358ff", fontWeight: "bold" },  // GMPL keywords in orange
+  { tag: tags.string, color: "#af4000" },     
+  { tag: tags.operator, color: "#5fb838" },                    // Strings in green
   { tag: tags.comment, color: "#808080", fontStyle: "italic" }, // Comments in gray
 ]);
 
