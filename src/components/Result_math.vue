@@ -13,7 +13,7 @@ export default {
     const mathematicalSolutionStore = useMathematicalSolution();
 
     // Assuming tableData is a prop passed from the parent or can be directly accessed
-    const variableTableData = mathematicalSolutionStore.solution; // Assuming this contains your 2D array
+    const variableTableData = mathematicalSolutionStore.solution;
     const constraintTableData =mathematicalSolutionStore.constraints;
     return {
       mathematicalSolutionStore,

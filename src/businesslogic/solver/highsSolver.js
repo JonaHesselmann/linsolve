@@ -37,7 +37,7 @@ async function solveLP(lpContent) {
   try {
     // Das LP-Modell in den Solver laden
      result = await highs.solve(lpContent); // Löst das LP-Problem
-      console.log(result)
+      console.log(formatSolutionToArray(result));
     return result; // Ergebnis zurückgeben
   } catch (error) {
     console.error("Fehler beim Lösen des LP-Problems:", error);
@@ -68,6 +68,62 @@ function returnVariables(){
     }
     return returns;
 }
+function formatSolutionToArray(solution) {
+
+    const result = [];
+
+    // Add headers for the columns
+    const columnHeaders = [
+        'Variable Name',
+        'Type',
+        'Lower Bound',
+        'Upper Bound',
+        'Primal Value',
+        'Dual Value',
+    ];
+    result.push(columnHeaders);
+
+
+    for (const key in solution.Columns) {
+        const col = solution.Columns[key];
+        result.push([
+            col.Name,
+            col.Type,
+            col.Lower,
+            col.Upper === Infinity ? '+inf' : col.Upper,
+            col.Primal,
+            col.Dual,
+        ]);
+    }
+
+    // Add headers for the rows
+    const rowHeaders = [
+        'Constraint Name',
+        'Lower Bound',
+        'Upper Bound',
+        'Primal Value',
+        'Dual Value',
+    ];
+    result.push(rowHeaders);
+
+    // Process each row
+    for (const row in solution.Rows) {
+        result.push([
+            row.Name,
+            row.Lower === -Infinity ? '-inf' : row.Lower,
+            row.Upper === Infinity ? '+inf' : row.Upper,
+            row.Primal,
+            row.Dual,
+        ]);
+    }
+
+
+    return result;
+}
+
+
+
+
 
 
 export { solveLP,returnVariables,returnOptimalResult }; // Exportiert die Funktion zur Verwendung in anderen Modulen
