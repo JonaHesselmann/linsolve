@@ -81,7 +81,6 @@ export default {
   border-radius: 4px;
   transition: background-color 0.3s;
   color: white;
-  z-index: 1000;
   margin-top: 6%;
 }
 
