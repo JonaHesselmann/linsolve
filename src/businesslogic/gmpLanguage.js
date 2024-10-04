@@ -19,27 +19,52 @@ const gmplParser = StreamLanguage.define({
     }
 
     // Detect strings starting
-    if (stream.match('"')) {
-      state.inString = true;
-      return "string"; 
+    if (stream.match('"') || stream.match("'")) {
+    let quoteType = stream.current(); // Capture whether it's a single or double quote
+    while (!stream.eol()) {
+        if (stream.next() === quoteType) { // Stop when the same quote type is found
+            state.inString = false;
+            break;
+        }
     }
+    return "string"; 
+}
+
+  
 
     // Detect comments starting with #
     if (stream.match("#")) {
       stream.skipToEnd();
       return "comment"; 
-    }
+  } else if (stream.match("/*")) {
+      while (!stream.match("*/", false)) { // Keep going until the closing */
+          stream.next();
+          if (stream.eol()) { // If the line ends without closing, continue to the next line
+              break;
+          }
+      }
+      stream.match("*/"); // Match the closing */
+      return "comment";
+  }
+  
 
     // GMPL Keywords (expanded list)
-    if (stream.match(/\b(and|else|mod|union|by|if|not|within|cross|in|or|diff|inter|symdiff|div|less|then)\b/)) {
+    
+    if (stream.match(/\b(and|else|mod|union|by|if|not|within|cross|in|or|diff|inter|symdiff|div|less|then|for|integer|minimize|maximize|model|param|s\.t\.|set|sum|to|var|printf|solve|data|end)\b/)) {
       return "keyword"; 
-}
+  }
+  
+  
 
 
     // GMPL Operators and punctuation
-    if (stream.match(/[+\-*/=<>]/)) {
-      return "operator"; 
-    }
+    
+    if (stream.match(":=")) {
+      return "operator";  // Handle the ':=' operator
+  } else if (stream.match(/[+\-*/=<>]/)) {
+      return "operator";  // Handle other operators
+  }
+  
 
     // Numbers (both integers and decimals)
     if (stream.match(/^\d+(\.\d+)?/)) {
