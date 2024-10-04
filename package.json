@@ -14,6 +14,14 @@
     "docgen": "npx vue-docgen-cli"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.18.1",
+    "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/highlight": "^0.19.8",
+    "@codemirror/language": "^6.10.3",
+    "@codemirror/language-data": "^6.5.1",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.34.1",
+    "@lezer/common": "^1.2.1",
     "@vue/test-utils": "^2.4.6",
     "glpk-wasm": "^0.1.4",
     "highs": "^1.0.1",

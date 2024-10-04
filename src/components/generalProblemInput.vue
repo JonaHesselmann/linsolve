@@ -5,76 +5,75 @@ You should have received a copy of the GNU General Public License along with Lin
 -->
 <script>
 import { useMathematicalSolution } from "../businesslogic/mathematicalSolutionStore.js";
-import { useGMPLStore } from "../businesslogic/useGMPLStore.js";
+import { useEditorStore } from "../businesslogic/useEditorStore.js";
 import { useRouter } from 'vue-router';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 export default {
   name: "GeneralProblemInput",
   setup() {
-    const gmplStore = useGMPLStore();
+    const editorContainer = ref(null); 
+    const editorStore = useEditorStore();  // Use the Pinia store where Codemirror is initialized
+
+    // Mount the Codemirror editor
+    onMounted(() => {
+      if (editorContainer.value) {
+        editorStore.initEditor(editorContainer.value, ''); // Initialize Codemirror
+      }
+    });
+
     const router = useRouter();
-    const mathematicalSolutionStore = useMathematicalSolution()
-    let data
+    const mathematicalSolutionStore = useMathematicalSolution();
+    let data;
+
+    // Solve function to get the content from Codemirror
     const solve = async () => {
+      // Get the content from the Codemirror editor
+      const problemInput = editorStore.editor.state.doc.toString();  // Get the content from Codemirror
+      console.log(problemInput);  // This will log the Codemirror content
+
       // Create a new web worker
       const workwork = new Worker(new URL('./webworker.worker.js', import.meta.url));
-      // Retrieve the problem input from gmplStore
-      const problemInput = gmplStore.problemInput;
+
       // Handle messages from the worker
       workwork.onmessage = (e) => {
         // Log the data received from the worker
         console.log(e.data);
-        data =  e.data;
-        mathematicalSolutionStore.solveProblem('general', data); 
+        data = e.data;
+        mathematicalSolutionStore.solveProblem('general', data);
         router.push("/result");
       };
+
       // Handle errors from the worker
       workwork.onerror = (e) => {
         console.error(e);
       };
-      // Send the problem input directly to the worker
+
+      // Send the problem input to the worker
       workwork.postMessage(problemInput);
-     
-      
     };
 
+
     return {
-      gmplStore,
+      editorContainer,
       solve,
     };
   },
-  methods: {
-    handleInput(event) {
-      const inputText = event.target.value;
-      this.gmplStore.updateProblemInput(inputText);
-      this.gmplStore.updateSuggestionPosition(event.target);
-    },
-    selectSuggestion(suggestion) {
-      this.gmplStore.insertSuggestion(suggestion);
-    }
-  }
 };
 </script>
+
 
 <template>
   <div class="mainContent">
     <h2 class="mainTitel">{{ $t("gerneralProblem") }}</h2>
     <div class="inputContainer">
-      <textarea
-        class="problemInput"
-        v-model="gmplStore.problemInput"
-        @input="handleInput"
+      <div
+        ref="editorContainer" class="problemInput"
+        contenteditable="true"
+
         :placeholder="$t('writeHere')"
-      ></textarea>
-      <ul
-        v-if="gmplStore.suggestions.length > 0"
-        class="suggestionsList"
-        :style="{ top: gmplStore.suggestionPosition.top + 'px', left: gmplStore.suggestionPosition.left + 'px' }"
-      >
-        <li v-for="(suggestion, index) in gmplStore.suggestions" :key="index" @click="selectSuggestion(suggestion)">
-          {{ suggestion }}
-        </li>
-      </ul>
+      ></div>
+     
     </div>
     <div class="buttoncontainer">
       <button class="mainButton" @click="gmplStore.importProblem">{{ $t("importProblem") }}</button>
