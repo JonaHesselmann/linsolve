@@ -1,9 +1,3 @@
-/*
-This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
-*/
-
 import { defineStore } from 'pinia';
 
 const GMPL_KEYWORDS = [
@@ -36,7 +30,16 @@ export const useGMPLStore = defineStore('gmpLStore', {
      */
     updateProblemInput(inputText) {
       this.problemInput = inputText;
-      const words = inputText.split(/\s+/); // Split by spaces or new lines
+
+      // Check if the current line is a comment (starts with '#') and skip auto-completion
+      const currentLine = inputText.split('\n').pop(); // Get the last line of input
+
+      if (currentLine.trim().startsWith('#')) {
+        this.suggestions = []; // Disable suggestions if it's a comment line
+        return;
+      }
+
+      const words = currentLine.split(/\s+/); // Split by spaces or new lines
       this.currentWord = words[words.length - 1]; // Get the last word being typed
 
       this.suggestions = this.getGMPLSuggestions(this.currentWord);
@@ -72,62 +75,64 @@ export const useGMPLStore = defineStore('gmpLStore', {
     updateSuggestionPosition(textarea) {
       const caretPosition = textarea.selectionStart;
       const { top, left } = this.getCaretCoordinates(textarea, caretPosition);
-      
-      
-      this.suggestionPosition = { 
-        top: top - textarea.scrollTop,    
-        left: left - textarea.scrollLeft  
+    
+      this.suggestionPosition = {
+        top: top - textarea.scrollTop,
+        left: left - textarea.scrollLeft
       };
     },
-
     /**
-     * Calculates the coordinates of the caret position within a textarea.
-     * This is used to position the suggestion dropdown correctly.
-     * @param {HTMLTextAreaElement} element - The textarea DOM element.
-     * @param {number} position - The current caret (cursor) position within the textarea.
-     * @returns {Object} An object containing the top and left position in pixels.
-     */
-    getCaretCoordinates(element, position) {
-      const div = document.createElement('div');
-      const style = getComputedStyle(element);
+ * Calculates the coordinates of the caret position within a textarea.
+ * This is used to position the suggestion dropdown correctly.
+ * @param {HTMLTextAreaElement} element - The textarea DOM element.
+ * @param {number} position - The current caret (cursor) position within the textarea.
+ * @returns {Object} An object containing the top and left position in pixels.
+ */
+getCaretCoordinates(element, position) {
+  const div = document.createElement('div');
+  const style = getComputedStyle(element);
 
-      // Copy styles from the textarea to the div
-      for (const prop in style) {
-        div.style[prop] = style[prop];
-      }
+  // List of essential CSS properties required for caret positioning
+  const propertiesToCopy = [
+    'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing',
+    'textTransform', 'wordWrap', 'whiteSpace', 'wordSpacing', 'lineHeight',
+    'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom',
+    'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomWidth',
+    'boxSizing', 'width'
+  ];
 
-      div.style.position = 'absolute';
-      div.style.visibility = 'hidden';
-      div.style.whiteSpace = 'pre-wrap';  
-      div.style.wordWrap = 'break-word';  
-      div.style.width = `${element.offsetWidth}px`;  
+  // Copy only the required styles from textarea to the div
+  propertiesToCopy.forEach(prop => {
+    div.style[prop] = style[prop];
+  });
 
-      // Insert the text up to the caret position
-      const textBeforeCaret = element.value.substring(0, position);
-      const textAfterCaret = element.value.substring(position);
-      div.textContent = textBeforeCaret;
+  div.style.position = 'absolute';
+  div.style.visibility = 'hidden';
+  div.style.whiteSpace = 'pre-wrap';  
+  div.style.wordWrap = 'break-word';  
+  div.style.width = `${element.offsetWidth}px`;
 
-      
-      const span = document.createElement('span');
-      span.textContent = textAfterCaret || '.';  
-      div.appendChild(span);
+  // Insert the text up to the caret position
+  const textBeforeCaret = element.value.substring(0, position);
+  div.textContent = textBeforeCaret;
 
-     
-      document.body.appendChild(div);
+  // Create a span to calculate the exact position of the caret
+  const span = document.createElement('span');
+  span.textContent = '\u200B'; // Zero-width space to ensure span exists
+  div.appendChild(span);
 
-      
-      const { offsetTop, offsetLeft } = span;
+  document.body.appendChild(div);
 
-    
-      document.body.removeChild(div);
+  // Get the caret coordinates based on the span position
+  const { offsetTop, offsetLeft } = span;
 
-     
-      return {
-        top: offsetTop + element.offsetTop - element.scrollTop + 20,  
-        left: offsetLeft + element.offsetLeft - element.scrollLeft   
-      };
-    }
+  document.body.removeChild(div);
+
+  return {
+    top: offsetTop + element.offsetTop - element.scrollTop,
+    left: offsetLeft + element.offsetLeft - element.scrollLeft
+  };
+}
+
   }
 });
-
-

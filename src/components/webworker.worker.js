@@ -18,10 +18,11 @@ self.onmessage = async function solveALP(msg) {
         //Integer Optimizer Parameters
         var iocp = new IOCP({presolve: GLP_ON});
         glp_intopt(lp, iocp);
+        glp_mpl_postsolve(tran, lp, GLP_MIP)
         //Return back to the mpl model
-         self.postMessage(glp_mpl_postsolve(tran, lp, GLP_MIP));
-         self.postMessage(returnVariableTable());
-         self.postMessage(returnConstrainTable());
+            const map = new Map();
+        
+            const Status = [];
             var status;
             switch (glp_mip_status(lp)) {
                 //TODO implement other States maybe
@@ -30,27 +31,37 @@ self.onmessage = async function solveALP(msg) {
                     break;
                 case GLP_UNDEF :
                     status = "UNDEFINED SOLUTION";
+                    Status.push(status,'0')
                     break;
                 case GLP_INFEAS :
                     status = "INFEASIBLE SOLUTION";
+                    Status.push(status,'0')
                     break;
                 case GLP_NOFEAS :
                     status = "NO FEASIBLE SOLUTION";
+                    Status.push(status,'0')
                     break;
                 case GLP_FEAS :
                     status = "FEASIBLE SOLUTION";
+                    Status[status,'0']
                     break;
                 case GLP_UNBND :
                     status = "UNBOUNDED SOLUTION";
+                    Status.push(status,'0')
                     break;
             }
             if (status == "OPTIMAL") {
                 console.log("OPTIMAL");
+                Status.push("Optimal",glp_mip_obj_val(lp));
                 console.log(glp_mip_obj_val(lp));
 
             } else {
                 console.log('no valid solution found');
             }
+            map.set('Result',Status);
+            map.set('VariableTable',returnVariableTable())
+            map.set('ConstrainTable',returnConstrainTable())
+            self.postMessage(map);
 
         } catch (err) {
             if (err.line) {
