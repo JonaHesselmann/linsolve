@@ -9,11 +9,16 @@ import { defineStore } from 'pinia';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-// Defining a new store for managing the state of the mathematical solution 
+
+/**
+ * Constructor for the Store
+ * @type {StoreDefinition<"mathematicalSolution", {solution: [], optimizationStore: *, optimalResult: []}, {}, {getRawArray(*): *, solveProblem(String, String): Promise<void>}>}
+ */
 export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // The `state` function returns an object representing the reactive state of the store
   state: () => ({
     solution: [], 
+    constraints:[],
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
   }),
@@ -21,9 +26,22 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // Actions section: methods to modify the state or perform other logic
   actions: {
     /**
-     * Calles the right Solverfunction and sets the Solutions
+     * Returns the Array
+     * @param array
+     * @returns {*}
      */
-    async solveProblem (problemKind) {
+      getRawArray(array){
+        return array
+      },
+
+
+    /**
+     * Solves the Problem
+     * @param {String }problemKind Chooses the Solver
+     * @param {String }data The Problem to be solved
+     * @returns {Promise<void>}
+     */
+    async solveProblem (problemKind, data) {
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -48,12 +66,14 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
           this.solution = highsSolver.returnVariables(); 
           console.log(this.solution);
           this.optimalResult = highsSolver.returnOptimalResult();
-          console.log('TEST' + this.optimalResult);
         } catch (error) {
           console.error('Keine Lösung vorhanden:', error);
         }
       } else if (problemKind === 'general') {
-        // TODO: Put the Logic for gernal Problems
+        this.solution = this.getRawArray(data.get('VariableTable'))
+        this.optimalResult =  data.get('Result')
+        this.constraints =data.get('ConstrainTable')
+        console.log(this.constraints)
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }
