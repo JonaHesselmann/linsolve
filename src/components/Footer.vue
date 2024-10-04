@@ -23,6 +23,7 @@ You should have received a copy of the GNU General Public License along with Lin
         <router-link to="/about" class="footer-link">{{ $t('aboutUs') }}</router-link>
         <router-link to="/agb" class="footer-link">{{ $t('gtcs') }}</router-link>
         <router-link to="/imprint" class="footer-link">{{ $t('imprint') }}</router-link>
+        <router-link to="privacyPolicy" class="footer-link">{{ $t("privacyPolicy") }}</router-link>
     </footer>
 </template>
 <style>
