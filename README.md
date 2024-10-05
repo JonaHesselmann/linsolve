@@ -12,9 +12,10 @@
 This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
 
 ## Screenshot
-![ Landing Page](/public/landingPage.png raw=true "Langding Page")
-![ General Problem Page](/public/generalProblemPage.png raw=true "General Problem Page")
-![ Spezific Problem Page](/public/spezifischProblemPage.png raw=true "Spezific Problem Page")
+![Landing Page](./public/landingPage.png)
+![General Problem Page](./public/generalProblemPage.png)
+![Spezific Problem Page](./public/spezifischProblemPage.png)
+
 # Dependencies
 *************
 A list of technologies used within the project:
