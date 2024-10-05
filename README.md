@@ -19,7 +19,10 @@
 
 ## General Information
 ***
-This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
+This project was developed as part of a programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the **Highs** and **GLPK** solvers for linear optimisation problems. 
+
+You can access the website at: [https://jonahesselmann.github.io/linsolve/](https://jonahesselmann.github.io/linsolve/).
+
 
 ## Screenshot
 
@@ -104,9 +107,10 @@ This project is licensed under the GNU General Public License v3.0.
 
 ## Documentation
 
-The project’s documentation is automatically generated using <strong>JSDoc</strong>, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
+The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
 
-You can find the full documentation <a href="./docs/jsdoc/index.html" target="_blank">here</a>.
+You can find the full documentation [here](https://jonahesselmann.github.io/linsolve/docs/jsdoc/index.html).
+
 
 
 **********
