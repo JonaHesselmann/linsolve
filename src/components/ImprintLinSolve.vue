@@ -17,7 +17,8 @@ export default{
             <h2 class="secondTitle"> {{ $t('imprintTitle') }} </h2>
             <p class="maintext">{{ $t('imprintName') }}</p>
             <p class="maintext">{{ $t('imprintStudent') }}</p>
-            <p class="maintext">{{ $t('imprintHS') }}</p>            
+            <p class="maintext">{{ $t('imprintHS') }}</p> 
+            <p class="maintext">{{ $t('imprintContact') }}</p>           
         </section>
         <br>
         <section class="imprintHs">
@@ -25,7 +26,7 @@ export default{
             <p class="maintext">{{ $t('imprintHS') }}</p>
             <p class="maintext">{{ $t('imprintStreet') }}</p>
             <p class="maintext">{{ $t('imprintCity') }}</p>
-            <p class="maintext">{{ $t('imprintContact') }}</p>
+          
         </section>
     </div>
 </template>
