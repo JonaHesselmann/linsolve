@@ -12,9 +12,19 @@
 This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
 
 ## Screenshot
+### Landing Page 
+### Landing Page
 ![Landing Page](./public/landingPage.png)
+On this page, the user can select the type of problem they want to solve and upload a file containing the problem.
+
+### General Problem Page
 ![General Problem Page](./public/generalProblemPage.png)
-![Spezific Problem Page](./public/spezifischProblemPage.png)
+On this page, the user can specify the general problem they want to solve. This needs to be done using **GMPL**.
+
+### Specific Problem Page
+![Specific Problem Page](./public/spezifischProblemPage.png)
+On this page, specific problems can be detailed and defined.
+
 
 # Dependencies
 *************
@@ -69,9 +79,66 @@ npm test dev --coverage
 
 ## Collaboration
 
+We are always looking for contributors and collaborators to help improve this project! Whether you’re a developer, designer, mathematician, or simply passionate about problem-solving, there are many ways you can get involved.
+
+### How You Can Contribute
+
+- **Feature Development**: Help us build new features or improve existing ones. Check out our [issues](#) for areas where we need assistance.
+- **Bug Fixing**: Found a bug? Submit an issue or, even better, a pull request with a fix!
+- **Documentation**: We’re always looking to improve our documentation. Whether it's clarifying explanations, adding examples, or making the project easier to use, your input is welcome.
+- **Feedback**: Share your thoughts and suggestions for improving the user experience, feature requests, or general improvements.
+- **Testing**: Help us test new features, report bugs, and ensure the project is stable across different environments.
 
 ## Documentation
+### Documentation
+
+The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
+
+You can find the full documentation [here](/docs/jsdoc/index.html).
+
 **********
 # FAQs
+# FAQs
+**********
+
+### 1. What format should my problem file be in?
+The file should be in **LP** (Linear Programming) or **GMPL** (GNU Math Programming Language) format.
+
+### 2. Which solvers are implemented?
+For general problems, the **GMPL** solver is implemented using a WebWorker. For specific problems, **Highs** is implemented with WebAssembly.
+
+### 3. What is GMPL?
+**GMPL** (GNU Math Programming Language) is a high-level modeling language used for describing linear, nonlinear, and mixed-integer programming problems. It is part of the **GLPK** (GNU Linear Programming Kit) and is widely used for optimization problems.
+
+### 4. Who can I contact if I encounter an issue or have a question?
+If you run into any issues or have questions, feel free to open an issue on the GitHub repository, or reach out to the project maintainers. We’re happy to help!
+
+### 5. What is Linsolve?
+Linsolve is a web-based interface for the Highs Solver, designed to solve linear optimization problems. The project was developed as part of a programming project in the Business Informatics program at Osnabrück University of Applied Sciences.
+
+### 6. How can I submit a problem to be solved?
+You can submit a problem by selecting the appropriate problem type on the **Landing Page** and uploading the problem file. The system supports both general and specific problem types.
+
+### 7. How can I run the project locally?
+To run the project locally, clone the repository, install the required dependencies using `npm install`, and then run `npm run dev` to start the development server. Detailed instructions can be found in the [Getting Started](#getting-started) section.
+
+### 8. How is the project tested?
+The project uses **Vitest** for unit testing. You can run the tests using the command `vitest` or `npm test dev`. Test coverage reports can also be generated.
+
+### 9. Can I contribute to this project?
+Absolutely! We welcome contributions from developers, designers, and problem-solvers. Please see the [Collaboration](#collaboration) section for more details on how to get involved.
+
+### 10. Where can I find the project documentation?
+The documentation is automatically generated using **JSDoc** and can be found [here](/docs/jsdoc/index.html). It includes detailed information on how the system works, its architecture, and how you can contribute.
+
+### 11. What are the main dependencies of this project?
+The project uses several technologies, including:
+- **Vue.js** for the frontend
+- **Vue Router** for navigation
+- **Pinia** for state management
+- **Mathlive** for handling mathematical expressions
+
+You can find a full list of dependencies in the [Dependencies](#dependencies) section.
+
 **********
 
