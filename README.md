@@ -44,7 +44,6 @@ A list of technologies used within the project:
 * [Vue](https://vuejs.org/): version ^3.4.37
 * [Vue-i18n](https://vue-i18n.intlify.dev/): version ^9.14.0
 * [Vue-router](https://router.vuejs.org/): version ^4.0.13
-* [Mathlive](https://cortexjs.io/mathlive/): version ^0.101.0
 * [Pinia](https://pinia.vuejs.org/): version ^2.2.2
 
 # Getting Started
@@ -151,7 +150,7 @@ The project uses several technologies, including:
 - **Vue.js** for the frontend
 - **Vue Router** for navigation
 - **Pinia** for state management
-- **Mathlive** for handling mathematical expressions
+
 
 You can find a full list of dependencies in the [Dependencies](#dependencies) section.
 
