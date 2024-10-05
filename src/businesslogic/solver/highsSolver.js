@@ -46,7 +46,7 @@ async function solveLP(lpContent) {
         map.set('ConstrainTable', returnConstraints(result));
         console.log(map);
         //TODO: Change to return
-        return result; // Ergebnis zurückgeben
+        return map; // Ergebnis zurückgeben
     } catch (error) {
         console.error("Fehler beim Lösen des LP-Problems:", error);
         throw error;

@@ -42,6 +42,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
      * @returns {Promise<void>}
      */
     async solveProblem (problemKind, data) {
+      let highsData
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -55,20 +56,22 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             ""
           );
           console.log(lpContent);
-          const result = await highsSolver.solveLP(lpContent); // Solve the LP
-          console.log(result);
+          highsData = await highsSolver.solveLP(lpContent);
+          console.log('Highs'+ highsData)
+          try {
+            this.solution = this.getRawArray(highsData.get('VariableTable'))
+            this.optimalResult = highsData.get('Result')
+            this.constraints = highsData.get('ConstrainTable')
+          } catch (error) {
+            console.error('Error:', error);
+          }
+           
           // TODO: Handle the result and move to the solved result
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
         }
         
-        try {
-          this.solution = highsSolver.returnConstraints();
-          console.log(this.solution);
-          this.optimalResult = highsSolver.returnOptimalResult();
-        } catch (error) {
-          console.error('Keine Lösung vorhanden:', error);
-        }
+        
       } else if (problemKind === 'general') {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
