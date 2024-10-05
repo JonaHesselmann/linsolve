@@ -1,5 +1,5 @@
 
-importScripts('./glpk.js')
+importScripts(import.meta.env.BASE_URL+'/glpk.js')
 self.onmessage = async function solveALP(msg) {
     console.log("Message received in worker:");
         var output = 0;
