@@ -6,23 +6,44 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 <script>
-    import Header from '../components/Header.vue';
-    import Result_math from '../components/Result_math.vue';
-    import Footer from '../components/Footer.vue';
+import Header from '../components/Header.vue';
+import Result_math from '../components/Result_math.vue';
+import Footer from '../components/Footer.vue';
 import GoToHomepage from '../components/goToHomepage.vue';
+import { exportLPFile } from '../businesslogic/exportLPFile';
+import { useOptimizationStore } from '../businesslogic/optimizationStore'; // Importieren Sie den Store
 
-    export default{
-        name:'Result',
-        components:{
-            Header, 
-            Footer, 
-            Result_math, 
-            GoToHomepage,
-        }
-    }
-    </script>
+export default {
+  name: 'Result',
+  components: {
+    Header,
+    Footer,
+    Result_math,
+    GoToHomepage,
+  },
+  setup() {
+    const optimizationStore = useOptimizationStore(); // Initialisieren Sie den Store
+
+    const exportResults = () => {
+      const format = 'lp'; // oder ein anderes Format, das Sie verwenden möchten
+      exportLPFile(format, optimizationStore);
+    };
+
+    return {
+      exportResults,
+      optimizationStore
+    };
+  }
+}
+</script>
 <template>
     <Header></Header>
+    <div class="button-container">
+      <button @click="exportResults()" class="export-button">
+        <img src="../assets/export.png" alt="Export" class="export-icon" />
+        Problem Exportieren
+      </button>
+    </div>
     <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <Result_math class="mainContent"></Result_math>
     <Footer></Footer>
@@ -36,6 +57,40 @@ import GoToHomepage from '../components/goToHomepage.vue';
 .GoToHomepage{
          margin-top: 1%;
     }
-</style>
 
+    .button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  position: absolute;
+  top: 90px;
+  right: 10px;
+}
+
+.export-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: rgb(173, 170, 170);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  color: white;
+  margin-top: 6%;
+}
+
+.export-button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.export-icon {
+  width: 24px;
+  height: 24px;
+}
+</style>
 
