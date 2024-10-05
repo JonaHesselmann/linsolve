@@ -1,7 +1,6 @@
 # Linsolve
 ![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
 ![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/JonaHesselmann/linsolve)
 ![GitHub last commit](https://img.shields.io/github/last-commit/JonaHesselmann/linsolve)
 ![GitHub contributors](https://img.shields.io/github/contributors/JonaHesselmann/linsolve)
 ![GitHub issues](https://img.shields.io/github/issues/JonaHesselmann/linsolve)
