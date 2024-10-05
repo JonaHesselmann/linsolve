@@ -4,50 +4,70 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
 
-
 <script>
 import { useMathematicalSolution } from '../businesslogic/mathematicalSolutionStore.js'
-export default{
-  name: "resultMath", 
-  setup(){
-      const mathematicalSolutionStore = useMathematicalSolution()
-      return {
+
+export default {
+  name: "resultMath",
+  setup() {
+    const mathematicalSolutionStore = useMathematicalSolution();
+
+    // Assuming tableData is a prop passed from the parent or can be directly accessed
+    const variableTableData = mathematicalSolutionStore.solution;
+    const constraintTableData =mathematicalSolutionStore.constraints;
+    return {
       mathematicalSolutionStore,
+      variableTableData,
+      constraintTableData
     };
-    }
   }
+}
 </script>
+
 <template>
-<div>
-    <h2> {{ $t('mathematicallySolution') }} </h2>
-    <p v-if="mathematicalSolutionStore.optimalResult[0]!='Optimal'">{{ $t('solutionErrorMessage') }}</p>
-    <table class="solution-table" v-if="mathematicalSolutionStore.optimalResult[0] ==='Optimal'">
-      <thead>
+  <div>
+    <h2>{{ $t('mathematicallySolution') }}</h2>
+
+    <div>
+      <p>{{ $t('variable') }}</p>
+      <table v-if="variableTableData.length" class="solution-table">
+        <thead>
         <tr>
-          <th>{{ $t('variable') }}</th>
-          <th>{{ $t('optimalValue') }}</th>
+          <th v-for="(header, index) in variableTableData[0]" :key="index">{{ header }}</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(solution, index) in mathematicalSolutionStore.solution" :key="index">
-          <td>{{ solution[0] }}</td>
-          <td>{{ solution[1] }}</td>
+        </thead>
+        <tbody>
+        <tr v-for="(row, rowIndex) in variableTableData.slice(1)" :key="rowIndex">
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
         </tr>
-      </tbody>
-    </table>
-    <div class="results-container" v-if="mathematicalSolutionStore.optimalResult[0] ==='Optimal'">
-  <div class="result-card" >
-    <h3>{{ $t('objectiveFunctionValue') }}</h3>
-    <p> {{ $t('optimalValue') }} <strong>{{ mathematicalSolutionStore.optimalResult[1] }}</strong></p>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p>{{ $t('constraint') }}</p>
+      <table v-if="constraintTableData.length" class="solution-table">
+        <thead>
+        <tr>
+          <th v-for="(header, index) in constraintTableData[0]" :key="index">{{ header }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(row, rowIndex) in constraintTableData.slice(1)" :key="rowIndex">
+          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="results-container" v-if="mathematicalSolutionStore.optimalResult[0] === 'Optimal'">
+      <div class="result-card">
+        <h3>{{ $t('objectiveFunctionValue') }}</h3>
+        <p>{{ $t('optimalValue') }} <strong>{{ mathematicalSolutionStore.optimalResult[1] }}</strong></p>
+      </div>
+    </div>
   </div>
-
-  
-</div>
-
-    
-</div> 
-
 </template>
+
 <style>
 .solution-table {
   width: 100%;
@@ -55,10 +75,12 @@ export default{
   margin: 20px 0;
 }
 
-.solution-table th, .solution-table td {
+.solution-table th,
+.solution-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  white-space: nowrap; /* Prevent breaking of text */
 }
 
 .solution-table th {
@@ -69,41 +91,15 @@ export default{
 .solution-table td {
   font-size: 18px;
 }
-.accordion {
+
+.results-container {
+  margin-top: 20px;
+}
+
+.result-card {
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 300px;
-  margin: 0 auto;
-}
-
-.accordion-item {
-  margin: 10px 0;
-}
-
-.accordion-header {
-  background-color: #f0f0f0;
-  border: none;
   padding: 10px;
-  text-align: left;
-  font-size: 1.1em;
-  width: 100%;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-color: #f9f9f9;
 }
-
-.accordion-header:hover {
-  background-color: #ddd;
-}
-
-.accordion-content {
-  background-color: white;
-  padding: 10px;
-  display: none;
-}
-
-.accordion-header.active + .accordion-content {
-  display: block;
-}
-
 </style>
-

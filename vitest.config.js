@@ -14,8 +14,9 @@ export default defineConfig({
         environment: 'happy-dom',
         globals: true,
         coverage: {
-            //changed so that it does not include node_modules and glpk.min.js
-            include: ['src/**']
+            //changed so that it does not include node_modules and glpk.min.cjs
+            include: ['src/**'],
+            exclude:['**/glpk.js']
         },
          },
 });

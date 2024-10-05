@@ -1,17 +1,42 @@
 # Linsolve
+![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
+![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
+![GitHub last commit](https://img.shields.io/github/last-commit/JonaHesselmann/linsolve)
+![GitHub contributors](https://img.shields.io/github/contributors/JonaHesselmann/linsolve)
+![GitHub issues](https://img.shields.io/github/issues/JonaHesselmann/linsolve)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/JonaHesselmann/linsolve)
+![GitHub forks](https://img.shields.io/github/forks/JonaHesselmann/linsolve?style=social)
+
 
 ## Table of Contents
 1. [General Information ](#general-information)
 2. [Dependencies](#Dependencies)
 3. [Getting Started](#getting-started)
 4. [Collaboration](#Collaboration)
-5. [FAQs](#faqs)
+5. [License](#License)
+6. [FAQs](#faqs)
 
 ## General Information
 ***
-This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
+This project was developed as part of a programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the **Highs** and **GLPK** solvers for linear optimisation problems. 
+
+You can access the website at: [https://jonahesselmann.github.io/linsolve/](https://jonahesselmann.github.io/linsolve/).
+
 
 ## Screenshot
+
+### Landing Page
+![Landing Page](./public/landingPage.png)
+On this page, the user can select the type of problem they want to solve and upload a file containing the problem.
+
+### General Problem Page
+![General Problem Page](./public/generalProblemPage.png)
+On this page, the user can specify the general problem they want to solve. This needs to be done using **GMPL**.
+
+### Specific Problem Page
+![Specific Problem Page](./public/spezifischProblemPage.png)
+On this page, specific problems can be detailed and defined.
+
 
 # Dependencies
 *************
@@ -19,7 +44,6 @@ A list of technologies used within the project:
 * [Vue](https://vuejs.org/): version ^3.4.37
 * [Vue-i18n](https://vue-i18n.intlify.dev/): version ^9.14.0
 * [Vue-router](https://router.vuejs.org/): version ^4.0.13
-* [Mathlive](https://cortexjs.io/mathlive/): version ^0.101.0
 * [Pinia](https://pinia.vuejs.org/): version ^2.2.2
 
 # Getting Started
@@ -59,11 +83,79 @@ Or alternatively use:
 ```bash
 npm test dev
 ```
+Test Coverage 
+```bash 
+npm test dev --coverage
+```
+
 ## Collaboration
 
+We are always looking for contributors and collaborators to help improve this project! Whether you’re a developer, designer, mathematician, or simply passionate about problem-solving, there are many ways you can get involved.
+
+### How You Can Contribute
+
+- **Feature Development**: Help us build new features or improve existing ones.
+- **Bug Fixing**: Found a bug? Submit an issue or, even better, a pull request with a fix!
+- **Documentation**: We’re always looking to improve our documentation. Whether it's clarifying explanations, adding examples, or making the project easier to use, your input is welcome.
+- **Feedback**: Share your thoughts and suggestions for improving the user experience, feature requests, or general improvements.
+- **Testing**: Help us test new features, report bugs, and ensure the project is stable across different environments.
+
+## License 
+This project is licensed under the GNU General Public License v3.0.
 
 ## Documentation
+
+The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
+
+You can find the full documentation [here](https://jonahesselmann.github.io/linsolve/docs/jsdoc/index.html).
+
+
+
 **********
 # FAQs
+**********
+
+### 1. What format should my problem file be in?
+The file should be in **LP** (Linear Programming) or **GMPL** (GNU Math Programming Language) format.
+
+### 2. Which solvers are implemented?
+For general problems, the **GMPL** solver is implemented using a WebWorker. For specific problems, **Highs** is implemented with WebAssembly.
+
+### 3. What is GMPL?
+**GMPL** (GNU Math Programming Language) is a high-level modeling language used for describing linear, nonlinear, and mixed-integer programming problems. It is part of the **GLPK** (GNU Linear Programming Kit) and is widely used for optimization problems.
+
+### 4. Who can I contact if I encounter an issue or have a question?
+If you run into any issues or have questions, feel free to open an issue on the GitHub repository, or reach out to the project maintainers. We’re happy to help!
+
+### 5. What is Linsolve?
+Linsolve is a web-based interface for the Highs Solver, designed to solve linear optimization problems. The project was developed as part of a programming project in the Business Informatics program at Osnabrück University of Applied Sciences.
+
+### 6. How can I submit a problem to be solved?
+You can submit a problem by selecting the appropriate problem type on the **Landing Page** and uploading the problem file. The system supports both general and specific problem types.
+
+### 7. How can I run the project locally?
+To run the project locally, clone the repository, install the required dependencies using `npm install`, and then run `npm run dev` to start the development server. Detailed instructions can be found in the [Getting Started](#getting-started) section.
+
+### 8. How is the project tested?
+The project uses **Vitest** for unit testing. You can run the tests using the command `vitest` or `npm test dev`. Test coverage reports can also be generated.
+
+### 9. Can I contribute to this project?
+Absolutely! We welcome contributions from developers, designers, and problem-solvers. Please see the [Collaboration](#collaboration) section for more details on how to get involved.
+
+### 10. Where can I find the project documentation?
+The documentation is automatically generated using **JSDoc** and can be found [here](/docs/jsdoc/index.html). It includes detailed information on how the system works, its architecture, and how you can contribute.
+
+### 11. What are the main dependencies of this project?
+The project uses several technologies, including:
+- **Vue.js** for the frontend
+- **Vue Router** for navigation
+- **Pinia** for state management
+
+
+You can find a full list of dependencies in the [Dependencies](#dependencies) section.
+
+**********
+## Acknowledgments
+We would like to thank all contributors and the faculty at Osnabrück University of Applied Sciences for their guidance and support during this project.
 **********
 

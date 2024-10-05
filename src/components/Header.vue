@@ -49,30 +49,34 @@ export default {
        <p class="dropdown-link" @click="changeLocale('en')">English</p>
     </div>
   </header>
+  
       
 </template>
 
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  padding-top: 5rem; 
+}
 
 .header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; 
+  width: 100%;
   display: flex;
-  align-items: center; 
+  align-items: center;
   padding: 1rem 2rem;
   background-color: rgba(7, 7, 152, 0.945);
   color: white;
   z-index: 1000;
 }
+
 
 
 .title {
@@ -82,7 +86,6 @@ export default {
   margin: 0 auto;
 }
 
-
 .globe {
   height: calc(10px + 1vw);
   width: calc(10px + 1vw);
@@ -90,22 +93,20 @@ export default {
   cursor: pointer;
 }
 
-
 .language {
   padding-left: 3px;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 20px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  display: none; 
+  display: none;
 }
-
 
 .dropdown-link {
   display: block;
@@ -119,17 +120,27 @@ export default {
   background-color: #f1f1f1;
 }
 
-
 .header:hover .dropdown-menu {
   display: block;
 }
 
+/* Standardgröße für größere Bildschirme */
 .logo {
   height: 3%;
   width: 3%;
   margin-left: auto;
   cursor: pointer;
 }
+
+/* Größere Größe für Mobilgeräte */
+@media only screen and (max-width: 768px) {
+  .logo {
+    height: 6%; /* Größer auf mobilen Geräten */
+    width: 6%;
+  }
+}
+
+
 
 </style>
 

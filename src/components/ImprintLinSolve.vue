@@ -4,21 +4,29 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
 
-
 <script>
 export default{
-    name: 'AboutUs'
+    name: 'Imprint'
 }
 </script>
 <template>
     <div>
-       <h1 class="mainTitle">
-           {{ $t('aboutUsHeadline') }}
-        </h1>
+        <h1 class="FirstTitle">{{ $t('imprint') }}</h1>
         <br>
-        <p class="mainText">   {{$t('aboutUsText')}} 💻
-        </p>
-        
+        <section class="imprint">
+            <h2 class="secondTitle"> {{ $t('imprintTitle') }} </h2>
+            <p class="maintext">{{ $t('imprintName') }}</p>
+            <p class="maintext">{{ $t('imprintStudent') }}</p>
+            <p class="maintext">{{ $t('imprintHS') }}</p>            
+        </section>
+        <br>
+        <section class="imprintHs">
+            <h2 class="secondTitle">{{ $t('imprintAddressTitle') }}</h2>
+            <p class="maintext">{{ $t('imprintHS') }}</p>
+            <p class="maintext">{{ $t('imprintStreet') }}</p>
+            <p class="maintext">{{ $t('imprintCity') }}</p>
+            <p class="maintext">{{ $t('imprintContact') }}</p>
+        </section>
     </div>
 </template>
 <style scoped>

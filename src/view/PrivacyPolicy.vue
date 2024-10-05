@@ -8,21 +8,21 @@ You should have received a copy of the GNU General Public License along with Lin
 <template>
     <Header></Header>
     <GoToHomepage class="GoToHomepage"></GoToHomepage>
-    <Agbs class="mainContent"></Agbs>
+    <PrivacyPolicyLinSolve class="mainContent"></PrivacyPolicyLinSolve>
     <Footer></Footer>
     </template>
     <script>
     import Header from '../components/Header.vue';
-    import Agbs from '../components/Agbs.vue';
     import Footer from '../components/Footer.vue';
-import GoToHomepage from '../components/goToHomepage.vue';
+    import GoToHomepage from '../components/goToHomepage.vue';
+    import PrivacyPolicyLinSolve from '../components/PrivacyPolicyLinSolve.vue';
 
     export default{
-        name: 'Agb',
+        name: 'PrivacyPolicyLinSolvePage',
         components:{
             Header, 
             Footer, 
-            Agbs, 
+            PrivacyPolicyLinSolve, 
             GoToHomepage,
         }
     }
@@ -36,4 +36,3 @@ import GoToHomepage from '../components/goToHomepage.vue';
          margin-top: 1%;
     }
     </style>
-

@@ -4,30 +4,48 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
 
-
-<script>
-export default{
-    name: 'AboutUs'
-}
-</script>
 <template>
-    <div>
-       <h1 class="mainTitle">
-           {{ $t('aboutUsHeadline') }}
-        </h1>
-        <br>
-        <p class="mainText">   {{$t('aboutUsText')}} 💻
-        </p>
-        
+    <div class="arrow-container">
+        <router-link to="/" class="arrow-link">
+            <img src="../assets/arrow.png" alt="Go to Homepage" class="arrow">
+            <p>{{ $t('goHome') }}</p>
+        </router-link>
     </div>
 </template>
+
 <style scoped>
-.mainTitle{
-  font-size: large;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.mainText{
-  font-size: medium;
-  color: #333;
+
+body {
+  padding-top: 5rem;
+}
+
+.arrow-container {
+  position: absolute;
+  top: calc(5rem + 1rem); 
+  left: 2rem; 
+}
+
+.arrow-link {
+  display: inline-flex; 
+  align-items: center; 
+  text-decoration: none; 
+  color: blackx;
+}
+
+.arrow {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem; 
+}
+
+p {
+  font-size: 1rem;
+  margin: 0;
+  color: black;
 }
 </style>
-

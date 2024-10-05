@@ -8,21 +8,21 @@ You should have received a copy of the GNU General Public License along with Lin
 <template>
     <Header></Header>
     <GoToHomepage class="GoToHomepage"></GoToHomepage>
-    <Agbs class="mainContent"></Agbs>
+    <ImprintLinSolve class="mainContent"></ImprintLinSolve>
     <Footer></Footer>
     </template>
     <script>
     import Header from '../components/Header.vue';
-    import Agbs from '../components/Agbs.vue';
+    import ImprintLinSolve from '../components/ImprintLinSolve.vue';
     import Footer from '../components/Footer.vue';
 import GoToHomepage from '../components/goToHomepage.vue';
 
     export default{
-        name: 'Agb',
+        name: 'ImprintLinSolvePage',
         components:{
             Header, 
             Footer, 
-            Agbs, 
+            ImprintLinSolve, 
             GoToHomepage,
         }
     }
@@ -36,4 +36,3 @@ import GoToHomepage from '../components/goToHomepage.vue';
          margin-top: 1%;
     }
     </style>
-

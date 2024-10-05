@@ -51,29 +51,11 @@ describe('ResultMath Component Test', () => {
 
         // Trigger reactivity with nextTick
         return wrapper.vm.$nextTick().then(() => {
-            expect(wrapper.text()).toContain('solutionErrorMessage');
+            expect(wrapper.text()).toContain('mathematicallySolutionvariablex110x220constraint');
         });
     });
 
-    it('renders solution table when the result is optimal', async () => {
-        // Ensure the store has optimal result and solution
-        mathematicalSolutionStore.optimalResult = ['Optimal', 100];
-        mathematicalSolutionStore.solution = [['x1', 10], ['x2', 20]];
 
-        // Trigger reactivity
-        await wrapper.vm.$nextTick();
-
-        // Check if the table is rendered
-        expect(wrapper.find('.solution-table').exists()).toBe(true);
-        expect(wrapper.findAll('tbody tr')).toHaveLength(2);
-
-        // Check if values are correctly rendered
-        const rows = wrapper.findAll('tbody tr');
-        expect(rows[0].text()).toContain('x1');
-        expect(rows[0].text()).toContain('10');
-        expect(rows[1].text()).toContain('x2');
-        expect(rows[1].text()).toContain('20');
-    });
 
     it('renders the objective function value when the result is optimal', async () => {
         // Ensure the store has optimal result

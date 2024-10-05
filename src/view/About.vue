@@ -7,6 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <template>
     <Header></Header>
+    <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <AboutUs class="mainContent"></AboutUs>
     <Footer></Footer>
     </template>
@@ -14,12 +15,15 @@ You should have received a copy of the GNU General Public License along with Lin
     import Header from '../components/Header.vue';
     import AboutUs from '../components/About_us.vue';
     import Footer from '../components/Footer.vue';
+import GoToHomepage from '../components/goToHomepage.vue';
+
     export default{
         name:'About',
         components:{
             Header, 
             Footer, 
-            AboutUs
+            AboutUs, 
+            GoToHomepage
         }
     }
     </script>
@@ -27,6 +31,9 @@ You should have received a copy of the GNU General Public License along with Lin
     .mainContent{
         margin-top: 15%;
         margin-bottom: 10%;
+    }
+    .GoToHomepage{
+         margin-top: 1%;
     }
     </style>
 
