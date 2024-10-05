@@ -1,11 +1,15 @@
 # Linsolve
+![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
+![Coverage](https://img.shields.io/codecov/c/github/JonaHesselmann/linsolve)
+![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
 
 ## Table of Contents
 1. [General Information ](#general-information)
 2. [Dependencies](#Dependencies)
 3. [Getting Started](#getting-started)
 4. [Collaboration](#Collaboration)
-5. [FAQs](#faqs)
+5. [License](#License)
+6. [FAQs](#faqs)
 
 ## General Information
 ***
@@ -83,21 +87,24 @@ We are always looking for contributors and collaborators to help improve this pr
 
 ### How You Can Contribute
 
-- **Feature Development**: Help us build new features or improve existing ones. Check out our [issues](#) for areas where we need assistance.
+- **Feature Development**: Help us build new features or improve existing ones.
 - **Bug Fixing**: Found a bug? Submit an issue or, even better, a pull request with a fix!
 - **Documentation**: We’re always looking to improve our documentation. Whether it's clarifying explanations, adding examples, or making the project easier to use, your input is welcome.
 - **Feedback**: Share your thoughts and suggestions for improving the user experience, feature requests, or general improvements.
 - **Testing**: Help us test new features, report bugs, and ensure the project is stable across different environments.
 
+## License 
+## License
+This project is licensed under the GNU General Public License v3.0.
+
 ## Documentation
-### Documentation
 
 The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
 
-You can find the full documentation [here](/docs/jsdoc/index.html).
+You can find the full documentation [here](./docs/jsdoc/index.html){:target="_blank"}.
+
 
 **********
-# FAQs
 # FAQs
 **********
 
