@@ -63,7 +63,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         }
         
         try {
-          this.solution = highsSolver.returnVariables(); 
+          this.solution = highsSolver.returnConstraints();
           console.log(this.solution);
           this.optimalResult = highsSolver.returnOptimalResult();
         } catch (error) {
