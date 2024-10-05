@@ -1,7 +1,13 @@
 # Linsolve
 ![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
-![Coverage](https://img.shields.io/codecov/c/github/JonaHesselmann/linsolve)
 ![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/JonaHesselmann/linsolve)
+![GitHub last commit](https://img.shields.io/github/last-commit/JonaHesselmann/linsolve)
+![GitHub contributors](https://img.shields.io/github/contributors/JonaHesselmann/linsolve)
+![GitHub issues](https://img.shields.io/github/issues/JonaHesselmann/linsolve)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/JonaHesselmann/linsolve)
+![GitHub forks](https://img.shields.io/github/forks/JonaHesselmann/linsolve?style=social)
+
 
 ## Table of Contents
 1. [General Information ](#general-information)
@@ -16,7 +22,7 @@
 This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.
 
 ## Screenshot
-### Landing Page 
+
 ### Landing Page
 ![Landing Page](./public/landingPage.png)
 On this page, the user can select the type of problem they want to solve and upload a file containing the problem.
@@ -94,14 +100,13 @@ We are always looking for contributors and collaborators to help improve this pr
 - **Testing**: Help us test new features, report bugs, and ensure the project is stable across different environments.
 
 ## License 
-## License
 This project is licensed under the GNU General Public License v3.0.
 
 ## Documentation
 
-The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
+The project’s documentation is automatically generated using <strong>JSDoc</strong>, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
 
-You can find the full documentation [here](./docs/jsdoc/index.html){:target="_blank"}.
+You can find the full documentation <a href="./docs/jsdoc/index.html" target="_blank">here</a>.
 
 
 **********
@@ -147,5 +152,8 @@ The project uses several technologies, including:
 
 You can find a full list of dependencies in the [Dependencies](#dependencies) section.
 
+**********
+## Acknowledgments
+We would like to thank all contributors and the faculty at Osnabrück University of Applied Sciences for their guidance and support during this project.
 **********
 
