@@ -39,7 +39,9 @@ async function solveLP(lpContent) {
         result = await highs.solve(lpContent); // Löst das LP-Problem
         //console.log(formatSolutionToArray(result));
         const map = new Map;
-        map.set('Result', result.Status);
+        const solution = new Array();
+        solution.push(result.Status,result.ObjectiveValue);
+        map.set('Result', solution);
         map.set('VariableTable', formatSolutionToArray(result));
         map.set('ConstrainTable', returnConstraints(result));
         console.log(map);
