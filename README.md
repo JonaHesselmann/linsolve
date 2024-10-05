@@ -1,11 +1,4 @@
 # Linsolve
-![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
-![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
-![GitHub last commit](https://img.shields.io/github/last-commit/JonaHesselmann/linsolve)
-![GitHub contributors](https://img.shields.io/github/contributors/JonaHesselmann/linsolve)
-![GitHub issues](https://img.shields.io/github/issues/JonaHesselmann/linsolve)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/JonaHesselmann/linsolve)
-![GitHub forks](https://img.shields.io/github/forks/JonaHesselmann/linsolve?style=social)
 
 
 ## Table of Contents
