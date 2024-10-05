@@ -57,7 +57,6 @@ export default {
 .GoToHomepage{
          margin-top: 1%;
     }
-
     .button-container {
   display: flex;
   justify-content: flex-end;
@@ -92,5 +91,24 @@ export default {
   width: 24px;
   height: 24px;
 }
+
+/* Anpassungen für kleinere Bildschirme (Handy < 480px) */
+@media only screen and (max-width: 480px) {
+  .button-container {
+    top: 80px;  
+    right: 5px; 
+  }
+
+  .export-button {
+    padding: 8px;  
+    font-size: x-small;  
+    margin-top: 8%;     
+  }
+  .export-icon {
+    width: 18px;  
+    height: 18px;
+  }
+}
+
 </style>
 

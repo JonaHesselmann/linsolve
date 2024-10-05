@@ -124,12 +124,22 @@ body {
   display: block;
 }
 
+/* Standardgröße für größere Bildschirme */
 .logo {
   height: 3%;
   width: 3%;
   margin-left: auto;
   cursor: pointer;
 }
+
+/* Größere Größe für Mobilgeräte */
+@media only screen and (max-width: 768px) {
+  .logo {
+    height: 6%; /* Größer auf mobilen Geräten */
+    width: 6%;
+  }
+}
+
 
 
 </style>
