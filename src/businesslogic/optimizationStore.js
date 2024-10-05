@@ -26,8 +26,8 @@ export const useOptimizationStore = defineStore('optimization', {
     getters: {
         /**
          *  Returns a human-readable label for the selected optimization ('Minimization' or 'Maximization')
-         * @param state {state}
-         * @returns {string}
+         * @param state {state} - State as input
+         * @returns {string} -Human-readable label
          */
         selectedOptimizationLabel(state) {
             return state.selectedOptimization === 'Minimize' ? 'Minimize' : 'Maximize';
@@ -41,7 +41,7 @@ export const useOptimizationStore = defineStore('optimization', {
         },
         /**
          * Get Bounds
-         * @returns {Array}
+         * @returns {Array} - The bounds of the problem
          */
         getProblemBounds(){
             return this.bounds;
@@ -53,7 +53,7 @@ export const useOptimizationStore = defineStore('optimization', {
         // Action to set the selected optimization type ('minimization' or 'maximization')
         /**
          * Setter for the Option
-         * @param option
+         * @param option - the choosen option(valid options are minimization or maximization)
          */
         selectOptimization(option) {
             this.selectedOptimization = option;
@@ -99,7 +99,10 @@ export const useOptimizationStore = defineStore('optimization', {
             this.variables = result;
         },
         /**
-         * Function to Add or Update the Bounds of the Variables
+         * Add new Bound
+         * @param upperBound -new Upper Bound
+         * @param lowerBound -new Lower Bound
+         * @param variable - the Variable
          */
         addBound(upperBound, lowerBound, variable) {
             // Debug logging to ensure the method is being called
@@ -139,14 +142,17 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
-
+        /**
+         * removes the Constraint by ID
+         * @param id - ID of the Constraint to be deleted
+         */
         removeConstraint(id) {
             this.constraints = this.constraints.filter(constraint => constraint.id !== id);
           },
         //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
-         * @param objectiveFunc
+         * @param objectiveFunc - new objective function
          */
         setObjectiveFunction(objectiveFunc){
             this.objectiveFunction = objectiveFunc;
@@ -154,8 +160,8 @@ export const useOptimizationStore = defineStore('optimization', {
         // Action to update the content of a specific constraint identified by its `id`
         /**
          * Updates the Constraint of the given Constraint
-         * @param id
-         * @param content {string}
+         * @param id - the ID of the Constraint to be updated
+         * @param content {string} - the new content
          */
         updateConstraint(id, content) {
 

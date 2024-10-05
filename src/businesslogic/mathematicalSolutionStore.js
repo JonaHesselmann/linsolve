@@ -27,8 +27,8 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   actions: {
     /**
      * Returns the Array
-     * @param array
-     * @returns {*}
+     * @param array -the unchanged Array
+     * @returns {*} - Array
      */
       getRawArray(array){
         return array

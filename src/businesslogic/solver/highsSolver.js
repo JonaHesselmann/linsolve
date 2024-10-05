@@ -9,7 +9,7 @@ import highs_loader from "highs";
 
 
 /**
- * Läd den Solver
+ * Constructor for Highs.js Solver. Loads the WASM File from the github Repository
  */
 let highs;
 (async () => {
@@ -25,13 +25,14 @@ let highs;
 })();
 
 
-//console.log(lpString);
-/**
- * Löst das LP-Problem mit Highs.
- * @param {string} lpContent - Der Inhalt der LP-Datei im CPLEX-Format.
- * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn das Problem gelöst ist.
- */
+
+
 var result =0;
+/**
+ * Solves the Problem.
+ * @param {string} lpContent - the Probleminput in  CPLEX-Format.
+ * @returns {Promise<void>} - Ein Promise, which is cleared when solved.
+ */
 
 async function solveLP(lpContent) {
   try {
@@ -47,7 +48,7 @@ async function solveLP(lpContent) {
 
 /**
  * Returns the Status and the Value of the Result
- * @returns {*[]}
+ * @returns {String[]} - Status and Result
  */
 function returnOptimalResult(){
     const { Status, ObjectiveValue } = result;
@@ -58,7 +59,7 @@ function returnOptimalResult(){
 
 /**
  * Returns an Array of tuples with the name of the Variable and its primal vaule
- * @returns {*[]}
+ * @returns {*[]} - Array of Name with Primal vales
  */
 function returnVariables(){
   const returns = [];
@@ -68,6 +69,12 @@ function returnVariables(){
     }
     return returns;
 }
+
+/**
+ * Returns the Table with Variables in an two dimensional array
+ * @param {String } solution -- Solution in JSON format given by highs
+ * @returns {String[]}
+ */
 function formatSolutionToArray(solution) {
 
     const result = [];

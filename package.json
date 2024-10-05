@@ -11,7 +11,7 @@
     "lint": "eslint --no-warn-ignored",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "docgen": "npx vue-docgen-cli"
+    "docgen": "npx jsdoc -c jsdoc.json"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.1",

@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 /**
- * Wandelt die Eingaben in das CPLEX-Format um.
+ * Uses the input fields and transcribes to CPLEX .
  * @param {String} objectiveType - Minimisation or Maximisation
  * @param {string} objectiveFunction - The Function which is to be Maximised
  * @param {constraint[]} constraints - The constraints of the problem

@@ -44,18 +44,36 @@
 
     <section>
         <article><h1>Linsolve</h1>
+<p><img src="https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI" alt="Build Status">
+<img src="https://img.shields.io/github/license/JonaHesselmann/linsolve" alt="License">
+<img src="https://img.shields.io/github/last-commit/JonaHesselmann/linsolve" alt="GitHub last commit">
+<img src="https://img.shields.io/github/contributors/JonaHesselmann/linsolve" alt="GitHub contributors">
+<img src="https://img.shields.io/github/issues/JonaHesselmann/linsolve" alt="GitHub issues">
+<img src="https://img.shields.io/github/issues-pr/JonaHesselmann/linsolve" alt="GitHub pull requests">
+<img src="https://img.shields.io/github/forks/JonaHesselmann/linsolve?style=social" alt="GitHub forks"></p>
 <h2>Table of Contents</h2>
 <ol>
 <li><a href="#general-information">General Information </a></li>
 <li><a href="#Dependencies">Dependencies</a></li>
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#Collaboration">Collaboration</a></li>
+<li><a href="#License">License</a></li>
 <li><a href="#faqs">FAQs</a></li>
 </ol>
 <h2>General Information</h2>
 <hr>
-<p>This project was developed as part of the programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the Highs Solver for linear optimisation problems.</p>
+<p>This project was developed as part of a programming project in the dual degree programme in Business Informatics at Osnabrück University of Applied Sciences. The aim of the project is to develop a website that serves as an interface for the <strong>Highs</strong> and <strong>GLPK</strong> solvers for linear optimisation problems.</p>
+<p>You can access the website at: <a href="https://jonahesselmann.github.io/linsolve/">https://jonahesselmann.github.io/linsolve/</a>.</p>
 <h2>Screenshot</h2>
+<h3>Landing Page</h3>
+<p><img src="./public/landingPage.png" alt="Landing Page">
+On this page, the user can select the type of problem they want to solve and upload a file containing the problem.</p>
+<h3>General Problem Page</h3>
+<p><img src="./public/generalProblemPage.png" alt="General Problem Page">
+On this page, the user can specify the general problem they want to solve. This needs to be done using <strong>GMPL</strong>.</p>
+<h3>Specific Problem Page</h3>
+<p><img src="./public/spezifischProblemPage.png" alt="Specific Problem Page">
+On this page, specific problems can be detailed and defined.</p>
 <h1>Dependencies</h1>
 <hr>
 <p>A list of technologies used within the project:</p>
@@ -63,7 +81,6 @@
 <li><a href="https://vuejs.org/">Vue</a>: version ^3.4.37</li>
 <li><a href="https://vue-i18n.intlify.dev/">Vue-i18n</a>: version ^9.14.0</li>
 <li><a href="https://router.vuejs.org/">Vue-router</a>: version ^4.0.13</li>
-<li><a href="https://cortexjs.io/mathlive/">Mathlive</a>: version ^0.101.0</li>
 <li><a href="https://pinia.vuejs.org/">Pinia</a>: version ^2.2.2</li>
 </ul>
 <h1>Getting Started</h1>
@@ -103,10 +120,58 @@ To install all the necessary dependencies for the project, run the following com
 <p>Or alternatively use:</p>
 <pre class="prettyprint source lang-bash"><code>npm test dev
 </code></pre>
+<p>Test Coverage</p>
+<pre class="prettyprint source lang-bash"><code>npm test dev --coverage
+</code></pre>
 <h2>Collaboration</h2>
+<p>We are always looking for contributors and collaborators to help improve this project! Whether you’re a developer, designer, mathematician, or simply passionate about problem-solving, there are many ways you can get involved.</p>
+<h3>How You Can Contribute</h3>
+<ul>
+<li><strong>Feature Development</strong>: Help us build new features or improve existing ones.</li>
+<li><strong>Bug Fixing</strong>: Found a bug? Submit an issue or, even better, a pull request with a fix!</li>
+<li><strong>Documentation</strong>: We’re always looking to improve our documentation. Whether it's clarifying explanations, adding examples, or making the project easier to use, your input is welcome.</li>
+<li><strong>Feedback</strong>: Share your thoughts and suggestions for improving the user experience, feature requests, or general improvements.</li>
+<li><strong>Testing</strong>: Help us test new features, report bugs, and ensure the project is stable across different environments.</li>
+</ul>
+<h2>License</h2>
+<p>This project is licensed under the GNU General Public License v3.0.</p>
 <h2>Documentation</h2>
+<p>The project’s documentation is automatically generated using <strong>JSDoc</strong>, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.</p>
+<p>You can find the full documentation <a href="https://jonahesselmann.github.io/linsolve/docs/jsdoc/index.html">here</a>.</p>
 <hr>
 <h1>FAQs</h1>
+<hr>
+<h3>1. What format should my problem file be in?</h3>
+<p>The file should be in <strong>LP</strong> (Linear Programming) or <strong>GMPL</strong> (GNU Math Programming Language) format.</p>
+<h3>2. Which solvers are implemented?</h3>
+<p>For general problems, the <strong>GMPL</strong> solver is implemented using a WebWorker. For specific problems, <strong>Highs</strong> is implemented with WebAssembly.</p>
+<h3>3. What is GMPL?</h3>
+<p><strong>GMPL</strong> (GNU Math Programming Language) is a high-level modeling language used for describing linear, nonlinear, and mixed-integer programming problems. It is part of the <strong>GLPK</strong> (GNU Linear Programming Kit) and is widely used for optimization problems.</p>
+<h3>4. Who can I contact if I encounter an issue or have a question?</h3>
+<p>If you run into any issues or have questions, feel free to open an issue on the GitHub repository, or reach out to the project maintainers. We’re happy to help!</p>
+<h3>5. What is Linsolve?</h3>
+<p>Linsolve is a web-based interface for the Highs Solver, designed to solve linear optimization problems. The project was developed as part of a programming project in the Business Informatics program at Osnabrück University of Applied Sciences.</p>
+<h3>6. How can I submit a problem to be solved?</h3>
+<p>You can submit a problem by selecting the appropriate problem type on the <strong>Landing Page</strong> and uploading the problem file. The system supports both general and specific problem types.</p>
+<h3>7. How can I run the project locally?</h3>
+<p>To run the project locally, clone the repository, install the required dependencies using <code>npm install</code>, and then run <code>npm run dev</code> to start the development server. Detailed instructions can be found in the <a href="#getting-started">Getting Started</a> section.</p>
+<h3>8. How is the project tested?</h3>
+<p>The project uses <strong>Vitest</strong> for unit testing. You can run the tests using the command <code>vitest</code> or <code>npm test dev</code>. Test coverage reports can also be generated.</p>
+<h3>9. Can I contribute to this project?</h3>
+<p>Absolutely! We welcome contributions from developers, designers, and problem-solvers. Please see the <a href="#collaboration">Collaboration</a> section for more details on how to get involved.</p>
+<h3>10. Where can I find the project documentation?</h3>
+<p>The documentation is automatically generated using <strong>JSDoc</strong> and can be found <a href="/docs/jsdoc/index.html">here</a>. It includes detailed information on how the system works, its architecture, and how you can contribute.</p>
+<h3>11. What are the main dependencies of this project?</h3>
+<p>The project uses several technologies, including:</p>
+<ul>
+<li><strong>Vue.js</strong> for the frontend</li>
+<li><strong>Vue Router</strong> for navigation</li>
+<li><strong>Pinia</strong> for state management</li>
+</ul>
+<p>You can find a full list of dependencies in the <a href="#dependencies">Dependencies</a> section.</p>
+<hr>
+<h2>Acknowledgments</h2>
+<p>We would like to thank all contributors and the faculty at Osnabrück University of Applied Sciences for their guidance and support during this project.</p>
 <hr></article>
     </section>
 
@@ -118,13 +183,13 @@ To install all the necessary dependencies for the project, run the following com
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalculateGMPL.html">CalculateGMPL</a></li></ul><h3>Global</h3><ul><li><a href="global.html#generateLPFile">generateLPFile</a></li><li><a href="global.html#highs">highs</a></li><li><a href="global.html#i18n">i18n</a></li><li><a href="global.html#languageStore">languageStore</a></li><li><a href="global.html#result">result</a></li><li><a href="global.html#returnOptimalResult">returnOptimalResult</a></li><li><a href="global.html#returnVariables">returnVariables</a></li><li><a href="global.html#useDropdownStore">useDropdownStore</a></li><li><a href="global.html#useOptimizationStore">useOptimizationStore</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#exportLPFile">exportLPFile</a></li><li><a href="global.html#formatSolutionToArray">formatSolutionToArray</a></li><li><a href="global.html#generateLPFile">generateLPFile</a></li><li><a href="global.html#gmplCustomHighlight">gmplCustomHighlight</a></li><li><a href="global.html#gmplHighlighting">gmplHighlighting</a></li><li><a href="global.html#gmplKeywords">gmplKeywords</a></li><li><a href="global.html#gmplParser">gmplParser</a></li><li><a href="global.html#highs">highs</a></li><li><a href="global.html#i18n">i18n</a></li><li><a href="global.html#languageStore">languageStore</a></li><li><a href="global.html#returnOptimalResult">returnOptimalResult</a></li><li><a href="global.html#returnVariables">returnVariables</a></li><li><a href="global.html#solveLP">solveLP</a></li><li><a href="global.html#useDropdownStore">useDropdownStore</a></li><li><a href="global.html#useMathematicalSolution">useMathematicalSolution</a></li><li><a href="global.html#useOptimizationStore">useOptimizationStore</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Sep 26 2024 15:56:40 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat Oct 05 2024 15:02:29 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

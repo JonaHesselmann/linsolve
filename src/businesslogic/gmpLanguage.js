@@ -7,7 +7,10 @@ You should have received a copy of the GNU General Public License along with Lin
 import { StreamLanguage } from "@codemirror/language";
 import { styleTags, tags } from "@codemirror/highlight";
 
-// Define a more specific GMPL tokenizer
+/**
+ * Constructor for the Parser
+ * @type {StreamLanguage<{inString: boolean}>} - token handling
+ */
 const gmplParser = StreamLanguage.define({
   startState() {
     return { inString: false };
@@ -89,6 +92,10 @@ const gmplParser = StreamLanguage.define({
 });
 
 // Define custom syntax highlighting
+/**
+ * Definition of Styletags
+ */
+
 const gmplHighlighting = styleTags({
   keyword: tags.keyword,
   operator: tags.operator,
