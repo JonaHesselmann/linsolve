@@ -181,6 +181,22 @@ export const useOptimizationStore = defineStore('optimization', {
         deleteConstraint(){
             this.constraints.pop()
         },
+         /**
+         * Resets the store's state to its initial values.
+         * 
+         * This method clears the optimization settings, constraints, variables, and bounds,
+         * resetting the store to its original state.
+         * 
+         * @method
+         * @returns {void}
+         */
+         reset() {
+            this.selectedOptimization = 'Minimize';
+            this.constraints = [{0: ''}];
+            this.variables = [];
+            this.objectiveFunction = '';
+            this.bounds = [];
+        },
 
     },
 });

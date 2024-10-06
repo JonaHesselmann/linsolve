@@ -12,7 +12,7 @@ import Footer from '../components/Footer.vue';
 import GoToHomepage from '../components/goToHomepage.vue';
 import { exportLPFile } from '../businesslogic/exportLPFile';
 import { useOptimizationStore } from '../businesslogic/optimizationStore'; // Importieren Sie den Store
-
+import { useMathematicalSolution } from '../businesslogic/mathematicalSolutionStore.js'
 export default {
   name: 'Result',
   components: {
@@ -23,7 +23,7 @@ export default {
   },
   setup() {
     const optimizationStore = useOptimizationStore(); // Initialisieren Sie den Store
-
+    
     const exportResults = () => {
       const format = 'lp'; // oder ein anderes Format, das Sie verwenden möchten
       exportLPFile(format, optimizationStore);
@@ -33,7 +33,15 @@ export default {
       exportResults,
       optimizationStore
     };
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    const mathematicalSolutionStore = useMathematicalSolution();
+    const optimizationStore = useOptimizationStore();
+  console.log("Leaving the route...");
+  mathematicalSolutionStore.reset();
+  optimizationStore.reset();
+  next(); 
+}
 }
 </script>
 <template>

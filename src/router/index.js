@@ -15,6 +15,8 @@ import Result from '../view/Result.vue'
 import Imprint from '../view/Imprint.vue'
 import PrivacyPolicy from '../view/PrivacyPolicy.vue'
 import documentation from '../view/documentation.vue'
+import { useMathematicalSolution } from '../businesslogic/mathematicalSolutionStore.js'
+import { useOptimizationStore } from '../businesslogic/optimizationStore.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
