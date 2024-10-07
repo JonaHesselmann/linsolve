@@ -38,6 +38,7 @@ export default {
       isMaximizationSelected,
       solveLP,
       deleteConstraint,
+      
     }
   },
   watch: {
@@ -138,7 +139,7 @@ export default {
               type="number"
               class="boundTextField"
               v-model="bounds[index].lowerBound"
-              @input="updateBound(index, variable)"
+              @input="updateLowerBound(index, variable)"
           >
           <p class="boundText">≤ {{ variable }} ≤</p>
 
@@ -147,7 +148,7 @@ export default {
               type="number"
               class="boundTextField"
               v-model="bounds[index].upperBound"
-              @input="updateBound(index, variable)"
+              @input="updateUpperBound(index, variable)"
           >
         </div>
       </div>
