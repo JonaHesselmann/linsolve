@@ -24,7 +24,7 @@ export const languageStore = defineStore('i18n', {
     // This action sets the new locale for both the store and the global i18n instance
     /**
      * setter for the locale
-     * @param locale {locale}
+     * @param locale {locale} -the locale to change to
      */
     setLocale(locale) {
       this.locale = locale; 
