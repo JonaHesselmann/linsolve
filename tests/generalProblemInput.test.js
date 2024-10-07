@@ -108,7 +108,7 @@ describe('generalProblemInput.vue', () => {
         const solveButton = wrapper.find('button:nth-child(2)'); // Second button is "solve"
 
         await solveButton.trigger('click');
-
+/
         expect(solveSpy).toHaveBeenCalled();
     });
 });
