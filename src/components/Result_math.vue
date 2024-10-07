@@ -26,7 +26,11 @@ export default {
 <template>
   <div class="result-math-container">
     <h2>{{ $t('mathematicallySolution') }}</h2>
-
+     
+    <div v-if="variableTableData.length < 1"> 
+      <p> {{ $t("solutionErrorMessage") }}</p>
+    </div>
+  
 
     <div v-if="variableTableData.length > 1"> 
       <p>{{ $t('variable') }}</p> 
