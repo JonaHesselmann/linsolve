@@ -105,12 +105,16 @@ export default {
           @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
+        <img src="../assets/question.png" alt="Help" class="help-icon">
       </div>
 
       <div class="input-container__condition-container">
-        <input type="text" class="input-container__condition" :placeholder="$t('condition')"
-          @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
-          id="objectiveFunction">
+        <div class="condition-wrapper">
+          <input type="text" class="input-container__condition" :placeholder="$t('condition')"
+            @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
+            id="objectiveFunction">
+          <img src="../assets/question.png" alt="Help" class="help-icon">
+        </div>
       </div>
 
       <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="input-container__constraint-wrapper">
@@ -120,6 +124,12 @@ export default {
             :placeholder="$t('constraint')"
             @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
+          <img 
+            v-if="index === 0" 
+            src="../assets/question.png" 
+            alt="Help" 
+            class="help-icon"
+          />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <img 
             :class="{ hidden: index === 0 }" 
@@ -313,6 +323,18 @@ export default {
   justify-content: center;
 }
 
+.help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.condition-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
 @media (max-width: 900px) {
   .input-container {
