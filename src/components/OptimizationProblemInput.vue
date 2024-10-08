@@ -83,7 +83,10 @@ export default {
 <template>
   <div class="input-container">
     <div class="input-container__bounds">
+    <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
+      <img src="../assets/questionmark.png" alt="Help" class="help-icon">
+    </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
         <input type="number" class="boundTextField" @input="firstInput = $event.target.value, optimizationStore.addBound('', $event.target.value, variable )">
         <p class="boundText">≤ {{ variable }} ≤</p>
@@ -337,6 +340,13 @@ export default {
   gap: 10px;
   width: 100%;
 }
+
+.bounds-header {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+}
+
 
 @media (max-width: 900px) {
   .input-container {
