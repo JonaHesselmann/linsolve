@@ -12,6 +12,15 @@ import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionSto
 import { useRouter } from 'vue-router';
 export default {
   name: 'OptimizationProblemInput',
+  data() {
+        return {
+            showPopup: false,    // Controls whether the main popup is shown
+            showExamplePopup: false, // Controls whether the example popup is shown
+            popupContent: "",    // Stores the content to be shown in the main popup
+
+            
+        };
+    },
   setup() {
     const optimizationStore = useOptimizationStore();
     const mathematicalSolutionStore = useMathematicalSolution()
@@ -75,7 +84,37 @@ export default {
 
       // Update the bounds in the store
       this.optimizationStore.addBound(upperBound, lowerBound, variable);
-    }
+    }, 
+    openPopup(type) {
+            const currentLocale = this.$i18n.locale; // Access the app's current language
+
+            // Set the popup content based on the button clicked
+            if (type === 'bounds') {
+               
+                this.popupContent = this.$t('inputConstraint');
+                
+            } else if (type === 'optimization') {
+               
+                this.popupContent = this.$t('inputProblemType');
+                
+            } else if (type === 'condition') {
+                
+                this.popupContent = this.$t('inputCondition');
+                
+            } else if (type === 'constraint') {
+           
+                this.popupContent = this.$t('inputSideCondition');
+                
+            } 
+
+            // Show the main popup
+            this.showPopup = true;
+        },
+        closePopup() {
+            // Close both the main and example popups
+            this.showPopup = false;
+           
+        },
   }
 };
 </script>
@@ -85,7 +124,7 @@ export default {
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/question.png" alt="Help" class="help-icon">
+      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
         <!-- Lower Bound Input -->
@@ -121,7 +160,7 @@ export default {
             @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <img src="../assets/question.png" alt="Help" class="help-icon">
+        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('optimization')">
       </div>
 
       <div class="input-container__condition-container">
@@ -129,7 +168,7 @@ export default {
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
                  @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
                  id="objectiveFunction">
-          <img src="../assets/question.png" alt="Help" class="help-icon">
+          <img src="../assets/question.png" alt="Help" class="help-icon"@click="openPopup('condition')">
         </div>
       </div>
 
@@ -145,6 +184,7 @@ export default {
               src="../assets/question.png"
               alt="Help"
               class="help-icon"
+              @click="openPopup('constraint')"
           />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <img
@@ -158,7 +198,10 @@ export default {
       </div>
 
       <div class="input-container__bounds_mobile">
-        <p>{{ $t('bounds') }}:</p>
+        <div class="bounds-header">
+      <p>{{ $t('bounds') }}:</p>
+      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
+      </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
           <!-- Lower Bound Input -->
           <input
@@ -186,9 +229,21 @@ export default {
       </div>
     </div>
   </div>
+  <div v-if="showPopup" class="popupOverlay" @click="closePopup">
+        <div class="popupContent" @click.stop>
+            <p>{{ popupContent }}</p>
+            <button @click="closePopup">{{ $t("close") }}</button>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+*{
+  margin-top: 1%;
+}
+.helperbounds{
+  white-space: nowrap;
+}
 .input-container {
   display: grid;
   grid-template-columns: 2fr 4fr;
@@ -397,7 +452,7 @@ export default {
   }
 
   .input-container__bounds_mobile .bound {
-    flex-direction: row;
+    flex-direction: row; 
   }
 
   .input-container__bounds_mobile {
@@ -405,7 +460,52 @@ export default {
     flex-direction: column;
     gap: 10px;
   }
+  .help-icon {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  margin-left: 0px;
 }
+}
+
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  /* Center the close button */
+    margin-top: 2rem;    /* Add margin above the button */
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
 </style>
 
 
