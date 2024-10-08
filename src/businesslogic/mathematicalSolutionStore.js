@@ -9,6 +9,7 @@ import { defineStore } from 'pinia';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
+import {returnTimeTaken} from "../businesslogic/solver/highsSolver.js";
 //test
 /**
  * Constructor for the Store
@@ -21,6 +22,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
     constraints:[],
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
+    walltime: [],
   }),
   
   // Actions section: methods to modify the state or perform other logic
@@ -62,6 +64,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
           }
           console.log(lpContent);
           const result = await highsSolver.solveLP(lpContent); // Solve the LP
+          this.walltime = returnTimeTaken();
           console.log(result);
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
@@ -78,7 +81,9 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
         this.constraints =data.get('ConstrainTable')
+        this.walltime = data.get('Walltime');
         console.log(this.constraints)
+        console.log(data.get('Walltime'))
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }

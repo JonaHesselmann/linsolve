@@ -1,8 +1,3 @@
-<!-- 
-This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
--->
 <script>
 import { useMathematicalSolution } from '../businesslogic/mathematicalSolutionStore.js'
 
@@ -13,11 +8,13 @@ export default {
 
     const variableTableData = mathematicalSolutionStore.solution;
     const constraintTableData = mathematicalSolutionStore.constraints;
+    const runtime = mathematicalSolutionStore.walltime; // Extract runtime from store
 
     return {
       mathematicalSolutionStore,
       variableTableData,
-      constraintTableData
+      constraintTableData,
+      runtime // Return runtime to template
     };
   }
 }
@@ -30,7 +27,6 @@ export default {
     <div v-if="variableTableData.length < 1">
       <p> {{ $t("solutionErrorMessage") }}</p>
     </div>
-
 
     <div v-if="variableTableData.length > 1">
       <p>{{ $t('variable') }}</p>
@@ -49,7 +45,6 @@ export default {
         </table>
       </div>
     </div>
-
 
     <div v-if="constraintTableData.length > 1">
       <p>{{ $t('constraint') }}</p>
@@ -76,9 +71,16 @@ export default {
         <p>{{ $t('optimalValue') }} <strong>{{ mathematicalSolutionStore.optimalResult[1] }}</strong></p>
       </div>
     </div>
+
+    <!-- Runtime Display -->
+    <div class="runtime-container">
+      <div class="runtime-card">
+        <h3>{{ $t('runtime') }}</h3>
+        <p>{{ $t('executionTime') }}: <strong>{{ runtime }} ms</strong></p>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <style scoped>
 /* General Styles (Desktop First) */
@@ -99,29 +101,34 @@ export default {
 .solution-table th {
   background-color: #f2f2f2;
   font-weight: bold;
-
 }
 
 .solution-table td {
   font-size: 18px;
 }
 
-/* Make sure headers are bold on desktop */
-.solution-table th {
-  font-weight: bold;
-}
-
-/* Ensure proper spacing and border for result card */
+/* Results card style */
 .results-container {
   margin-top: 20px;
 }
 
-.result-card {
+.result-card, .runtime-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   background-color: #f9f9f9;
 }
+
+/* Runtime container for displaying runtime */
+.runtime-container {
+  margin-top: 20px;
+}
+
+.runtime-card {
+  text-align: center;
+}
+
+/* Responsive design for mobile */
 @media (max-width: 768px) {
   /* Hide the th elements on mobile */
   .solution-table thead{
@@ -135,10 +142,9 @@ export default {
   .solution-table th,
   .solution-table td,
   .solution-table tr {
-    display: block; /* Stack table rows and cells */
+    display: block;
   }
 
-  /* Style the tr to look like cards on mobile */
   .solution-table tr {
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -148,7 +154,6 @@ export default {
     padding: 20px;
   }
 
-  /* Each td will act like a row with a label using the :before pseudo-element */
   .solution-table td {
     display: block;
     padding: 12px 15px;
@@ -156,54 +161,58 @@ export default {
     position: relative;
     border: none;
     font-size: 16px;
-    word-wrap: break-word; /* Handle long text */
+    word-wrap: break-word;
   }
 
-  /* Add labels to the td elements using the data-label attribute */
   .solution-table td:before {
-    content: attr(data-label); /* Label pulled from data-label attribute */
+    content: attr(data-label);
     display: block;
-    position: relative;
     margin-bottom: 6px;
     font-weight: bold;
     color: #555;
-    width: 100%;
-    white-space: normal; /* Allow labels to break into multiple lines */
   }
 
-  /* Add alternating row background color for better readability */
   .solution-table tr:nth-child(odd) {
     background-color: #fafafa;
+  }
+
+  /* Runtime card styles for mobile */
+  .runtime-card {
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+  }
+
+  .runtime-card strong {
+    font-size: 16px;
   }
 }
 
 @media (min-width: 769px) {
-  /* Desktop styles: show table headers and restore normal layout */
   .solution-table {
     display: table;
   }
 
   .solution-table thead th,
   .solution-table td {
-    display: table-cell; /* Display headers and cells in normal table layout */
+    display: table-cell;
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
   }
 
-  /* Remove the block style for table rows on desktop */
   .solution-table tr {
     display: table-row;
-    margin-bottom: 0;
-    box-shadow: none;
   }
 
-  /* Remove the labels for td on desktop */
   .solution-table td:before {
     content: none;
   }
+
+  /* Runtime card styles for desktop */
+  .runtime-card {
+    text-align: center;
+    font-size: 18px;
+  }
 }
-
-
-
 </style>
