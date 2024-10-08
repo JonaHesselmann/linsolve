@@ -180,6 +180,7 @@ export default {
       </div>
 
       <div class="input-container__last-row">
+        <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('uploadFile') }}</button>
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
         <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
@@ -318,6 +319,7 @@ export default {
   cursor: pointer;
   width: 24px;
   height: 24px;
+  margin-left: 10px;
 }
 
 .delete-icon.hidden {
