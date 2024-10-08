@@ -14,6 +14,7 @@ export default {
   setup() {
     const editorContainer = ref(null);
     const editorStore = useEditorStore();  // Use the Pinia store where Codemirror is initialized
+    const fileInput = ref(null);
 
     // Mount the Codemirror editor
     onMounted(() => {
@@ -53,10 +54,32 @@ export default {
       workwork.postMessage(problemInput);
     };
 
+    const triggerFileUpload = () => {
+      fileInput.value.click(); // Simulate a click on the hidden file input
+    };
+
+    const handleFileUpload = (event) => {
+      const file = event.target.files[0]; // Get the first selected file
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const fileContent = reader.result; // Get the content of the file
+          editorStore.editor.dispatch({
+            changes: { from: 0, to: editorStore.editor.state.doc.length, insert: fileContent }, // Insert content into the editor
+          });
+          console.log("File content loaded into editor:", fileContent);  // Log the file content
+        };
+        reader.readAsText(file); // Read the file as text
+      }
+    };
+
 
     return {
       editorContainer,
       solve,
+      triggerFileUpload,
+      handleFileUpload,
+      fileInput,
     };
   },
 };
@@ -76,7 +99,17 @@ export default {
 
     </div>
     <div class="buttoncontainer">
-      <button class="mainButton" @click="gmplStore.importProblem">{{ $t("importProblem") }}</button>
+      <button class="mainButton" @click="triggerFileUpload">{{ $t("importProblem") }}</button>
+
+<!-- Verstecktes Datei-Upload-Input -->
+<input
+  type="file"
+  ref="fileInput"
+  @change="handleFileUpload"
+  style="display: none"
+  accept=".mod"
+/>
+
       <button class="mainButton" @click="solve">{{ $t("solve") }}</button>
     </div>
   </div>
