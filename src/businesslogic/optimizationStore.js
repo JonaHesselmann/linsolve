@@ -26,8 +26,8 @@ export const useOptimizationStore = defineStore('optimization', {
     getters: {
         /**
          *  Returns a human-readable label for the selected optimization ('Minimization' or 'Maximization')
-         * @param state {state} - State as input
-         * @returns {string} -Human-readable label
+         * @param state {state}
+         * @returns {string}
          */
         selectedOptimizationLabel(state) {
             return state.selectedOptimization === 'Minimize' ? 'Minimize' : 'Maximize';
@@ -41,7 +41,7 @@ export const useOptimizationStore = defineStore('optimization', {
         },
         /**
          * Get Bounds
-         * @returns {Array} - The bounds of the problem
+         * @returns {Array}
          */
         getProblemBounds(){
             return this.bounds;
@@ -53,7 +53,7 @@ export const useOptimizationStore = defineStore('optimization', {
         // Action to set the selected optimization type ('minimization' or 'maximization')
         /**
          * Setter for the Option
-         * @param option - the choosen option(valid options are minimization or maximization)
+         * @param option
          */
         selectOptimization(option) {
             this.selectedOptimization = option;
@@ -99,10 +99,7 @@ export const useOptimizationStore = defineStore('optimization', {
             this.variables = result;
         },
         /**
-         * Add new Bound
-         * @param upperBound -new Upper Bound
-         * @param lowerBound -new Lower Bound
-         * @param variable - the Variable
+         * Function to Add or Update the Bounds of the Variables
          */
         addBound(upperBound, lowerBound, variable) {
             // Debug logging to ensure the method is being called
@@ -112,11 +109,11 @@ export const useOptimizationStore = defineStore('optimization', {
 
             // Initialize the newBound variable based on the provided bounds
             let newBound = '';
-            if (lowerBound !== '' &&lowerBound !== null && upperBound !== ''&& upperBound !== null) {
+            if (lowerBound !== '' && upperBound !== '') {
                 newBound = `${lowerBound} <= ${variable} <= ${upperBound}`;
-            } else if (lowerBound !== '' && lowerBound !== null) {
-                newBound = `${variable} >= ${lowerBound}`;
-            } else if (upperBound !== ''&& upperBound !== null ) {
+            } else if (lowerBound !== '') {
+                newBound = `${lowerBound} <= ${variable}`;
+            } else if (upperBound !== '') {
                 newBound = `${variable} <= ${upperBound}`;
             } else {
                 console.log("Both bounds are null, nothing to add.");
@@ -142,17 +139,14 @@ export const useOptimizationStore = defineStore('optimization', {
             this.constraints.push({ id: Date.now(), content: '' });
             
         },
-        /**
-         * removes the Constraint by ID
-         * @param id - ID of the Constraint to be deleted
-         */
+
         removeConstraint(id) {
             this.constraints = this.constraints.filter(constraint => constraint.id !== id);
           },
         //Setter for Objective Function
         /**
          * Setter for the Objectivefuction
-         * @param objectiveFunc - new objective function
+         * @param objectiveFunc
          */
         setObjectiveFunction(objectiveFunc){
             this.objectiveFunction = objectiveFunc;
@@ -160,8 +154,8 @@ export const useOptimizationStore = defineStore('optimization', {
         // Action to update the content of a specific constraint identified by its `id`
         /**
          * Updates the Constraint of the given Constraint
-         * @param id - the ID of the Constraint to be updated
-         * @param content {string} - the new content
+         * @param id
+         * @param content {string}
          */
         updateConstraint(id, content) {
 
@@ -180,22 +174,6 @@ export const useOptimizationStore = defineStore('optimization', {
          */
         deleteConstraint(){
             this.constraints.pop()
-        },
-         /**
-         * Resets the store's state to its initial values.
-         * 
-         * This method clears the optimization settings, constraints, variables, and bounds,
-         * resetting the store to its original state.
-         * 
-         * @method
-         * @returns {void}
-         */
-         reset() {
-            this.selectedOptimization = 'Minimize';
-            this.constraints = [{0: ''}];
-            this.variables = [];
-            this.objectiveFunction = '';
-            this.bounds = [];
         },
 
     },

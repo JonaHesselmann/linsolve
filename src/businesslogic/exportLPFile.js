@@ -6,11 +6,6 @@ You should have received a copy of the GNU General Public License along with Lin
 
 import { generateLPFile } from "./inputToLPInterface";
 
-/**
- *
- * @param format - the Format to export to currently only LP is supported
- * @param optimizationStore -Store with the LP Data
- */
 function exportLPFile(format, optimizationStore) {
     // Generiere den LP-Dateiinhalt mit der Funktion
     let lpContent;

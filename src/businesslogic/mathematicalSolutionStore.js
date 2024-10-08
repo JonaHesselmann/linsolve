@@ -9,7 +9,7 @@ import { defineStore } from 'pinia';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-
+//test
 /**
  * Constructor for the Store
  * @type {StoreDefinition<"mathematicalSolution", {solution: [], optimizationStore: *, optimalResult: []}, {}, {getRawArray(*): *, solveProblem(String, String): Promise<void>}>}
@@ -26,26 +26,9 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   // Actions section: methods to modify the state or perform other logic
   actions: {
     /**
- * Resets the state of the mathematical solution store.
- * 
- * This method clears the data for the solution, constraints, 
- * and optimalResult properties in the store. It is typically
- * used when navigating away from the component or when a new 
- * problem is being solved to ensure that no stale data remains.
- * 
- * @method
- * @returns {void}
- */
-    reset() {
-      this.solution = [];
-      this.constraints = [];
-      this.optimalResult = [];
-    },
-  
-    /**
      * Returns the Array
-     * @param array -the unchanged Array
-     * @returns {*} - Array
+     * @param array
+     * @returns {*}
      */
       getRawArray(array){
         return array
@@ -59,7 +42,6 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
      * @returns {Promise<void>}
      */
     async solveProblem (problemKind, data) {
-      let highsData
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -73,22 +55,20 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             ""
           );
           console.log(lpContent);
-          highsData = await highsSolver.solveLP(lpContent);
-          console.log('Highs'+ highsData)
-          try {
-            this.solution = this.getRawArray(highsData.get('VariableTable'))
-            this.optimalResult = highsData.get('Result')
-            this.constraints = highsData.get('ConstrainTable')
-          } catch (error) {
-            console.error('Error:', error);
-          }
-           
+          const result = await highsSolver.solveLP(lpContent); // Solve the LP
+          console.log(result);
           // TODO: Handle the result and move to the solved result
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
         }
         
-        
+        try {
+          this.solution = highsSolver.returnVariables(); 
+          console.log(this.solution);
+          this.optimalResult = highsSolver.returnOptimalResult();
+        } catch (error) {
+          console.error('Keine Lösung vorhanden:', error);
+        }
       } else if (problemKind === 'general') {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')

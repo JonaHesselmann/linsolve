@@ -1,6 +1,0 @@
----
-title: main
----
-
-# main
-

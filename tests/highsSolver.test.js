@@ -6,7 +6,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 import { describe, it, expect, beforeAll, vi } from 'vitest';
-import { solveLP, returnConstraints, returnOptimalResult } from '../src/businesslogic/solver/highsSolver.js';
+import { solveLP, returnVariables, returnOptimalResult } from '../src/businesslogic/solver/highsSolver.js';
 import highs_loader from 'highs';
 
 
@@ -66,7 +66,7 @@ End
         expect(optimalResult).toEqual(['optimal', 42]);
 
         // Test returnVariables
-        const variables = returnConstraints();
+        const variables = returnVariables();
         expect(variables).toEqual([
             ['x1', 10],
             ['x2', 5]
@@ -138,7 +138,7 @@ End
         expect(optimalResult).toEqual(['optimal', 100]);
 
         // Test returnVariables
-        const variables = returnConstraints();
+        const variables = returnVariables();
         expect(variables).toEqual([
             ['x1', 20],
             ['x2', 30],
