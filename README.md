@@ -1,11 +1,5 @@
 # Linsolve
-![Build Status](https://img.shields.io/github/workflow/status/JonaHesselmann/linsolve/CI)
-![License](https://img.shields.io/github/license/JonaHesselmann/linsolve)
-![GitHub last commit](https://img.shields.io/github/last-commit/JonaHesselmann/linsolve)
-![GitHub contributors](https://img.shields.io/github/contributors/JonaHesselmann/linsolve)
-![GitHub issues](https://img.shields.io/github/issues/JonaHesselmann/linsolve)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/JonaHesselmann/linsolve)
-![GitHub forks](https://img.shields.io/github/forks/JonaHesselmann/linsolve?style=social)
+
 
 
 ## Table of Contents
@@ -64,13 +58,10 @@ To install all the necessary dependencies for the project, run the following com
 ```bash
 npm install
 ```
-3. Once the dependencies are installed successfully, you can run the project in development:
-```bash
-npm run dev 
-```
-If you want to build the project for production, you can run the following command: 
+3. Once the dependencies are installed successfully, you want to build the project for production, you can run the following command: 
 ```bash
 npm run build
+npm run preview
 ```
 
 ## Testing
@@ -104,10 +95,8 @@ We are always looking for contributors and collaborators to help improve this pr
 This project is licensed under the GNU General Public License v3.0.
 
 ## Documentation
+Currently, the button on the website to open the documentation is not yet functional. Therefore, we have decided to temporarily publish the documentation in the Wiki on GitHub. You can access all relevant information and guides there.
 
-The project’s documentation is automatically generated using **JSDoc**, a powerful tool for creating documentation directly from the comments in the code. This ensures that the documentation stays up to date as the code evolves, making it easier for developers to understand and contribute to the project.
-
-You can find the full documentation [here](https://jonahesselmann.github.io/linsolve/docs/jsdoc/index.html).
 
 
 
