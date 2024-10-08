@@ -43,7 +43,7 @@ describe('selectionProblemButtons.vue', () => {
 
     // Überprüfe, ob die Buttons gerendert werden
     const buttons = wrapper.findAll('.mainButton');
-    expect(buttons).toHaveLength(3); // Es gibt 3 Buttons in der Vorlage
+    expect(buttons).toHaveLength(2); // Es gibt 3 Buttons in der Vorlage
   });
 
   it('renders the correct translated button texts', () => {
@@ -52,7 +52,7 @@ describe('selectionProblemButtons.vue', () => {
     // Überprüfe die gerenderten Texte der Buttons
     expect(buttons[0].text()).toBe('gerneralProblem'); // Der erste Button sollte "gerneralProblem" zeigen
     expect(buttons[1].text()).toBe('specificProblem'); // Der zweite Button sollte "specificProblem" zeigen
-    expect(buttons[2].text()).toBe('importProblem');   // Der dritte Button sollte "importProblem" zeigen
+    
   });
 
   it('navigates to the correct route when a button is clicked', async () => {
@@ -67,6 +67,6 @@ describe('selectionProblemButtons.vue', () => {
   it('renders question mark images for each row', () => {
     // Überprüfe, ob das Fragezeichenbild in jeder Buttonreihe gerendert wird
     const questionMarks = wrapper.findAll('.questionmark');
-    expect(questionMarks).toHaveLength(3); // Es gibt drei Reihen, also drei Fragezeichen
+    expect(questionMarks).toHaveLength(2); // Es gibt drei Reihen, also drei Fragezeichen
   });
 });

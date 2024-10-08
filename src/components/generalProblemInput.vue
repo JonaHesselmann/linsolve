@@ -11,6 +11,27 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 export default {
   name: "GeneralProblemInput",
+  data() {
+        return {
+            showPopup: false,    // Controls whether the main popup is shown
+            popupContent: "",    // Stores the content to be shown in the main popup
+            
+        };
+    },
+  methods: {
+        openPopup() {
+            const currentLocale = this.$i18n.locale; // Access the app's current language
+
+            this.popupContent = this.$t('generalProblemExample');
+            this.showPopup = true;
+        },
+        closePopup() {
+            // Close both the main and example popups
+            this.showPopup = false;
+           
+        },
+       
+    },
   setup() {
     const editorContainer = ref(null);
     const editorStore = useEditorStore();  // Use the Pinia store where Codemirror is initialized
@@ -90,13 +111,14 @@ export default {
   <div class="mainContent">
     <h2 class="mainTitel">{{ $t("gerneralProblem") }}</h2>
     <div class="inputContainer">
-      <div
+      <div class="problemInputWrapper">
+        <div
           ref="editorContainer" class="problemInput"
           contenteditable="true"
-
           :placeholder="$t('writeHere')"
-      ></div>
-
+        ></div>
+        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup()">
+      </div>
     </div>
     <div class="buttoncontainer">
       <button class="mainButton" @click="triggerFileUpload">{{ $t("importProblem") }}</button>
@@ -113,9 +135,23 @@ export default {
       <button class="mainButton" @click="solve">{{ $t("solve") }}</button>
     </div>
   </div>
+
+  <div v-if="showPopup" class="popupOverlay" @click="closePopup">
+        <div class="popupContent" @click.stop>
+            <p>{{ popupContent }}</p>
+            <a v-if="type==='general'" @click="openExamplePopup" style="color: blue; text-decoration: underline; cursor: pointer; margin-right: 3%;">{{ $t('showExample') }}</a>
+            <button @click="closePopup">{{ $t("close") }}</button>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+
+.problemInputWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
 .mainContent {
   display: flex;
   flex-direction: column;
@@ -136,8 +172,14 @@ export default {
 .inputContainer {
   position: relative;
   width: 100%;
+  white-space: noWrap;
 }
-
+.help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+}
 .problemInput {
   width: 100%;
   min-height: 20rem;
@@ -189,5 +231,42 @@ export default {
 
 .mainButton:hover {
   background-color: rgb(140, 140, 140);
+}
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  /* Center the close button */
+    margin-top: 2rem;    /* Add margin above the button */
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 </style>
