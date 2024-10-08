@@ -6,6 +6,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 
 import highs_loader from "highs";
+import {data} from "happy-dom/lib/PropertySymbol.d.ts.js";
 
 
 /**
@@ -32,11 +33,15 @@ let highs;
  * @returns {Promise<void>} - Ein Promise, das aufgelöst wird, wenn das Problem gelöst ist.
  */
 var result =0;
+var Timetaken;
 
 async function solveLP(lpContent) {
   try {
     // Das LP-Modell in den Solver laden
+      const beginningtime = Date.now();
      result = await highs.solve(lpContent); // Löst das LP-Problem
+      Timetaken = Date.now() -beginningtime;
+      console.log(Timetaken);
       console.log(formatSolutionToArray(result));
     return result; // Ergebnis zurückgeben
   } catch (error) {
@@ -67,6 +72,9 @@ function returnVariables(){
         returns.push([column.Name, column.Primal]);
     }
     return returns;
+}
+function returnTimeTaken(){
+    return Timetaken;
 }
 function formatSolutionToArray(solution) {
 
@@ -126,5 +134,5 @@ function formatSolutionToArray(solution) {
 
 
 
-export { solveLP,returnVariables,returnOptimalResult }; // Exportiert die Funktion zur Verwendung in anderen Modulen
+export { solveLP,returnVariables,returnOptimalResult,returnTimeTaken}; // Exportiert die Funktion zur Verwendung in anderen Modulen
 
