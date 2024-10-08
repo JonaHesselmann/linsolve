@@ -1,7 +1,7 @@
 
 importScripts(import.meta.env.BASE_URL+'/glpk.js')
 
-//you have to change this import when testing in dev
+//you have to change this import when testing in dev.
 self.onmessage = async function solveALP(msg) {
     console.log("Message received in worker:");
         var output = 0;
