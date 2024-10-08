@@ -83,7 +83,10 @@ export default {
 <template>
   <div class="input-container">
     <div class="input-container__bounds">
+      <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
+      <img src="../assets/question.png" alt="Help" class="help-icon">
+      </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
         <!-- Lower Bound Input -->
         <input
@@ -145,7 +148,7 @@ export default {
           />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <img
-              :class="{ hidden: index === 0 }"
+              v-show="index !== 0" 
               src="../assets/trash.png"
               @click="deleteConstraint(constraint.id)"
               alt="Löschen"
@@ -177,6 +180,7 @@ export default {
       </div>
 
       <div class="input-container__last-row">
+        <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('uploadFile') }}</button>
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
         <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
@@ -315,6 +319,7 @@ export default {
   cursor: pointer;
   width: 24px;
   height: 24px;
+  margin-left: 10px;
 }
 
 .delete-icon.hidden {
@@ -347,6 +352,11 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.bounds-header {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
 }
 
 @media (max-width: 900px) {
