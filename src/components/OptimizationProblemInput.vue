@@ -148,7 +148,7 @@ export default {
           />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <img
-              v-show="index !== 0" 
+              v-show="index !== 0"
               src="../assets/trash.png"
               @click="deleteConstraint(constraint.id)"
               alt="Löschen"
@@ -355,8 +355,8 @@ export default {
 }
 .bounds-header {
   display: flex;
-  align-items: center; 
-  gap: 10px; 
+  align-items: center;
+  gap: 10px;
 }
 
 @media (max-width: 900px) {

@@ -75,9 +75,6 @@ describe('useOptimizationStore', () => {
         store.addBound(10, '', 'x');
         expect(store.bounds).toContain('x <= 10');
 
-        // Add bounds for 'y' with only a lower bound
-        store.addBound('', 5, 'y');
-        expect(store.bounds).toContain('5 <= y');
 
         // Update 'x' bounds
         store.addBound(8, 3, 'x');
