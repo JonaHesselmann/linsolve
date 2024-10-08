@@ -26,8 +26,7 @@ export default {
 
 <template>
   <div>
-    <h2>{{ $t('mathematicallySolution') }}</h2>  
-    </div>
+    <h2>{{ $t('mathematicallySolution') }}</h2>
 
     <div>
       <p>{{ $t('variable') }}</p>
