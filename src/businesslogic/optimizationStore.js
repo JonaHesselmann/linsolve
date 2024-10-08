@@ -175,6 +175,14 @@ export const useOptimizationStore = defineStore('optimization', {
         deleteConstraint(){
             this.constraints.pop()
         },
+        reset() {
+            this.selectedOptimization = 'Minimize';
+            this.constraints = [{0: ''}];
+            this.variables = [];
+            this.objectiveFunction = '';
+            this.bounds = [];
+        },
+
 
     },
 });

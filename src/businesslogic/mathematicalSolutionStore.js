@@ -27,6 +27,22 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
   
   // Actions section: methods to modify the state or perform other logic
   actions: {
+       /**
+ * Resets the state of the mathematical solution store.
+ * 
+ * This method clears the data for the solution, constraints, 
+ * and optimalResult properties in the store. It is typically
+ * used when navigating away from the component or when a new 
+ * problem is being solved to ensure that no stale data remains.
+ * 
+ * @method
+ * @returns {void}
+ */
+       reset() {
+        this.solution = [];
+        this.constraints = [];
+        this.optimalResult = [];
+      },
     /**
      * Returns the Array
      * @param array
