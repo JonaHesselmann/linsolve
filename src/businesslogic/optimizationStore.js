@@ -112,11 +112,11 @@ export const useOptimizationStore = defineStore('optimization', {
 
             // Initialize the newBound variable based on the provided bounds
             let newBound = '';
-            if (lowerBound !== '' && upperBound !== '') {
+            if (lowerBound !== '' &&lowerBound !== null && upperBound !== ''&& upperBound !== null) {
                 newBound = `${lowerBound} <= ${variable} <= ${upperBound}`;
-            } else if (lowerBound !== '') {
-                newBound = `${lowerBound} <= ${variable}`;
-            } else if (upperBound !== '') {
+            } else if (lowerBound !== '' && lowerBound !== null) {
+                newBound = `${variable} >= ${lowerBound}`;
+            } else if (upperBound !== ''&& upperBound !== null ) {
                 newBound = `${variable} <= ${upperBound}`;
             } else {
                 console.log("Both bounds are null, nothing to add.");
