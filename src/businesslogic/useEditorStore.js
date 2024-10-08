@@ -14,20 +14,14 @@ import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { tags } from '@codemirror/highlight';
 
 // GMPL keywords for autocompletion
-/**
- * valid Keywords
- * @type {string[]}
- */
+
 const gmplKeywords = [
   'and', 'by', 'cross', 'data', 'diff', 'div', 'else', 'end', 'for', 'if', 'in', 
   'integer', 'inter', 'less', 'maximize', 'minimize', 'mod', 'model', 'not', 'or', 
   'param', 'printf', 's.t.', 'set', 'solve', 'sum', 'symdiff', 'then', 'to', 'union', 'var', 'within'
 ];
 
-/**
- * Constructor
- * @type {HighlightStyle} - Codemirror style
- */
+
 
 // Define custom GMPL keyword colors for syntax highlighting
 const gmplCustomHighlight = HighlightStyle.define([
@@ -54,10 +48,7 @@ export const useEditorStore = defineStore('editor', {
         ],
       });
 
-      /**
-       *  Create the EditorState with GMPL language, autocompletion, and custom highlighting
-       * @type {EditorState} - Codemirror State
-       */
+      // Create the EditorState with GMPL language, autocompletion, and custom highlighting
       const state = EditorState.create({
         doc: initialContent,  // Initialize with empty content or default content
         extensions: [

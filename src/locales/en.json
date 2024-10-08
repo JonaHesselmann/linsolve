@@ -46,7 +46,7 @@
     "imprintAddressTitle":"Address of the university:",
     "imprintStreet":"Albrechtstraße 30",
     "imprintCity": "49076 Osnabrück",
-    "imprintContact":"{'nele.hensel@hs-osnabrueck.de'} ",
+    "imprintContact":"nele.hensel@hs-osnabrueck.de ",
     "privacyPolicy": "Privacy Policy",
     "privacyNote": "Data protection at a glance - General Information",
     "privacyNotetext": "The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is all data with which you can be personally identified. Detailed information on data protection can be found in our privacy policy listed below this text.",
@@ -70,7 +70,7 @@
     "hosterstreet": "San Francisco",
     "hosterCity": "CA 94107 United States of America",
     "hosterNumber": "+1 877 448 4820",
-    "hosterEmail": "{'privacy@github.com'}",
+    "hosterEmail": "privacy@github.com",
     "privacyNotes": "General Notes and Mandatory Information on Data Protection",
     "privacyNotesText": "The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with statutory data protection regulations and this privacy policy. When you use this website, various personal data are collected. Personal data is data with which you can be personally identified. This privacy policy explains what data we collect and what we use it for. It also explains how and for what purpose this happens. We point out that data transmission over the Internet (e.g., communication by email) can have security vulnerabilities. Complete protection of the data from access by third parties is not possible.",
     "privacyPosition": "Notice concerning the responsible party",
@@ -94,8 +94,7 @@
     "dataCollections": "Data Collection on this Website",
     "dataCollectionsText": "If you perform mathematical calculations on our website, the data you enter will be stored for processing and solving the mathematical problem. This data will be automatically deleted after the calculation is completed unless you export the result. If you send us inquiries via email, your information from the inquiry form, including the contact details you provide there, will be stored with us for the purpose of processing the inquiry and in case of follow-up questions. We do not share this data without your consent. The processing of this data is based on Art. 6(1)(b) GDPR, provided that your inquiry is related to the fulfillment of a contract or is necessary for the implementation of pre-contractual measures. In all other cases, the processing is based on our legitimate interest in the effective processing of inquiries addressed to us (Art. 6(1)(f) GDPR) or on your consent (Art. 6(1)(a) GDPR), if this has been requested; consent can be revoked at any time. The data you enter in the email will remain with us until you request deletion, revoke your consent to storage, or the purpose for storing the data no longer applies (e.g., after your request has been processed). Mandatory legal provisions – particularly retention periods – remain unaffected.",
     "enquiry": "Inquiry via Email",
-    "enquiryText": "If you contact us via email, your request, including all resulting personal data (name, inquiry), will be stored and processed by us for the purpose of processing your request. We do not share this data without your consent. The processing of this data is based on Art. 6(1)(b) GDPR, provided that your inquiry is related to the fulfillment of a contract or is necessary for pre-contractual measures. In all other cases, the processing is based on our legitimate interest in the effective processing of inquiries addressed to us (Art. 6(1)(f) GDPR) or on your consent (Art. 6(1)(a) GDPR), if this has been requested; consent can be revoked at any time. The data you send to us via contact inquiries will remain with us until you request deletion, revoke your consent to storage, or the purpose for storing the data no longer applies (e.g., after your request has been processed). Mandatory legal provisions – particularly legal retention periods – remain unaffected.", 
-    "problemExportieren": "Problem Export"
+    "enquiryText": "If you contact us via email, your request, including all resulting personal data (name, inquiry), will be stored and processed by us for the purpose of processing your request. We do not share this data without your consent. The processing of this data is based on Art. 6(1)(b) GDPR, provided that your inquiry is related to the fulfillment of a contract or is necessary for pre-contractual measures. In all other cases, the processing is based on our legitimate interest in the effective processing of inquiries addressed to us (Art. 6(1)(f) GDPR) or on your consent (Art. 6(1)(a) GDPR), if this has been requested; consent can be revoked at any time. The data you send to us via contact inquiries will remain with us until you request deletion, revoke your consent to storage, or the purpose for storing the data no longer applies (e.g., after your request has been processed). Mandatory legal provisions – particularly legal retention periods – remain unaffected."
 
 }
 
