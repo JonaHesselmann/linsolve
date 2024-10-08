@@ -38,6 +38,7 @@ export default {
       isMaximizationSelected,
       solveLP,
       deleteConstraint,
+      
     }
   },
   watch: {
@@ -104,28 +105,38 @@ export default {
           @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
+        <img src="../assets/questionmark.png" alt="Help" class="help-icon">
       </div>
 
       <div class="input-container__condition-container">
-        <input type="text" class="input-container__condition" :placeholder="$t('condition')"
-          @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
-          id="objectiveFunction">
+        <div class="condition-wrapper">
+          <input type="text" class="input-container__condition" :placeholder="$t('condition')"
+            @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
+            id="objectiveFunction">
+          <img src="../assets/questionmark.png" alt="Help" class="help-icon">
+        </div>
       </div>
 
-      <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="input-container__constraint-wrapper">
-        <div class="constraint-wrapper">
+      <div class="input-container__constraint-container">
+        <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="constraint-wrapper">
           <input type="text"
             class="input-container__constraint"
             :placeholder="$t('constraint')"
             @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
+          <img 
+            v-if="index === 0" 
+            src="../assets/questionmark.png" 
+            alt="Help" 
+            class="help-icon"
+          />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <img 
-            :class="{ hidden: index === 0 }" 
+            v-show="index !== 0" 
             src="../assets/trash.png" 
             @click="deleteConstraint(constraint.id)" 
             alt="Löschen" 
-            class="delete-icon"
+            class="delete-icon" 
           />
         </div>
       </div>
@@ -138,7 +149,7 @@ export default {
               type="number"
               class="boundTextField"
               v-model="bounds[index].lowerBound"
-              @input="updateBound(index, variable)"
+              @input="updateLowerBound(index, variable)"
           >
           <p class="boundText">≤ {{ variable }} ≤</p>
 
@@ -147,7 +158,7 @@ export default {
               type="number"
               class="boundTextField"
               v-model="bounds[index].upperBound"
-              @input="updateBound(index, variable)"
+              @input="updateUpperBound(index, variable)"
           >
         </div>
       </div>
@@ -285,6 +296,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  width: 100%;
 }
 
 .delete-icon {
@@ -312,6 +324,19 @@ export default {
   justify-content: center;
 }
 
+.help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.condition-wrapper,
+.constraint-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
 
 @media (max-width: 900px) {
   .input-container {
