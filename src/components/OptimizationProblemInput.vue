@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 <script>
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
-import { computed } from 'vue'; 
+import { computed } from 'vue';
 import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
 import { useRouter } from 'vue-router';
 export default {
@@ -15,7 +15,7 @@ export default {
   setup() {
     const optimizationStore = useOptimizationStore();
     const mathematicalSolutionStore = useMathematicalSolution()
-   
+
 
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
@@ -24,8 +24,8 @@ export default {
      * Solve LP
      */
     const solveLP = async () => {
-     await mathematicalSolutionStore.solveProblem('spezific'); 
-     
+      await mathematicalSolutionStore.solveProblem('spezific');
+
     };
 
     const deleteConstraint = (id) => {
@@ -38,7 +38,7 @@ export default {
       isMaximizationSelected,
       solveLP,
       deleteConstraint,
-      
+
     }
   },
   watch: {
@@ -83,63 +83,73 @@ export default {
 <template>
   <div class="input-container">
     <div class="input-container__bounds">
-    <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/questionmark.png" alt="Help" class="help-icon">
-    </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-        <input type="number" class="boundTextField" @input="firstInput = $event.target.value, optimizationStore.addBound('', $event.target.value, variable )">
+        <!-- Lower Bound Input -->
+        <input
+            type="number"
+            class="boundTextField"
+            v-model="bounds[index].lowerBound"
+            @input="updateLowerBound(index, variable)"
+        >
         <p class="boundText">≤ {{ variable }} ≤</p>
-        <input type="number" class="boundTextField" @input="optimizationStore.addBound($event.target.value, firstInput, variable)">
+
+        <!-- Upper Bound Input -->
+        <input
+            type="number"
+            class="boundTextField"
+            v-model="bounds[index].upperBound"
+            @input="updateUpperBound(index, variable)"
+        >
       </div>
     </div>
 
     <div class="input-container__main-content">
       <div class="input-container__first-row sticky-buttons">
         <button
-          class="input-container__selection-optimization"
-          :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
-          @click="optimizationStore.selectOptimization('Minimize')">
+            class="input-container__selection-optimization"
+            :class="{ 'input-container__selection-optimization--selected': isMinimizationSelected }"
+            @click="optimizationStore.selectOptimization('Minimize')">
           {{ $t('minimization') }}
         </button>
         <button
-          class="input-container__selection-optimization"
-          :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
-          @click="optimizationStore.selectOptimization('Maximize')">
+            class="input-container__selection-optimization"
+            :class="{ 'input-container__selection-optimization--selected': isMaximizationSelected }"
+            @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <img src="../assets/questionmark.png" alt="Help" class="help-icon">
+        <img src="../assets/question.png" alt="Help" class="help-icon">
       </div>
 
       <div class="input-container__condition-container">
         <div class="condition-wrapper">
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
-            @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)" 
-            id="objectiveFunction">
-          <img src="../assets/questionmark.png" alt="Help" class="help-icon">
+                 @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
+                 id="objectiveFunction">
+          <img src="../assets/question.png" alt="Help" class="help-icon">
         </div>
       </div>
 
-      <div class="input-container__constraint-container">
-        <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="constraint-wrapper">
+      <div v-for="(constraint, index) in optimizationStore.constraints" :key="constraint.id" class="input-container__constraint-wrapper">
+        <div class="constraint-wrapper">
           <input type="text"
-            class="input-container__constraint"
-            :placeholder="$t('constraint')"
-            @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
+                 class="input-container__constraint"
+                 :placeholder="$t('constraint')"
+                 @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
-          <img 
-            v-if="index === 0" 
-            src="../assets/questionmark.png" 
-            alt="Help" 
-            class="help-icon"
+          <img
+              v-if="index === 0"
+              src="../assets/question.png"
+              alt="Help"
+              class="help-icon"
           />
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
-          <img 
-            v-show="index !== 0" 
-            src="../assets/trash.png" 
-            @click="deleteConstraint(constraint.id)" 
-            alt="Löschen" 
-            class="delete-icon" 
+          <img
+              :class="{ hidden: index === 0 }"
+              src="../assets/trash.png"
+              @click="deleteConstraint(constraint.id)"
+              alt="Löschen"
+              class="delete-icon"
           />
         </div>
       </div>
@@ -218,7 +228,7 @@ export default {
 .boundText {
   margin: 0 10px;
   font-size: 0.9rem;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .input-container__main-content {
@@ -299,7 +309,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  width: 100%;
 }
 
 .delete-icon {
@@ -319,9 +328,9 @@ export default {
 .sticky-buttons {
   position: sticky;
   top: 0;
-  background-color: white; 
+  background-color: white;
   z-index: 10;
-  height: 60px; 
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -331,22 +340,14 @@ export default {
   width: 24px;
   height: 24px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
-.condition-wrapper,
-.constraint-wrapper {
+.condition-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
 }
-
-.bounds-header {
-  display: flex;
-  align-items: center; 
-  gap: 10px; 
-}
-
 
 @media (max-width: 900px) {
   .input-container {
@@ -386,7 +387,7 @@ export default {
   }
 
   .input-container__bounds_mobile .bound {
-    flex-direction: row; 
+    flex-direction: row;
   }
 
   .input-container__bounds_mobile {
