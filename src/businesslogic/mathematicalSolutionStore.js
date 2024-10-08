@@ -54,10 +54,15 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             this.optimizationStore.getProblemBounds, 
             ""
           );
+          if(this.optimizationStore.getObjectiveFunction.length ===0){
+            alert("Error:missing objective function")
+          }
+          if(this.optimizationStore.constraints.length ===0){
+            alert("Error:missing constraints")
+          }
           console.log(lpContent);
           const result = await highsSolver.solveLP(lpContent); // Solve the LP
           console.log(result);
-          // TODO: Handle the result and move to the solved result
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
         }
