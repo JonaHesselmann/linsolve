@@ -73,7 +73,7 @@ export default {
     </div>
 
     <!-- Runtime Display -->
-    <div class="runtime-container">
+    <div class="runtime-container"  v-if="variableTableData.length >1" >
       <div class="runtime-card">
         <h3>{{ $t('runtime') }}</h3>
         <p>{{ $t('executionTime') }}: <strong>{{ runtime }} ms</strong></p>

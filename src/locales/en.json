@@ -104,6 +104,8 @@
     "inputConstraint": "A constraint limits the possible solutions to the problem. It defines the boundaries within which the decision variables (e.g., production quantities, transportation costs, time investment) must lie. Decimal numbers must be separated by a period and not by a comma. It is structured as follows: 0 <= x1 <= 40\n2 <= x4 <= 3",
     "showExample":" Example", 
     "close":"Close",
-    "uploadFile": "Upload File"
+    "uploadFile": "Upload File", 
+    "runtime": "runtime",
+    "executionTime": "execution Time"
 }
 
