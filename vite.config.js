@@ -7,7 +7,6 @@ You should have received a copy of the GNU General Public License along with Lin
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import {viteStaticCopy} from "vite-plugin-static-copy";
 
 
 // https://vitejs.dev/config/
@@ -15,7 +14,9 @@ export default defineConfig({
   resolve: {
     dedupe: ['@codemirror/state', '@codemirror/view', '@codemirror/autocomplete']
   },
-
+  optimizeDeps: {
+    include: ['src/businesslogic/solver/glpk.min.cjs'],
+  },
   build: {
     commonjsOptions: {
 
@@ -24,15 +25,7 @@ export default defineConfig({
   plugins: [vue({
     template: {
     }
-  },viteStaticCopy({
-        targets: [
-          {
-            src: 'src/components/glpk.js',
-            dest: 'public'
-          }
-        ]
-      })
-      ),
+  }, ),
 ],
   base: '/linsolve/'  
 })
