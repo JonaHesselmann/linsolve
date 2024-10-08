@@ -62,18 +62,18 @@ export default {
 };
 </script>
 
+
 <template>
   <div class="mainContent">
     <h2 class="mainTitel">{{ $t("gerneralProblem") }}</h2>
     <div class="inputContainer">
-      <div class="problemInputWrapper">
-        <div
-          ref="editorContainer" class="problemInput"
-          contenteditable="true"
-          :placeholder="$t('writeHere')"
-        ></div>
-        <img src="../assets/question.png" alt="Help" class="help-icon">
-      </div>
+      <div
+        ref="editorContainer" class="problemInput"
+        contenteditable="true"
+
+        :placeholder="$t('writeHere')"
+      ></div>
+     
     </div>
     <div class="buttoncontainer">
       <button class="mainButton" @click="gmplStore.importProblem">{{ $t("importProblem") }}</button>
@@ -105,12 +105,6 @@ export default {
   width: 100%;
 }
 
-.problemInputWrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
 .problemInput {
   width: 100%;
   min-height: 20rem;
@@ -120,13 +114,6 @@ export default {
   border-radius: 8px;
   resize: vertical;
   margin-bottom: 2rem;
-}
-
-.help-icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  margin-top: 1.5rem; /* Align with the top of the input field */
 }
 
 .suggestionsList {
