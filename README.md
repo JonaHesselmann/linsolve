@@ -64,6 +64,7 @@ npm run dev
 If you want to build the project for production, you can run the following command: 
 ```bash
 npm run build
+npm run preview
 ```
 
 ## Testing
