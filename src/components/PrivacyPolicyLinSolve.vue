@@ -3,15 +3,8 @@ This file is part of LinSolve. LinSolve is free software: you can redistribute i
 LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
-
-<script>
-export default{
-    name: 'PrivacyPolicy'
-}
-</script>
 <template>
-
-        <div class="privacy-policy">
+  <div class="privacy-policy">
     <h1>{{ $t('privacyPolicy') }}</h1>
     <br>
 
@@ -50,7 +43,7 @@ export default{
     </section>
     <br>
 
-    <section class="nonCenterText"> 
+    <section class="nonCenterText">
       <h2>{{ $t('privacyNotes') }}</h2>
       <p>{{ $t('privacyNotesText') }}</p>
     </section>
@@ -61,21 +54,19 @@ export default{
       <p>{{ $t('privacyPositionText') }}</p>
       <section class="imprint">
         <br>
-            <h2 class="secondTitle"> {{ $t('imprintTitle') }} </h2>
-            <p class="maintext">{{ $t('imprintName') }}</p>
-            <p class="maintext">{{ $t('imprintStudent') }}</p>
-            <p class="maintext">{{ $t('imprintHS') }}</p> 
-            <p class="maintext">{{ $t('imprintContact') }}</p>
-         <br>              
-        </section>
-        <section class="imprintHs">
-            <h2 class="secondTitle">{{ $t('imprintAddressTitle') }}</h2>
-            <p class="maintext">{{ $t('imprintHS') }}</p>
-            <p class="maintext">{{ $t('imprintStreet') }}</p>
-            <p class="maintext">{{ $t('imprintCity') }}</p>
-           
-        </section>
-     
+        <h2 class="secondTitle">{{ $t('imprintTitle') }}</h2>
+        <p class="maintext">{{ $t('imprintName') }}</p>
+        <p class="maintext">{{ $t('imprintStudent') }}</p>
+        <p class="maintext">{{ $t('imprintHS') }}</p>
+        <p class="maintext">{{ $t('imprintContact') }}</p>
+        <br>
+      </section>
+      <section class="imprintHs">
+        <h2 class="secondTitle">{{ $t('imprintAddressTitle') }}</h2>
+        <p class="maintext">{{ $t('imprintHS') }}</p>
+        <p class="maintext">{{ $t('imprintStreet') }}</p>
+        <p class="maintext">{{ $t('imprintCity') }}</p>
+      </section>
     </section>
     <br>
 
@@ -137,18 +128,68 @@ export default{
       <h2>{{ $t('enquiry') }}</h2>
       <p>{{ $t('enquiryText') }}</p>
     </section>
-    </div>
+  </div>
 </template>
+
 <style scoped>
-.mainTitle{
+.mainTitle {
   font-size: large;
 }
-.mainText{
+
+.mainText {
   font-size: medium;
   color: #333;
 }
-.nonCenterText{
-    text-align: justify;
+
+.nonCenterText {
+  text-align: justify;
+}
+
+@media only screen and (max-width: 768px) {
+  .privacy-policy {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .nonCenterText {
+    text-align: left;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .privacy-policy {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
 }
 </style>
-

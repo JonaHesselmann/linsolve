@@ -3,37 +3,52 @@ This file is part of LinSolve. LinSolve is free software: you can redistribute i
 LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 -->
-
-
 <template>
     <Header></Header>
     <GoToHomepage class="GoToHomepage"></GoToHomepage>
     <Agbs class="mainContent"></Agbs>
     <Footer></Footer>
-    </template>
-    <script>
-    import Header from '../components/Header.vue';
-    import Agbs from '../components/Agbs.vue';
-    import Footer from '../components/Footer.vue';
+</template>
+
+<script>
+import Header from '../components/Header.vue';
+import Agbs from '../components/Agbs.vue';
+import Footer from '../components/Footer.vue';
 import GoToHomepage from '../components/goToHomepage.vue';
 
-    export default{
-        name: 'Agb',
-        components:{
-            Header, 
-            Footer, 
-            Agbs, 
-            GoToHomepage,
-        }
+export default {
+    name: 'Agb',
+    components: {
+        Header,
+        Footer,
+        Agbs,
+        GoToHomepage
     }
-    </script>
-    <style>
-    .mainContent{
-        margin-top: 15%;
-        margin-bottom: 10%;
-    }
-    .GoToHomepage{
-         margin-top: 1%;
-    }
-    </style>
+}
+</script>
 
+<style scoped>
+.mainContent {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.go-to-homepage {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 480px) {
+    .mainContent {
+        margin-top: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        margin-top: 120px;
+    }
+}
+</style>

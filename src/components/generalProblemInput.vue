@@ -269,4 +269,55 @@ export default {
     border-radius: 0.5rem;
     cursor: pointer;
 }
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 1rem;
+  }
+
+  .mainTitel {
+    font-size: 1.8rem;
+    padding: 0.5rem 0;
+  }
+
+  .inputContainer {
+    width: 100%;
+  }
+
+  .problemInput {
+    font-size: 1rem;
+    padding: 1rem;
+    min-height: 15rem;
+  }
+
+  .buttoncontainer {
+    flex-direction: row;
+    justify-content: space-between; /* Keep buttons next to each other */
+    gap: 0.5rem;
+  }
+
+  .mainButton {
+    padding: 0.5rem 1rem; /* Smaller padding */
+    font-size: 0.9rem; /* Smaller text size */
+    max-width: 100%; /* Ensure full button size for each */
+  }
+
+  .help-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+  }
+
+  .popupContent {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .popupContent button {
+    margin-top: 1.5rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+
 </style>

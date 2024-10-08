@@ -30,7 +30,7 @@
     "bounds": "Bounds",
     "gerneralProblem": "General Problem",
     "specificProblem": "Specific Problem", 
-    "importProblem":"Import Task",
+    "importProblem":"Import File",
     "writeHere":"Write here", 
     "variable": "Variable",
     "optimalValue": "Optimal value",
