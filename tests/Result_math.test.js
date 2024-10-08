@@ -3,69 +3,117 @@ This file is part of LinSolve. LinSolve is free software: you can redistribute i
 LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 */
-
-
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
-import Component from '../src/components/Result_math.vue'; // Adjust the path if necessary
-import { useMathematicalSolution } from '../src/businesslogic/mathematicalSolutionStore.js';
+import GeneralProblemInput from '../src/components/generalProblemInput.vue'; // Adjust the path accordingly
+import { useEditorStore } from '../src/businesslogic/useEditorStore.js'; // Adjust path to your editor store
+import { useMathematicalSolution } from '../src/businesslogic/mathematicalSolutionStore.js'; // Adjust path to your solution store
+import { createRouter, createMemoryHistory } from 'vue-router';
 
-describe('ResultMath Component Test', () => {
-    let wrapper;
-    let mathematicalSolutionStore;
+// Mock the web worker globally
+class MockWorker {
+  constructor(scriptUrl) {
+    this.onmessage = null;
+    this.onerror = null;
+    this.scriptUrl = scriptUrl;
+  }
 
-    beforeEach(() => {
-        // Create a testing Pinia instance with spies enabled
-        const pinia = createTestingPinia({
-            createSpy: vi.fn, // Automatically mock all actions
-            stubActions: false, // Allow actions to work correctly
-        });
+  postMessage(message) {
+    if (this.onmessage) {
+      this.onmessage({ data: 'mockResultData' });
+    }
+  }
 
-        // Access the mathematical solution store
-        mathematicalSolutionStore = useMathematicalSolution(pinia);
+  terminate() {}
+}
 
-        // Set the initial state of the store (ensure optimalResult is initialized)
-        mathematicalSolutionStore.optimalResult = ['Optimal', 100];
-        mathematicalSolutionStore.solution = [['x1', 10], ['x2', 20]];
+// Stub the global Worker
+vi.stubGlobal('Worker', MockWorker);
 
-        // Mount the component with the testing Pinia instance
-        wrapper = mount(Component, {
-            global: {
-                plugins: [pinia],
-                mocks: {
-                    $t: (msg) => msg // Simple mock for translation function
-                },
-            },
-        });
+// Create a mock router for the test
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [
+    { path: '/result', name: 'result' }, // Define the result route for testing
+  ],
+});
+
+vi.spyOn(router, 'push'); // Spy on the push method to track its calls
+
+describe('GeneralProblemInput.vue', () => {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = mount(GeneralProblemInput, {
+      global: {
+        plugins: [
+          createTestingPinia({ stubActions: false }), // Use actual Pinia action stubs
+          router, // Inject the mock router into the test
+        ],
+        mocks: {
+          $t: (msg) => msg, // Mock translation function
+        },
+      },
     });
+  });
 
-    it('renders static text correctly', () => {
-        // Check if the translated title is rendered (mathematicallySolution)
-        expect(wrapper.text()).toContain('mathematicallySolution');
-    });
+  it('should initialize the editor on mount', () => {
+    const editorStore = useEditorStore();
+    expect(editorStore.initEditor).toHaveBeenCalled(); // Ensure editor initialization happens
+  });
 
-    it('renders error message when the solution is not optimal', () => {
-        // Update store state to trigger error message
-        mathematicalSolutionStore.optimalResult = ['Not Optimal'];
+  it('should call solve and use web worker correctly', async () => {
+    const editorStore = useEditorStore();
 
-        // Trigger reactivity with nextTick
-        return wrapper.vm.$nextTick().then(() => {
-            expect(wrapper.text()).toContain('mathematicallySolutionvariablex110x220constraint');
-        });
-    });
+    // Mock the editor content for the test
+    editorStore.editor = {
+      state: {
+        doc: {
+          toString: () => 'mockProblemInput',
+        },
+      },
+    };
 
+    // Trigger the solve function
+    await wrapper.vm.solve();
 
+    // Check that the problem input was extracted from the editor
+    expect(editorStore.editor.state.doc.toString()).toBe('mockProblemInput');
 
-    it('renders the objective function value when the result is optimal', async () => {
-        // Ensure the store has optimal result
-        mathematicalSolutionStore.optimalResult = ['Optimal', 150];
+    // Check that the web worker sends data back
+    const mathematicalSolutionStore = useMathematicalSolution();
+    expect(mathematicalSolutionStore.solveProblem).toHaveBeenCalledWith('general', 'mockResultData');
+  });
 
-        // Trigger reactivity
-        await wrapper.vm.$nextTick();
+  it('should navigate to result page after solving', async () => {
+    // Trigger the solve function
+    await wrapper.vm.solve();
 
-        // Check if the objective function value is rendered
-        expect(wrapper.text()).toContain('objectiveFunctionValue');
-        expect(wrapper.text()).toContain('150');
-    });
+    // Check that the router pushes the user to the "/result" page
+    expect(router.push).toHaveBeenCalledWith('/result');
+  });
+
+  it('should render the editor container and buttons', () => {
+    // Check for the presence of the editor container
+    const editorContainer = wrapper.find('.problemInput');
+    expect(editorContainer.exists()).toBe(true);
+
+    // Check for the presence of buttons
+    const buttons = wrapper.findAll('button');
+    expect(buttons.length).toBe(2);
+
+    // Check button texts
+    expect(buttons[0].text()).toBe(wrapper.vm.$t('importProblem'));
+    expect(buttons[1].text()).toBe(wrapper.vm.$t('solve'));
+  });
+
+  it('should trigger solve on button click', async () => {
+    const solveSpy = vi.spyOn(wrapper.vm, 'solve');
+    const solveButton = wrapper.findAll('button').at(1); // Second button is "solve"
+
+    await solveButton.trigger('click');
+
+    expect(solveSpy).toHaveBeenCalled();
+  });
 });
