@@ -1,16 +1,17 @@
 
+
 importScripts(import.meta.env.BASE_URL+'/glpk.js')
 
 //you have to change this import when testing in dev.
 self.onmessage = async function solveALP(msg) {
+    const beginningtime =  Date.now();
     console.log("Message received in worker:");
         var output = 0;
+        var log = '';
         const model = msg.data;
-        // glp_set_print_func(log);
         var lp = glp_create_prob();
         var tran = glp_mpl_alloc_wksp();
         _glp_mpl_init_rand(tran, 1);
-
         try{
         var ret = glp_mpl_read_model_from_string(tran,"model",model,0);
         glp_mpl_generate(tran, null, );
@@ -22,6 +23,7 @@ self.onmessage = async function solveALP(msg) {
         var iocp = new IOCP({presolve: GLP_ON});
         glp_intopt(lp, iocp);
         glp_mpl_postsolve(tran, lp, GLP_MIP)
+        const endTime = Date.now();
         //Return back to the mpl model
             const map = new Map();
         
@@ -64,6 +66,7 @@ self.onmessage = async function solveALP(msg) {
             map.set('Result',Status);
             map.set('VariableTable',returnVariableTable())
             map.set('ConstrainTable',returnConstrainTable())
+            map.set('Walltime', endTime - beginningtime)
             self.postMessage(map);
 
         } catch (err) {

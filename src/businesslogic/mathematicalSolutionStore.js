@@ -9,7 +9,8 @@ import { defineStore } from 'pinia';
 import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import * as highsSolver from "../businesslogic/solver/highsSolver.js";
 import * as inputToLPInterface from "../businesslogic/inputToLPInterface.js";
-
+import {returnTimeTaken} from "../businesslogic/solver/highsSolver.js";
+//test
 /**
  * Constructor for the Store
  * @type {StoreDefinition<"mathematicalSolution", {solution: [], optimizationStore: *, optimalResult: []}, {}, {getRawArray(*): *, solveProblem(String, String): Promise<void>}>}
@@ -21,10 +22,27 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
     constraints:[],
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
+    walltime: [],
   }),
   
   // Actions section: methods to modify the state or perform other logic
   actions: {
+       /**
+ * Resets the state of the mathematical solution store.
+ * 
+ * This method clears the data for the solution, constraints, 
+ * and optimalResult properties in the store. It is typically
+ * used when navigating away from the component or when a new 
+ * problem is being solved to ensure that no stale data remains.
+ * 
+ * @method
+ * @returns {void}
+ */
+       reset() {
+        this.solution = [];
+        this.constraints = [];
+        this.optimalResult = [];
+      },
     /**
      * Returns the Array
      * @param array
@@ -54,10 +72,16 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             this.optimizationStore.getProblemBounds, 
             ""
           );
+          if(this.optimizationStore.getObjectiveFunction.length ===0){
+            alert("Error:missing objective function")
+          }
+          if(this.optimizationStore.constraints.length ===0){
+            alert("Error:missing constraints")
+          }
           console.log(lpContent);
           const result = await highsSolver.solveLP(lpContent); // Solve the LP
+          this.walltime = returnTimeTaken();
           console.log(result);
-          // TODO: Handle the result and move to the solved result
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
         }
@@ -73,7 +97,9 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
         this.constraints =data.get('ConstrainTable')
+        this.walltime = data.get('Walltime');
         console.log(this.constraints)
+        console.log(data.get('Walltime'))
       } else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }

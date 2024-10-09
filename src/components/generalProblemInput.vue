@@ -11,9 +11,31 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 export default {
   name: "GeneralProblemInput",
+  data() {
+        return {
+            showPopup: false,    // Controls whether the main popup is shown
+            popupContent: "",    // Stores the content to be shown in the main popup
+            
+        };
+    },
+  methods: {
+        openPopup() {
+            const currentLocale = this.$i18n.locale; // Access the app's current language
+
+            this.popupContent = this.$t('generalProblemExample');
+            this.showPopup = true;
+        },
+        closePopup() {
+            // Close both the main and example popups
+            this.showPopup = false;
+           
+        },
+       
+    },
   setup() {
-    const editorContainer = ref(null); 
+    const editorContainer = ref(null);
     const editorStore = useEditorStore();  // Use the Pinia store where Codemirror is initialized
+    const fileInput = ref(null);
 
     // Mount the Codemirror editor
     onMounted(() => {
@@ -53,10 +75,32 @@ export default {
       workwork.postMessage(problemInput);
     };
 
+    const triggerFileUpload = () => {
+      fileInput.value.click(); // Simulate a click on the hidden file input
+    };
+
+    const handleFileUpload = (event) => {
+      const file = event.target.files[0]; // Get the first selected file
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const fileContent = reader.result; // Get the content of the file
+          editorStore.editor.dispatch({
+            changes: { from: 0, to: editorStore.editor.state.doc.length, insert: fileContent }, // Insert content into the editor
+          });
+          console.log("File content loaded into editor:", fileContent);  // Log the file content
+        };
+        reader.readAsText(file); // Read the file as text
+      }
+    };
+
 
     return {
       editorContainer,
       solve,
+      triggerFileUpload,
+      handleFileUpload,
+      fileInput,
     };
   },
 };
@@ -72,17 +116,36 @@ export default {
           contenteditable="true"
           :placeholder="$t('writeHere')"
         ></div>
-        <img src="../assets/question.png" alt="Help" class="help-icon">
+        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup()">
       </div>
     </div>
     <div class="buttoncontainer">
-      <button class="mainButton" @click="gmplStore.importProblem">{{ $t("importProblem") }}</button>
+      <button class="mainButton" @click="triggerFileUpload">{{ $t("importProblem") }}</button>
+
+
+<input
+  type="file"
+  ref="fileInput"
+  @change="handleFileUpload"
+  style="display: none"
+  accept=".mod"
+/>
+
       <button class="mainButton" @click="solve">{{ $t("solve") }}</button>
     </div>
   </div>
+
+  <div v-if="showPopup" class="popupOverlay" @click="closePopup">
+        <div class="popupContent" @click.stop>
+            <p>{{ popupContent }}</p>
+            <a v-if="type==='general'" @click="openExamplePopup" style="color: blue; text-decoration: underline; cursor: pointer; margin-right: 3%;">{{ $t('showExample') }}</a>
+            <button @click="closePopup">{{ $t("close") }}</button>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+
 .mainContent {
   display: flex;
   flex-direction: column;
@@ -103,6 +166,7 @@ export default {
 .inputContainer {
   position: relative;
   width: 100%;
+  white-space: noWrap;
 }
 
 .problemInputWrapper {
@@ -170,4 +234,92 @@ export default {
 .mainButton:hover {
   background-color: rgb(140, 140, 140);
 }
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  
+    margin-top: 2rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 1rem;
+  }
+
+  .mainTitel {
+    font-size: 1.8rem;
+    padding: 0.5rem 0;
+  }
+
+  .inputContainer {
+    width: 100%;
+  }
+
+  .problemInput {
+    font-size: 1rem;
+    padding: 1rem;
+    min-height: 15rem;
+  }
+
+  .buttoncontainer {
+    flex-direction: row;
+    justify-content: space-between; 
+    gap: 0.5rem;
+  }
+
+  .mainButton {
+    padding: 0.5rem 1rem; 
+    font-size: 0.9rem; 
+    max-width: 100%; 
+  }
+
+  .help-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+  }
+
+  .popupContent {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .popupContent button {
+    margin-top: 1.5rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+
 </style>

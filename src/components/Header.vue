@@ -124,7 +124,7 @@ body {
   display: block;
 }
 
-/* Standardgröße für größere Bildschirme */
+
 .logo {
   height: 3%;
   width: 3%;
@@ -132,10 +132,10 @@ body {
   cursor: pointer;
 }
 
-/* Größere Größe für Mobilgeräte */
+
 @media only screen and (max-width: 768px) {
   .logo {
-    height: 6%; /* Größer auf mobilen Geräten */
+    height: 6%; 
     width: 6%;
   }
 }
