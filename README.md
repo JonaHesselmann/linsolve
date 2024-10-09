@@ -123,7 +123,7 @@ Linsolve is a web-based interface for the Highs Solver, designed to solve linear
 You can submit a problem by selecting the appropriate problem type on the **Landing Page** and uploading the problem file. The system supports both general and specific problem types.
 
 ### 7. How can I run the project locally?
-To run the project locally, clone the repository, install the required dependencies using `npm install`, and then run `npm run dev` to start the development server. Detailed instructions can be found in the [Getting Started](#getting-started) section.
+To run the project locally, clone the repository, install the required dependencies using `npm install`, and then run `npm run build` to start. Detailed instructions can be found in the [Getting Started](#getting-started) section.
 
 ### 8. How is the project tested?
 The project uses **Vitest** for unit testing. You can run the tests using the command `vitest` or `npm test dev`. Test coverage reports can also be generated.
@@ -131,8 +131,6 @@ The project uses **Vitest** for unit testing. You can run the tests using the co
 ### 9. Can I contribute to this project?
 Absolutely! We welcome contributions from developers, designers, and problem-solvers. Please see the [Collaboration](#collaboration) section for more details on how to get involved.
 
-### 10. Where can I find the project documentation?
-The documentation is automatically generated using **JSDoc** and can be found [here](/docs/jsdoc/index.html). It includes detailed information on how the system works, its architecture, and how you can contribute.
 
 ### 11. What are the main dependencies of this project?
 The project uses several technologies, including:
