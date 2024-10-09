@@ -4,33 +4,46 @@ LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARR
 You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 */
 
-
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import App from '../src/App.vue'
-import Header from '../src/components/Header.vue'
-import Footer from '../src/components/Footer.vue';
-import { createTestingPinia } from '@pinia/testing'
+import { createRouter, createMemoryHistory } from 'vue-router';
+import App from '../src/App.vue';
+import SelectionPage from '../src/view/SelectionPage.vue'
+import { createTestingPinia } from '@pinia/testing';
+import { createI18n } from 'vue-i18n'; // Assuming you're using vue-i18n
 
+// Create a mock router for the test with a sample route
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [
+    {
+      path: '/',
+      component: SelectionPage, // Mock TestComponent for routing
+    },
+  ],
+});
 
-//TODO find fix for the Test
-describe.skip('Component', () => {
+// Mock i18n for the test environment
+const i18n = createI18n({
+  locale: 'en',
+  messages: {
+    en: { language: 'Language' },
+  },
+});
 
-    it('should render Header and Footer components', () => {
-        const wrapper = mount(App, {
-            global: {
-                plugins: [createTestingPinia()],
-            },
-        })
-
-
-
-        // Check if the Header component is rendered
-        expect(wrapper.findComponent(Header).exists()).toBe(true);
-
-        // Check if the Footer component is rendered
-        expect(wrapper.findComponent(Footer).exists()).toBe(true);
+describe('App.vue', () => {
+  it('should render the routed component through RouterView', async () => {
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, createTestingPinia(), i18n], // Include router, Pinia, and i18n
+      },
     });
 
+    // Ensure the router is ready
+    await router.isReady();
+
+    // Check if the routed component (TestComponent) is rendered
+    expect(wrapper.findComponent(SelectionPage).exists()).toBe(true);
+  });
 });
 
