@@ -127,7 +127,7 @@ export default {
       <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-        <!-- Lower Bound Input -->
+      
         <input
             type="number"
             class="boundTextField"
@@ -136,7 +136,7 @@ export default {
         >
         <p class="boundText">≤ {{ variable }} ≤</p>
 
-        <!-- Upper Bound Input -->
+      
         <input
             type="number"
             class="boundTextField"
@@ -203,7 +203,7 @@ export default {
       <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
       </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
-          <!-- Lower Bound Input -->
+          
           <input
               type="number"
               class="boundTextField"
@@ -212,7 +212,7 @@ export default {
           >
           <p class="boundText">≤ {{ variable }} ≤</p>
 
-          <!-- Upper Bound Input -->
+        
           <input
               type="number"
               class="boundTextField"
@@ -496,8 +496,8 @@ export default {
 }
 
 .popupContent button {
-    align-self: center;  /* Center the close button */
-    margin-top: 2rem;    /* Add margin above the button */
+    align-self: center;  
+    margin-top: 2rem;   
     padding: 0.8rem 1.5rem;
     background-color: #444;
     color: white;

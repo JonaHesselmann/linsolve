@@ -64,7 +64,7 @@ export default {
       </div>
     </div>
 
-    <!-- Results -->
+    
     <div class="results-container" v-if="mathematicalSolutionStore.optimalResult[0] === 'Optimal'">
       <div class="result-card">
         <h3>{{ $t('objectiveFunctionValue') }}</h3>
@@ -72,7 +72,7 @@ export default {
       </div>
     </div>
 
-    <!-- Runtime Display -->
+   
     <div class="runtime-container"  v-if="variableTableData.length >1" >
       <div class="runtime-card">
         <h3>{{ $t('runtime') }}</h3>
@@ -83,7 +83,7 @@ export default {
 </template>
 
 <style scoped>
-/* General Styles (Desktop First) */
+
 .solution-table {
   width: 100%;
   border-collapse: collapse;
@@ -95,7 +95,7 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
-  white-space: nowrap; /* Prevent breaking of text */
+  white-space: nowrap; 
 }
 
 .solution-table th {
@@ -107,7 +107,7 @@ export default {
   font-size: 18px;
 }
 
-/* Results card style */
+
 .results-container {
   margin-top: 20px;
 }
@@ -119,7 +119,7 @@ export default {
   background-color: #f9f9f9;
 }
 
-/* Runtime container for displaying runtime */
+
 .runtime-container {
   margin-top: 20px;
 }
@@ -128,14 +128,14 @@ export default {
   text-align: center;
 }
 
-/* Responsive design for mobile */
+
 @media (max-width: 768px) {
-  /* Hide the th elements on mobile */
+  
   .solution-table thead{
     display: none !important;
   }
 
-  /* Make td display as block on mobile for a stacked look */
+  
   .solution-table,
   .solution-table thead,
   .solution-table tbody,
@@ -176,7 +176,7 @@ export default {
     background-color: #fafafa;
   }
 
-  /* Runtime card styles for mobile */
+  
   .runtime-card {
     font-size: 14px;
     padding: 10px;
@@ -209,7 +209,7 @@ export default {
     content: none;
   }
 
-  /* Runtime card styles for desktop */
+  
   .runtime-card {
     text-align: center;
     font-size: 18px;

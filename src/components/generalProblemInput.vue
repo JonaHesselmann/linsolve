@@ -123,7 +123,7 @@ export default {
     <div class="buttoncontainer">
       <button class="mainButton" @click="triggerFileUpload">{{ $t("importProblem") }}</button>
 
-<!-- Verstecktes Datei-Upload-Input -->
+
 <input
   type="file"
   ref="fileInput"
@@ -260,8 +260,8 @@ export default {
 }
 
 .popupContent button {
-    align-self: center;  /* Center the close button */
-    margin-top: 2rem;    /* Add margin above the button */
+    align-self: center;  
+    margin-top: 2rem;   
     padding: 0.8rem 1.5rem;
     background-color: #444;
     color: white;
@@ -291,14 +291,14 @@ export default {
 
   .buttoncontainer {
     flex-direction: row;
-    justify-content: space-between; /* Keep buttons next to each other */
+    justify-content: space-between; 
     gap: 0.5rem;
   }
 
   .mainButton {
-    padding: 0.5rem 1rem; /* Smaller padding */
-    font-size: 0.9rem; /* Smaller text size */
-    max-width: 100%; /* Ensure full button size for each */
+    padding: 0.5rem 1rem; 
+    font-size: 0.9rem; 
+    max-width: 100%; 
   }
 
   .help-icon {
