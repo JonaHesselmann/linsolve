@@ -145,6 +145,7 @@ export default {
 
 <template>
   <div class="input-container">
+    <h2 class="mainTitle">{{ $t("specificProblem") }}</h2>
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
@@ -270,16 +271,25 @@ export default {
 </template>
 
 <style scoped>
-*{
+/* *{
   margin-top: 1%;
-}
+} */
 .helperbounds{
   white-space: nowrap;
+}
+.mainTitle {
+  margin: 0;
+  font-size: 2.5rem;
+  text-align: center;
+  width: 100%;
+  padding: 1rem 0;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 .input-container {
   display: grid;
   grid-template-columns: 2fr 4fr;
-  gap: 150px;
+  gap: 50px 150px;
   width: 100%;
   margin: 0 auto;
   padding: 5%;
@@ -328,7 +338,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 60px;
+  /* padding-top: 60px; */ 
 }
 
 .input-container__first-row {
@@ -422,7 +432,7 @@ export default {
   top: 0;
   background-color: white;
   z-index: 10;
-  height: 60px;
+  /* height: 60px; */
   display: flex;
   align-items: center;
   justify-content: center;
