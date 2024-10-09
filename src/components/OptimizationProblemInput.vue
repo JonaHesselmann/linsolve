@@ -10,6 +10,7 @@ import { useOptimizationStore } from '../businesslogic/optimizationStore';
 import { computed } from 'vue';
 import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 export default {
   name: 'OptimizationProblemInput',
   data() {
@@ -25,10 +26,31 @@ export default {
     const optimizationStore = useOptimizationStore();
     const mathematicalSolutionStore = useMathematicalSolution()
 
-
+    const fileInput = ref(null);
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
     const isMaximizationSelected = computed(() => optimizationStore.selectedOptimization === 'Maximize');
+    const triggerFileUpload = () => {
+      fileInput.value.click();  // Simulate a click on the hidden input
+    };
+    const handleFileUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const fileType = file.name.split('.').pop().toLowerCase();  // Get the file extension
+        if (fileType === 'lp') {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const fileContent = reader.result;
+            console.log("File content loaded:", fileContent);
 
+            
+            
+          };
+          reader.readAsText(file);  // Read the file content as text
+        } else {
+          alert('Nur .lp-Dateien sind erlaubt.');
+        }
+      }
+    };
     /**
      * Solve LP
      */
@@ -47,7 +69,9 @@ export default {
       isMaximizationSelected,
       solveLP,
       deleteConstraint,
-
+      triggerFileUpload,
+      handleFileUpload,
+      fileInput,
     }
   },
   watch: {
@@ -223,7 +247,15 @@ export default {
       </div>
 
       <div class="input-container__last-row">
-        <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('uploadFile') }}</button>
+        <button class="input-container__main-button" @click="triggerFileUpload">{{ $t('uploadFile') }}</button>
+        <input
+        type="file"
+        ref="fileInput"
+        @change="handleFileUpload"
+        accept=".lp"
+        style="display: none"
+      />
+
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
         <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
