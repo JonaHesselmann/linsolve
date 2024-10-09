@@ -106,5 +106,6 @@
     "close":"Schließen",
     "uploadFile":"Datei Hochladen", 
     "runtime": "Laufzeit",
-    "executionTime":"Laufzeit"
+    "executionTime":"Laufzeit",
+    "exportProblem": "Problem exportieren"
 }

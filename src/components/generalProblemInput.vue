@@ -106,7 +106,6 @@ export default {
 };
 </script>
 
-
 <template>
   <div class="mainContent">
     <h2 class="mainTitel">{{ $t("gerneralProblem") }}</h2>
@@ -147,11 +146,6 @@ export default {
 
 <style scoped>
 
-.problemInputWrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
 .mainContent {
   display: flex;
   flex-direction: column;
@@ -174,12 +168,13 @@ export default {
   width: 100%;
   white-space: noWrap;
 }
-.help-icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  margin-left: 10px;
+
+.problemInputWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
+
 .problemInput {
   width: 100%;
   min-height: 20rem;
@@ -189,6 +184,13 @@ export default {
   border-radius: 8px;
   resize: vertical;
   margin-bottom: 2rem;
+}
+
+.help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-top: 1.5rem; /* Align with the top of the input field */
 }
 
 .suggestionsList {

@@ -8,7 +8,7 @@ You should have received a copy of the GNU General Public License along with Lin
   <div class="button-container">
     <button @click="exportResults()" class="export-button">
       <img src="../assets/export.png" alt="Export" class="export-icon" />
-        {{ $t("problemExportieren") }}
+        {{ $t("exportProblem") }}
     </button>
   </div>
   <GoToHomepage class="GoToHomepage"></GoToHomepage>
