@@ -56,11 +56,11 @@ export default {
     <div class="mainButton_container">
         <div class="rowButton">
             <router-link to="/allgemeinesProblem" tag="button" class="mainButton">{{ $t("gerneralProblem") }}</router-link>
-            <img src="../assets/questionmark.png" class="questionmark" @click="openPopup('general')">
+            <span class="material-symbols-outlined themeTextColor questionmark" @click="openPopup('general')">help</span>
         </div>
         <div class="rowButton">
             <router-link to="/spezifischesProblem" tag="button" class="mainButton">{{ $t("specificProblem") }}</router-link>
-            <img src="../assets/questionmark.png" class="questionmark" @click="openPopup('specific')">
+            <span class="material-symbols-outlined themeTextColor questionmark" @click="openPopup('specific')">help</span>
         </div>
     </div>
 
@@ -124,6 +124,7 @@ export default {
     height: auto; 
     margin-left: 1rem; 
     align-self: center; 
+    cursor: pointer;
 }
 
 .popupOverlay {
@@ -140,7 +141,6 @@ export default {
 
 
 .popupContent {
-    background-color: white;
     padding: 2rem;
     border-radius: 0.5rem;
     width: 80%;

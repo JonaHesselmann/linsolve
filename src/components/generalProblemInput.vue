@@ -116,7 +116,7 @@ export default {
           contenteditable="true"
           :placeholder="$t('writeHere')"
         ></div>
-        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup()">
+        <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup()">help</span>
       </div>
     </div>
     <div class="buttoncontainer">
@@ -187,10 +187,9 @@ export default {
 }
 
 .help-icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
-  margin-top: 1.5rem; /* Align with the top of the input field */
 }
 
 .suggestionsList {
@@ -249,7 +248,6 @@ export default {
 
 
 .popupContent {
-    background-color: white;
     padding: 2rem;
     border-radius: 0.5rem;
     width: 80%;
