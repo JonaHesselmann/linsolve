@@ -20,6 +20,14 @@ You should have received a copy of the GNU General Public License along with Lin
   -moz-osx-font-smoothing: grayscale;
 }
 
+.themeTextColor {
+  color: white;
+}
+
+.popupContent {
+  background-color: rgb(112, 112, 112);
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -82,5 +90,11 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+  .themeTextColor {
+    color: black;
+  }
+  .popupContent {
+    background-color: white;
   }
 }

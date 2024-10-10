@@ -149,7 +149,7 @@ export default {
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
+      <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('bounds')">help</span>
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
       
@@ -185,7 +185,7 @@ export default {
             @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('optimization')">
+        <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('optimization')">help</span>
       </div>
 
       <div class="input-container__condition-container">
@@ -193,7 +193,7 @@ export default {
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
                  @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
                  id="objectiveFunction">
-          <img src="../assets/question.png" alt="Help" class="help-icon"@click="openPopup('condition')">
+                 <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('condition')">help</span>
         </div>
       </div>
 
@@ -204,28 +204,20 @@ export default {
                  :placeholder="$t('constraint')"
                  @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
-          <img
-              v-if="index === 0"
-              src="../assets/question.png"
-              alt="Help"
-              class="help-icon"
-              @click="openPopup('constraint')"
-          />
+          <span v-if="index === 0" 
+                class="material-symbols-outlined themeTextColor help-icon" 
+                @click="openPopup('constraint')">help</span>
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
-          <img
-              v-show="index !== 0"
-              src="../assets/trash.png"
-              @click="deleteConstraint(constraint.id)"
-              alt="Löschen"
-              class="delete-icon"
-          />
+          <span v-show="index !== 0"
+                class="material-symbols-outlined themeTextColor delete-icon" 
+                @click="deleteConstraint(constraint.id)">delete_forever</span>
         </div>
       </div>
 
       <div class="input-container__bounds_mobile">
         <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
+      <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('bounds')">help</span>
       </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
           
@@ -354,7 +346,6 @@ export default {
   flex-direction: column;
   align-items: end;
   cursor: pointer;
-  background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
@@ -414,8 +405,6 @@ export default {
 
 .delete-icon {
   cursor: pointer;
-  width: 24px;
-  height: 24px;
   margin-left: 10px;
 }
 
@@ -430,7 +419,6 @@ export default {
 .sticky-buttons {
   position: sticky;
   top: 0;
-  background-color: white;
   z-index: 10;
   /* height: 60px; */
   display: flex;
@@ -439,8 +427,6 @@ export default {
 }
 
 .help-icon {
-  width: 24px;
-  height: 24px;
   cursor: pointer;
   margin-left: 10px;
 }
@@ -503,8 +489,6 @@ export default {
     gap: 10px;
   }
   .help-icon {
-  width: 15px;
-  height: 15px;
   cursor: pointer;
   margin-left: 0px;
 }
@@ -525,7 +509,6 @@ export default {
 
 
 .popupContent {
-    background-color: white;
     padding: 2rem;
     border-radius: 0.5rem;
     width: 80%;
