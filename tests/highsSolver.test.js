@@ -51,6 +51,8 @@ End
 
         // Call solveLP and verify the result
         const result = await solveLP(lpContent);
+
+        // Expected result map, with all the expected keys
         const solution = new Map();
         solution.set('Result', ['optimal', 42]);
         solution.set('VariableTable', [
@@ -58,6 +60,10 @@ End
             ['x1', undefined, undefined, undefined, 10, undefined],
             ['x2', undefined, undefined, undefined, 5, undefined],
         ]);
+        solution.set('ConstrainTable', undefined);  // Default or empty constraint table
+        solution.set('Walltime', 0);  // Simulated wall time (can be adjusted)
+
+        // Ensure that result includes all keys
         expect(result).toEqual(solution);
 
         // Verify that highs.solve was called with the correct content
@@ -71,9 +77,10 @@ End
         const variables = returnVariables();
         expect(variables).toEqual([
             ['x1', 10],
-            ['x2', 5],
+            ['x2', 5]
         ]);
     });
+
 
     it('should throw an error when the highs.solve function fails', async () => {
         // Mock the solve function to throw an error
