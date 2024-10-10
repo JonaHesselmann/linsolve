@@ -47,7 +47,7 @@ async function solveLP(lpContent) {
         map.set('Result', solution);
         map.set('VariableTable', formatSolutionToArray(result));
         map.set('ConstrainTable', returnConstraints(result));
-        map.set('WallTime', Timetaken);
+        map.set('Walltime', Timetaken);
         console.log(map);
         console.log(Timetaken);
         console.log(formatSolutionToArray(result));

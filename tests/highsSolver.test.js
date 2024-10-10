@@ -1,25 +1,20 @@
 /*
 This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
 LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
 */
-
 
 import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { solveLP, returnVariables, returnOptimalResult } from '../src/businesslogic/solver/highsSolver.js';
 import highs_loader from 'highs';
 
-
+// Mock the highs library and the solve function
 vi.mock('highs', () => {
-    let mockSolve = vi.fn();
-
+    const mockSolve = vi.fn();
     return {
         __esModule: true,
-        default: async () => {
-            return {
-                solve: mockSolve,
-            };
-        },
+        default: async () => ({
+            solve: mockSolve,
+        }),
     };
 });
 
@@ -38,8 +33,8 @@ describe('highsSolver Module', () => {
             ObjectiveValue: 42,
             Columns: {
                 x1: { Primal: 10, Name: 'x1' },
-                x2: { Primal: 5, Name: 'x2' }
-            }
+                x2: { Primal: 5, Name: 'x2' },
+            },
         };
 
         // Mock the solve function to return the mock result
@@ -56,7 +51,14 @@ End
 
         // Call solveLP and verify the result
         const result = await solveLP(lpContent);
-        expect(result).toEqual(mockResult);
+        const solution = new Map();
+        solution.set('Result', ['optimal', 42]);
+        solution.set('VariableTable', [
+            ['Variable Name', 'Type', 'Lower Bound', 'Upper Bound', 'Primal Value', 'Dual Value'],
+            ['x1', undefined, undefined, undefined, 10, undefined],
+            ['x2', undefined, undefined, undefined, 5, undefined],
+        ]);
+        expect(result).toEqual(solution);
 
         // Verify that highs.solve was called with the correct content
         expect(highsMock.solve).toHaveBeenCalledWith(lpContent);
@@ -69,7 +71,7 @@ End
         const variables = returnVariables();
         expect(variables).toEqual([
             ['x1', 10],
-            ['x2', 5]
+            ['x2', 5],
         ]);
     });
 
@@ -107,15 +109,15 @@ End
     });
 
     it('should return correct variables and optimal result from a valid LP solve', async () => {
-        // Mock result for more complex LP problem
+        // Mock result for a more complex LP problem
         const mockResult = {
             Status: 'optimal',
             ObjectiveValue: 100,
             Columns: {
                 x1: { Primal: 20, Name: 'x1' },
                 x2: { Primal: 30, Name: 'x2' },
-                x3: { Primal: 50, Name: 'x3' }
-            }
+                x3: { Primal: 50, Name: 'x3' },
+            },
         };
 
         // Mock the solve function
@@ -142,9 +144,7 @@ End
         expect(variables).toEqual([
             ['x1', 20],
             ['x2', 30],
-            ['x3', 50]
+            ['x3', 50],
         ]);
     });
 });
-
-
