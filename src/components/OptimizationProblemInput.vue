@@ -95,9 +95,12 @@ export default {
     }
   },
   methods: {
-toggleFileUploadDiv() {
-      this.showFileUploadDiv = !this.showFileUploadDiv;  // Toggle the visibility of the file upload div
-    },
+    toggleFileUploadDiv() {
+    this.showFileUploadDiv = !this.showFileUploadDiv;  // Toggle the visibility of the file upload div
+    if (!this.showFileUploadDiv) {
+      this.uploadedFileContent = "";  // Set the uploaded file content to an empty string
+    }
+  },
 
     updateLowerBound(index, variable) {
       const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
@@ -259,8 +262,7 @@ toggleFileUploadDiv() {
   </div>
   <div v-if="showFileUploadDiv" class="popupOverlay">
         <div class="popupContent">
-          <textarea v-model="uploadedFileContent" rows="10" cols="30" placeholder="Dateiinhalt wird hier angezeigt..." readonly id="uploadedFileArea"></textarea>
-
+          <textarea v-model="uploadedFileContent" rows="10" cols="30" :placeholder="$t('fileInputField')" readonly id="uploadedFileArea"></textarea>
           <button class="input-container__main-button" @click="triggerFileUpload">
           {{ $t('uploadFile') }}
           </button>
