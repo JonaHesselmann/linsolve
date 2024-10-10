@@ -172,14 +172,13 @@ export default {
     display: block;
     margin-bottom: 6px;
     font-weight: bold;
-    color: #555;
+    color: #3d3d3d;
   }
 
-  .solution-table tr:nth-child(odd) {
-    background-color: #fafafa;
+  .solution-table tr {
+    background-color: #707070;
   }
 
-  
   .runtime-card {
     font-size: 14px;
     padding: 10px;
@@ -188,6 +187,12 @@ export default {
 
   .runtime-card strong {
     font-size: 16px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    .solution-table tr {
+      background-color: white;
+    }
   }
 }
 
