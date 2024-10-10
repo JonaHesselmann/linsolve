@@ -263,14 +263,17 @@ export default {
   <div v-if="showFileUploadDiv" class="popupOverlay">
         <div class="popupContent">
           <textarea v-model="uploadedFileContent" rows="10" cols="30" :placeholder="$t('fileInputField')" readonly id="uploadedFileArea"></textarea>
-          <button class="input-container__main-button" @click="triggerFileUpload">
+          <div>
+          <button  @click="triggerFileUpload">
           {{ $t('uploadFile') }}
           </button>
-          <router-link to="/result" class="input-container__main-button" @click="solveFile">
-          {{ $t('solve') }} </router-link>
-          <button class="input-container__main-button" @click="toggleFileUploadDiv">
-          {{ $t('close') }} </button>
          
+          <router-link to="/result"  @click="solveFile" class="router-link">
+          {{ $t('solve') }} </router-link>
+        
+          <button  @click="toggleFileUploadDiv">
+          {{ $t('close') }} </button>
+        </div>
         <input
           type="file"
           ref="fileInput"
@@ -426,6 +429,69 @@ export default {
   color: white;
 }
 
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  
+    margin-top: 2rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.popupContent button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.router-link {
+    align-self: center;  
+    
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    
+}
+
+.router-link:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.popupDiv {
+  box-sizing: flex;
+}
+
 .input-container__main-button:hover {
   background-color: rgb(140, 140, 140);
 }
@@ -528,42 +594,7 @@ export default {
 }
 }
 
-.popupOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
 
-
-.popupContent {
-    padding: 2rem;
-    border-radius: 0.5rem;
-    width: 80%;
-    max-width: 30rem;
-    text-align: left;
-    white-space: pre-wrap; 
-    word-wrap: break-word; 
-    overflow-wrap: anywhere; 
-    overflow-x: auto; 
-}
-
-.popupContent button {
-    align-self: center;  
-    margin-top: 2rem;   
-    padding: 0.8rem 1.5rem;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-}
 
 </style>
 
