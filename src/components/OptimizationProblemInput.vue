@@ -11,6 +11,7 @@ import { computed } from 'vue';
 import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { ssrLooseContain } from 'vue/server-renderer';
 export default {
   name: 'OptimizationProblemInput',
   data() {
@@ -18,13 +19,15 @@ export default {
             showPopup: false,    // Controls whether the main popup is shown
             showExamplePopup: false, // Controls whether the example popup is shown
             popupContent: "",    // Stores the content to be shown in the main popup
-
+            showFileUploadDiv: false,
+            
             
         };
     },
   setup() {
     const optimizationStore = useOptimizationStore();
     const mathematicalSolutionStore = useMathematicalSolution()
+    const uploadedFileContent = ref("");
 
     const fileInput = ref(null);
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
@@ -35,17 +38,15 @@ export default {
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
       if (file) {
-        const fileType = file.name.split('.').pop().toLowerCase();  // Get the file extension
+        const fileType = file.name.split('.').pop().toLowerCase();
         if (fileType === 'lp') {
           const reader = new FileReader();
           reader.onload = () => {
             const fileContent = reader.result;
             console.log("File content loaded:", fileContent);
-
-            
-            
+            uploadedFileContent.value = fileContent; // Hier auf .value zugreifen
           };
-          reader.readAsText(file);  // Read the file content as text
+          reader.readAsText(file);
         } else {
           alert('Nur .lp-Dateien sind erlaubt.');
         }
@@ -57,6 +58,10 @@ export default {
     const solveLP = async () => {
       await mathematicalSolutionStore.solveProblem('spezific');
 
+    };
+
+    const solveFile = async () => {
+      await mathematicalSolutionStore.solveProblem('file', uploadedFileContent.value);
     };
 
     const deleteConstraint = (id) => {
@@ -72,6 +77,8 @@ export default {
       triggerFileUpload,
       handleFileUpload,
       fileInput,
+      uploadedFileContent,
+      solveFile
     }
   },
   watch: {
@@ -88,6 +95,13 @@ export default {
     }
   },
   methods: {
+    toggleFileUploadDiv() {
+    this.showFileUploadDiv = !this.showFileUploadDiv;  // Toggle the visibility of the file upload div
+    if (!this.showFileUploadDiv) {
+      this.uploadedFileContent = "";  // Set the uploaded file content to an empty string
+    }
+  },
+
     updateLowerBound(index, variable) {
       const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
       const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
@@ -240,20 +254,37 @@ export default {
       </div>
 
       <div class="input-container__last-row">
-        <button class="input-container__main-button" @click="triggerFileUpload">{{ $t('uploadFile') }}</button>
-        <input
-        type="file"
-        ref="fileInput"
-        @change="handleFileUpload"
-        accept=".lp"
-        style="display: none"
-      />
-
+        <button class="input-container__main-button" @click="toggleFileUploadDiv">{{ $t('uploadFile') }}</button>
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
         <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
     </div>
   </div>
+  <div v-if="showFileUploadDiv" class="popupOverlay">
+        <div class="popupContent">
+          <textarea v-model="uploadedFileContent" rows="10" cols="30" :placeholder="$t('fileInputField')" readonly id="uploadedFileArea"></textarea>
+          <div>
+          <button  @click="triggerFileUpload">
+          {{ $t('uploadFile') }}
+          </button>
+         
+          <router-link to="/result"  @click="solveFile" class="router-link">
+          {{ $t('solve') }} </router-link>
+        
+          <button  @click="toggleFileUploadDiv">
+          {{ $t('close') }} </button>
+        </div>
+        <input
+          type="file"
+          ref="fileInput"
+          @change="handleFileUpload"
+          accept=".lp"
+          style="display: none"
+        />
+        </div>
+
+    </div>
+
   <div v-if="showPopup" class="popupOverlay" @click="closePopup">
         <div class="popupContent" @click.stop>
             <p>{{ popupContent }}</p>
@@ -268,6 +299,12 @@ export default {
 } */
 .helperbounds{
   white-space: nowrap;
+}
+
+.popupContent textarea {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
 }
 .mainTitle {
   margin: 0;
@@ -392,6 +429,69 @@ export default {
   color: white;
 }
 
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  
+    margin-top: 2rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.popupContent button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.router-link {
+    align-self: center;  
+    
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    
+}
+
+.router-link:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.popupDiv {
+  box-sizing: flex;
+}
+
 .input-container__main-button:hover {
   background-color: rgb(140, 140, 140);
 }
@@ -494,42 +594,7 @@ export default {
 }
 }
 
-.popupOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
 
-
-.popupContent {
-    padding: 2rem;
-    border-radius: 0.5rem;
-    width: 80%;
-    max-width: 30rem;
-    text-align: left;
-    white-space: pre-wrap; 
-    word-wrap: break-word; 
-    overflow-wrap: anywhere; 
-    overflow-x: auto; 
-}
-
-.popupContent button {
-    align-self: center;  
-    margin-top: 2rem;   
-    padding: 0.8rem 1.5rem;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-}
 
 </style>
 

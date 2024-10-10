@@ -21,24 +21,29 @@ You can access the website at: [https://jonahesselmann.github.io/linsolve/](http
 
 ### Landing Page
 ![Landing Page](./public/landingPage.png)
-On this page, the user can select the type of problem they want to solve and upload a file containing the problem.
+On this page, the user can select the type of problem they want to solve.
 
 ### General Problem Page
 ![General Problem Page](./public/generalProblemPage.png)
 On this page, the user can specify the general problem they want to solve. This needs to be done using **GMPL**.
 
 ### Specific Problem Page
-![Specific Problem Page](./public/spezifischProblemPage.png)
+![Specific Problem Page](./public/spezificProblemPage.png)
 On this page, specific problems can be detailed and defined.
-
+### Result Page
+![Result Page](./public/resultPage.png)
+On this page, the result can seen.
 
 # Dependencies
 *************
 A list of technologies used within the project:
-* [Vue](https://vuejs.org/): version ^3.4.37
-* [Vue-i18n](https://vue-i18n.intlify.dev/): version ^9.14.0
-* [Vue-router](https://router.vuejs.org/): version ^4.0.13
-* [Pinia](https://pinia.vuejs.org/): version ^2.2.2
+* [Vue](https://vuejs.org/)
+* [Vite](https://vite.dev/)
+* [Vitest](https://vitest.dev/)
+* [Vue-i18n](https://vue-i18n.intlify.dev/)
+* [Vue-router](https://router.vuejs.org/)
+* [Pinia](https://pinia.vuejs.org/)
+* [CodeMirror](https://codemirror.net/)
 
 # Getting Started
 ## Prerequisities
@@ -104,22 +109,22 @@ Currently, the button on the website to open the documentation is not yet functi
 **********
 
 ### 1. What format should my problem file be in?
-The file should be in **LP** (Linear Programming) or **GMPL** (GNU Math Programming Language) format.
+The file should be in **LP** (Linear Programming) or **GMPL** (GNU MathProge) format.
 
 ### 2. Which solvers are implemented?
 For general problems, the **GMPL** solver is implemented using a WebWorker. For specific problems, **Highs** is implemented with WebAssembly.
 
 ### 3. What is GMPL?
-**GMPL** (GNU Math Programming Language) is a high-level modeling language used for describing linear, nonlinear, and mixed-integer programming problems. It is part of the **GLPK** (GNU Linear Programming Kit) and is widely used for optimization problems.
+**GMPL** (GNU MathProg) is a high-level modeling language used for describing linear, nonlinear, and mixed-integer programming problems. It is part of the **GLPK** (GNU Linear Programming Kit) and is widely used for optimization problems.
 
 ### 4. Who can I contact if I encounter an issue or have a question?
 If you run into any issues or have questions, feel free to open an issue on the GitHub repository, or reach out to the project maintainers. We’re happy to help!
 
 ### 5. What is Linsolve?
-Linsolve is a web-based interface for the Highs Solver, designed to solve linear optimization problems. The project was developed as part of a programming project in the Business Informatics program at Osnabrück University of Applied Sciences.
+Linsolve is a web-based interface for the Highs and GLPK Solver, designed to solve linear optimization problems. The project was developed as part of a programming project in the Business Informatics program at Osnabrück University of Applied Sciences.
 
 ### 6. How can I submit a problem to be solved?
-You can submit a problem by selecting the appropriate problem type on the **Landing Page** and uploading the problem file. The system supports both general and specific problem types.
+You can submit a problem by selecting the appropriate problem type on the **Landing Page**. The system supports both general and specific problem types.
 
 ### 7. How can I run the project locally?
 To run the project locally, clone the repository, install the required dependencies using `npm install`, and then run `npm run build` to start. Detailed instructions can be found in the [Getting Started](#getting-started) section.
@@ -129,16 +134,6 @@ The project uses **Vitest** for unit testing. You can run the tests using the co
 
 ### 9. Can I contribute to this project?
 Absolutely! We welcome contributions from developers, designers, and problem-solvers. Please see the [Collaboration](#collaboration) section for more details on how to get involved.
-
-
-### 11. What are the main dependencies of this project?
-The project uses several technologies, including:
-- **Vue.js** for the frontend
-- **Vue Router** for navigation
-- **Pinia** for state management
-
-
-You can find a full list of dependencies in the [Dependencies](#dependencies) section.
 
 **********
 ## Acknowledgments
