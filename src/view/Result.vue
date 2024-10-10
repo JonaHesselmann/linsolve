@@ -5,7 +5,7 @@ You should have received a copy of the GNU General Public License along with Lin
 -->
 <template>
   <Header></Header>
-  <div class="button-container">
+  <div  v-if="isExportVisible"  class="button-container">
     <button @click="exportResults()" class="export-button">
       <img src="../assets/export.png" alt="Export" class="export-icon" />
         {{ $t("exportProblem") }}
@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License along with Lin
 </template>
 
 <script>
+import { computed } from 'vue';
 import Header from '../components/Header.vue';
 import Result_math from '../components/Result_math.vue';
 import Footer from '../components/Footer.vue';
@@ -35,15 +36,22 @@ components: {
 },
 setup() {
   const optimizationStore = useOptimizationStore();
+  const mathematicalSolutionStore = useMathematicalSolution();
   
   const exportResults = () => {
     const format = 'lp'; 
     exportLPFile(format, optimizationStore);
   };
 
+  const isExportVisible = computed(() => {
+      return mathematicalSolutionStore.problemKind === 'spezific' || 
+             mathematicalSolutionStore.problemKind === 'file';
+    });
+
   return {
     exportResults,
-    optimizationStore
+    optimizationStore,
+    isExportVisible
   };
 },
 beforeRouteLeave(to, from, next) {

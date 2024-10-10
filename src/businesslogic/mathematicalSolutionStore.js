@@ -23,6 +23,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
     walltime: [],
+    problemKind: null,
   }),
   
   // Actions section: methods to modify the state or perform other logic
@@ -60,6 +61,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
      * @returns {Promise<void>}
      */
     async solveProblem (problemKind, data) {
+      this.problemKind = problemKind;
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -93,6 +95,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         } catch (error) {
           console.error('Keine Lösung vorhanden:', error);
         }
+        
       } else if (problemKind === 'general') {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
@@ -120,6 +123,9 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
       else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }
+      console.log(problemKind);
+      return problemKind;
+      
     },
   }
 });
