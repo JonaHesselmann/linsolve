@@ -51,7 +51,7 @@ async function solveLP(lpContent) {
         console.log(map);
         console.log(Timetaken);
         console.log(formatSolutionToArray(result));
-        return result; // Ergebnis zurückgeben
+        return map; // Ergebnis zurückgeben
     } catch (error) {
         console.error("Fehler beim Lösen des LP-Problems:", error);
         throw error;
