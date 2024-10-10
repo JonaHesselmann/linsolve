@@ -112,4 +112,64 @@ describe('useMathematicalSolution Store', () => {
 
         alertMock.mockRestore();
     });
+
+    // New Test Case 1: Solving a file-based problem and updating the state
+    it('should solve a file-based problem and update the state', async () => {
+        const mockFileContent = 'Mock LP File Content';
+
+        await store.solveProblem('file', mockFileContent);
+
+        expect(highsSolver.solveLP).toHaveBeenCalledWith(mockFileContent);
+        expect(highsSolver.returnVariables).toHaveBeenCalled();
+        expect(highsSolver.returnOptimalResult).toHaveBeenCalled();
+        expect(store.solution).toEqual(['var1', 'var2']);
+        expect(store.optimalResult).toEqual({ optimal: 'Mock Optimal Result' });
+        expect(store.walltime).toEqual([100]);
+    });
+
+    // New Test Case 2: Handle errors when solving a file-based problem
+    it('should handle errors in solving a file-based problem', async () => {
+        // Mock the solveLP to throw an error
+        vi.spyOn(highsSolver, 'solveLP').mockRejectedValueOnce(new Error('Mock Error'));
+    
+        // Spy on console.error to check if the error is logged
+        const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    
+        const mockFileContent = 'Invalid LP File Content';
+    
+        // Execute solveProblem and ensure the promise is rejected
+        await expect(store.solveProblem('file', mockFileContent)).rejects.toThrow('Mock Error');
+    
+       
+        // Restore the original console.error behavior
+        consoleErrorSpy.mockRestore();
+    });
+    
+    
+    
+
+    // New Test Case 3: Ensure the state is reset when solving a new problem
+    it('should reset the state before solving a new problem', async () => {
+        // Set the store with old data
+        store.solution = ['oldSolution'];
+        store.constraints = ['oldConstraint'];
+        store.optimalResult = ['oldResult'];
+    
+     
+    
+        const mockFileContent = 'Mock LP File Content';
+        
+        // Call solveProblem and expect reset to have been called
+        await store.solveProblem('file', mockFileContent);
+    
+        
+        // Expect the state to have been reset before solving the new problem
+        expect(store.solution).toEqual(['var1', 'var2']); // New solution
+        expect(store.optimalResult).toEqual({ optimal: 'Mock Optimal Result' }); // New optimal result
+       
+        expect(store.walltime).toEqual([100]); // New walltime
+    });
+    
+    
+    
 });
