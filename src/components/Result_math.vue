@@ -71,7 +71,7 @@ export default {
 
     
     <div class="results-container" v-if="mathematicalSolutionStore.optimalResult[0] === 'Optimal'">
-      <div class="result-card">
+      <div class="result-card popupContent">
         <h3>{{ $t('objectiveFunctionValue') }}</h3>
         <p>{{ $t('optimalValue') }} <strong>{{ mathematicalSolutionStore.optimalResult[1] }}</strong></p>
       </div>
@@ -79,7 +79,7 @@ export default {
 
    
     <div class="runtime-container"  v-if="variableTableData.length >1" >
-      <div class="runtime-card">
+      <div class="runtime-card popupContent">
         <h3>{{ $t('runtime') }}</h3>
         <p>{{ $t('executionTime') }}: <strong>{{ runtime }} ms</strong></p>
       </div>
@@ -103,13 +103,11 @@ export default {
   white-space: nowrap; 
 }
 
-.solution-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
 
+.solution-table th,
 .solution-table td {
   font-size: 18px;
+  font-weight: normal;
 }
 
 
@@ -121,7 +119,6 @@ export default {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  background-color: #f9f9f9;
 }
 
 
@@ -159,6 +156,7 @@ export default {
     padding: 20px;
   }
 
+  .solution-table th,
   .solution-table td {
     display: block;
     padding: 12px 15px;

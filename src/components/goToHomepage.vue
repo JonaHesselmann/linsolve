@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
 <template>
     <div class="arrow-container">
         <router-link to="/" class="arrow-link">
-          <span class="material-symbols-outlined themeTextColor">arrow_back</span>
+          <span class="material-icons themeTextColor">arrow_back</span>
             <p class="themeTextColor">{{ $t('goHome') }}</p>
         </router-link>
     </div>

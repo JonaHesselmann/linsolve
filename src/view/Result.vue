@@ -7,7 +7,7 @@ You should have received a copy of the GNU General Public License along with Lin
   <Header></Header>
   <div class="button-container">
     <button @click="exportResults()" class="export-button">
-      <img src="../assets/export.png" alt="Export" class="export-icon" />
+      <span class="material-icons">ios_share</span>
         {{ $t("exportProblem") }}
     </button>
   </div>

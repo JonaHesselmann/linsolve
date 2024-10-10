@@ -116,7 +116,7 @@ export default {
           contenteditable="true"
           :placeholder="$t('writeHere')"
         ></div>
-        <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup()">help</span>
+        <span class="material-icons themeTextColor help-icon" @click="openPopup()">help</span>
       </div>
     </div>
     <div class="buttoncontainer">

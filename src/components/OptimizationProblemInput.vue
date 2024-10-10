@@ -149,7 +149,7 @@ export default {
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('bounds')">help</span>
+      <span class="material-icons themeTextColor help-icon" @click="openPopup('bounds')">help</span>
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
       
@@ -185,7 +185,7 @@ export default {
             @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('optimization')">help</span>
+        <span class="material-icons themeTextColor help-icon" @click="openPopup('optimization')">help</span>
       </div>
 
       <div class="input-container__condition-container">
@@ -193,7 +193,7 @@ export default {
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
                  @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
                  id="objectiveFunction">
-                 <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('condition')">help</span>
+                 <span class="material-icons themeTextColor help-icon" @click="openPopup('condition')">help</span>
         </div>
       </div>
 
@@ -205,11 +205,11 @@ export default {
                  @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
           <span v-if="index === 0" 
-                class="material-symbols-outlined themeTextColor help-icon" 
+                class="material-icons themeTextColor help-icon" 
                 @click="openPopup('constraint')">help</span>
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
           <span v-show="index !== 0"
-                class="material-symbols-outlined themeTextColor delete-icon" 
+                class="material-icons themeTextColor delete-icon" 
                 @click="deleteConstraint(constraint.id)">delete_forever</span>
         </div>
       </div>
@@ -217,7 +217,7 @@ export default {
       <div class="input-container__bounds_mobile">
         <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <span class="material-symbols-outlined themeTextColor help-icon" @click="openPopup('bounds')">help</span>
+      <span class="material-icons themeTextColor help-icon" @click="openPopup('bounds')">help</span>
       </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
           

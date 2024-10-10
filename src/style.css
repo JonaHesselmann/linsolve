@@ -98,3 +98,15 @@ button:focus-visible {
     background-color: white;
   }
 }
+
+@font-face {
+  font-family: 'MaterialIcons';
+  src: url('src/assets/MaterialSymbolsOutlined.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.material-icons {
+  font-family: 'MaterialIcons';
+  font-size: 24px;
+}

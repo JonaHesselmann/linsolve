@@ -56,11 +56,11 @@ export default {
     <div class="mainButton_container">
         <div class="rowButton">
             <router-link to="/allgemeinesProblem" tag="button" class="mainButton">{{ $t("gerneralProblem") }}</router-link>
-            <span class="material-symbols-outlined themeTextColor questionmark" @click="openPopup('general')">help</span>
+            <span class="material-icons themeTextColor questionmark" @click="openPopup('general')">help</span>
         </div>
         <div class="rowButton">
             <router-link to="/spezifischesProblem" tag="button" class="mainButton">{{ $t("specificProblem") }}</router-link>
-            <span class="material-symbols-outlined themeTextColor questionmark" @click="openPopup('specific')">help</span>
+            <span class="material-icons themeTextColor questionmark" @click="openPopup('specific')">help</span>
         </div>
     </div>
 
