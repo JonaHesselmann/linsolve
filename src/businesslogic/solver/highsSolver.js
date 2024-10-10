@@ -41,6 +41,14 @@ async function solveLP(lpContent) {
       const beginningtime = Date.now();
      result = await highs.solve(lpContent); // Löst das LP-Problem
       Timetaken = Date.now() -beginningtime;
+      const solution = new Array();
+      solution.push(result.Status,result.ObjectiveValue);
+      const map = new Map;
+      map.set('Result', solution);
+      map.set('VariableTable', formatSolutionToArray(result));
+      map.set('ConstrainTable', returnConstraints(result));
+      map.set('WallTime', Timetaken);
+      console.log(map);
       console.log(Timetaken);
       console.log(formatSolutionToArray(result));
     return result; // Ergebnis zurückgeben
@@ -128,7 +136,34 @@ function formatSolutionToArray(solution) {
 
     return result;
 }
+/**
+ * Returns an Array of tuples with the name of the Variable and its primal value
+ * @returns {*[]} - Array of Name with Primal vales
+ */
+function returnConstraints(solution) {
+    const result = [];
 
+    // Add headers for the rows
+    const rowHeaders = [
+        'Constraint Name',
+        'Lower Bound',
+        'Upper Bound',
+        'Primal Value',
+        'Dual Value',
+    ];
+    result.push(rowHeaders);
+    for(const key in solution.Rows) {
+        const row = solution.Rows[key];
+        result.push([
+            row.Name,
+            row.Lower === -Infinity ? '-inf' : row.Lower,
+            row.Upper === Infinity ? '+inf' : row.Upper,
+            row.Primal,
+            row.Dual,
+        ]);
+        return result;
+    }
+}
 
 
 
