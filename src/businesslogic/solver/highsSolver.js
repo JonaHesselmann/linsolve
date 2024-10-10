@@ -84,7 +84,7 @@ function returnVariables(){
 function returnTimeTaken(){
     return Timetaken;
 }
-function formatSolutionToArray(solution) {
+function formatSolutionToArray(Sol) {
 
     const result = [];
 
@@ -98,10 +98,8 @@ function formatSolutionToArray(solution) {
         'Dual Value',
     ];
     result.push(columnHeaders);
-
-
-    for (const key in solution.Columns) {
-        const col = solution.Columns[key];
+    for (const key in Sol.Columns) {
+        const col = Sol.Columns[key];
         result.push([
             col.Name,
             col.Type,
@@ -111,29 +109,6 @@ function formatSolutionToArray(solution) {
             col.Dual,
         ]);
     }
-
-    // Add headers for the rows
-    const rowHeaders = [
-        'Constraint Name',
-        'Lower Bound',
-        'Upper Bound',
-        'Primal Value',
-        'Dual Value',
-    ];
-    result.push(rowHeaders);
-
-    // Process each row
-    for (const row in solution.Rows) {
-        result.push([
-            row.Name,
-            row.Lower === -Infinity ? '-inf' : row.Lower,
-            row.Upper === Infinity ? '+inf' : row.Upper,
-            row.Primal,
-            row.Dual,
-        ]);
-    }
-
-
     return result;
 }
 /**
