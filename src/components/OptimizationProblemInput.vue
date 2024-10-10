@@ -163,7 +163,7 @@ export default {
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <span class="material-icons themeTextColor help-icon" @click="openPopup('bounds')">help</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('bounds')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
       
@@ -199,7 +199,7 @@ export default {
             @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <span class="material-icons themeTextColor help-icon" @click="openPopup('optimization')">help</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('optimization')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
 
       <div class="input-container__condition-container">
@@ -207,7 +207,7 @@ export default {
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
                  @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
                  id="objectiveFunction">
-                 <span class="material-icons themeTextColor help-icon" @click="openPopup('condition')">help</span>
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('condition')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
         </div>
       </div>
 
@@ -218,20 +218,23 @@ export default {
                  :placeholder="$t('constraint')"
                  @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
-          <span v-if="index === 0" 
-                class="material-icons themeTextColor help-icon" 
-                @click="openPopup('constraint')">help</span>
+        <svg v-if="index === 0"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" 
+          @click="openPopup('constraint')">
+          <path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+        </svg>
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
-          <span v-show="index !== 0"
-                class="material-icons themeTextColor delete-icon" 
-                @click="deleteConstraint(constraint.id)">delete_forever</span>
+          <svg v-show="index !== 0" @click="deleteConstraint(constraint.id)"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor delete-icon" >
+            <path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/>
+          </svg>
         </div>
       </div>
 
       <div class="input-container__bounds_mobile">
         <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <span class="material-icons themeTextColor help-icon" @click="openPopup('bounds')">help</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('bounds')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
           
@@ -504,6 +507,8 @@ export default {
 }
 
 .delete-icon {
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   margin-left: 10px;
 }
@@ -527,6 +532,8 @@ export default {
 }
 
 .help-icon {
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   margin-left: 10px;
 }
@@ -588,6 +595,7 @@ export default {
     flex-direction: column;
     gap: 10px;
   }
+  .delete-icon,
   .help-icon {
   cursor: pointer;
   margin-left: 0px;

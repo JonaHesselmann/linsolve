@@ -7,8 +7,8 @@ You should have received a copy of the GNU General Public License along with Lin
 <template>
     <div class="arrow-container">
         <router-link to="/" class="arrow-link">
-          <span class="material-icons themeTextColor">arrow_back</span>
-            <p class="themeTextColor">{{ $t('goHome') }}</p>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" class="themeTextColor"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+          <p class="themeTextColor">{{ $t('goHome') }}</p>
         </router-link>
     </div>
 </template>

@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along with Lin
 
 .themeTextColor {
   color: white;
+  fill: white;
 }
 
 .popupContent {
@@ -93,20 +94,9 @@ button:focus-visible {
   }
   .themeTextColor {
     color: black;
+    fill: black;
   }
   .popupContent {
     background-color: white;
   }
-}
-
-@font-face {
-  font-family: 'MaterialIcons';
-  src: url('src/assets/MaterialSymbolsOutlined.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-.material-icons {
-  font-family: 'MaterialIcons';
-  font-size: 24px;
 }
