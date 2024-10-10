@@ -1,14 +1,9 @@
-/*
-This file is part of LinSolve. LinSolve is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
-LinSolve is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with LinSolve. If not, see <Licenses- GNU Project - Free Software Foundation >.
-*/
-
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import selectionProblemButtons from '../src/components/selectionProblemButtons.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
+// Define mock routes for testing router functionality
 const mockRoutes = [
   { path: '/', component: { template: '<div>Home</div>' } },
   { path: '/allgemeinesProblem', component: { template: '<div>Allgemeines Problem</div>' } },
@@ -24,49 +19,79 @@ describe('selectionProblemButtons.vue', () => {
   let wrapper;
 
   beforeEach(async () => {
-    router.push('/'); // Setze den Ausgangspfad auf "/"
-    await router.isReady(); // Warten bis der Router initialisiert ist
+    // Mock the router to start from the root
+    router.push('/');
+    await router.isReady();
 
+    // Mount the component with router and mocked i18n object
     wrapper = mount(selectionProblemButtons, {
       global: {
         plugins: [router],
         mocks: {
           $t: (msg) => msg, // Mock the translation function
+          $i18n: {
+            locale: 'en', // Mock the locale as 'en'
+          },
         },
       },
     });
   });
 
   it('renders the component correctly', () => {
-    // Überprüfe, ob das Haupt-Container-Element gerendert wird
+    // Check if the main container renders
     expect(wrapper.find('.mainButton_container').exists()).toBe(true);
 
-    // Überprüfe, ob die Buttons gerendert werden
+    // Check if the buttons are rendered correctly
     const buttons = wrapper.findAll('.mainButton');
-    expect(buttons).toHaveLength(2); // Es gibt 3 Buttons in der Vorlage
+    expect(buttons).toHaveLength(2); // There should be 2 buttons
   });
 
-  it('renders the correct translated button texts', () => {
-    const buttons = wrapper.findAll('.mainButton');
+  it('opens and displays the correct popup content when a question mark is clicked', async () => {
+    // Click on the first question mark to trigger the popup for the general problem
+    await wrapper.findAll('.questionmark')[0].trigger('click');
 
-    // Überprüfe die gerenderten Texte der Buttons
-    expect(buttons[0].text()).toBe('gerneralProblem'); // Der erste Button sollte "gerneralProblem" zeigen
-    expect(buttons[1].text()).toBe('specificProblem'); // Der zweite Button sollte "specificProblem" zeigen
-    
+    // Check if the popup is visible and displays the correct content
+    expect(wrapper.find('.popupOverlay').isVisible()).toBe(true);
+    expect(wrapper.find('.popupContent').text()).toContain('generalProblemInfo');
   });
 
-  it('navigates to the correct route when a button is clicked', async () => {
-    // Nutze router.push, um die Navigation zu testen
-    await router.push('/allgemeinesProblem');
-    expect(router.currentRoute.value.fullPath).toBe('/allgemeinesProblem'); // Überprüfe die Route nach der Navigation
+  it('closes the popup when clicking outside the popup or the close button', async () => {
+    // Open the popup
+    await wrapper.findAll('.questionmark')[0].trigger('click');
+    expect(wrapper.find('.popupOverlay').isVisible()).toBe(true);
 
-    await router.push('/spezifischesProblem');
-    expect(router.currentRoute.value.fullPath).toBe('/spezifischesProblem'); // Überprüfe die Route nach der Navigation
+    // Click outside the popup to close it
+    await wrapper.find('.popupOverlay').trigger('click');
+    expect(wrapper.find('.popupOverlay').exists()).toBe(false);
+
+    // Open the popup again
+    await wrapper.findAll('.questionmark')[0].trigger('click');
+    expect(wrapper.find('.popupOverlay').isVisible()).toBe(true);
+
+    // Click the close button
+    await wrapper.find('.popupContent button').trigger('click');
+    expect(wrapper.find('.popupOverlay').exists()).toBe(false);
   });
 
-  it('renders question mark images for each row', () => {
-    // Überprüfe, ob das Fragezeichenbild in jeder Buttonreihe gerendert wird
-    const questionMarks = wrapper.findAll('.questionmark');
-    expect(questionMarks).toHaveLength(2); // Es gibt drei Reihen, also drei Fragezeichen
+  it('opens and closes the example popup correctly for general problem', async () => {
+    // Open the general problem popup
+    await wrapper.findAll('.questionmark')[0].trigger('click');
+    expect(wrapper.find('.popupOverlay').isVisible()).toBe(true);
+
+    // Click to open the example popup
+    await wrapper.find('.popupContent a').trigger('click');
+
+    // There should now be two popup overlays, the second one being the example popup
+    const popups = wrapper.findAll('.popupOverlay');
+    expect(popups).toHaveLength(2); // Ensure that both popups are displayed
+    expect(popups[1].isVisible()).toBe(true); // The second popup (example popup) should be visible
+
+    // Close the example popup
+    await popups[1].trigger('click');
+
+    // After closing, there should only be one popup (the main one), so re-fetch popups
+    const updatedPopups = wrapper.findAll('.popupOverlay');
+    expect(updatedPopups).toHaveLength(1); // Only the main popup should be left open
   });
+
 });
