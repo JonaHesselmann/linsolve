@@ -69,8 +69,12 @@ export default {
       }
 
       if (missingWords.length > 0) {
-        this.openPopup()
-        console.log("Missing words:", missingWords.join(", "));
+
+        if (typeof alert === 'function') {
+          alert("Missing words: " + missingWords.join(", "));
+        } else {
+          console.log("Missing words: " + missingWords.join(", "));
+        }
       } else {
         workwork.onmessage = (e) => {
           // Log the data received from the worker
