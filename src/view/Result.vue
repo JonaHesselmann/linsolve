@@ -5,9 +5,9 @@ You should have received a copy of the GNU General Public License along with Lin
 -->
 <template>
   <Header></Header>
-  <div class="button-container">
+  <div  v-if="isExportVisible"  class="button-container">
     <button @click="exportResults()" class="export-button">
-      <img src="../assets/export.png" alt="Export" class="export-icon" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="export-icon"><path d="M240-40q-33 0-56.5-23.5T160-120v-440q0-33 23.5-56.5T240-640h120v80H240v440h480v-440H600v-80h120q33 0 56.5 23.5T800-560v440q0 33-23.5 56.5T720-40H240Zm200-280v-447l-64 64-56-57 160-160 160 160-56 57-64-64v447h-80Z"/></svg>
         {{ $t("exportProblem") }}
     </button>
   </div>
@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License along with Lin
 </template>
 
 <script>
+import { computed } from 'vue';
 import Header from '../components/Header.vue';
 import Result_math from '../components/Result_math.vue';
 import Footer from '../components/Footer.vue';
@@ -35,15 +36,22 @@ components: {
 },
 setup() {
   const optimizationStore = useOptimizationStore();
+  const mathematicalSolutionStore = useMathematicalSolution();
   
   const exportResults = () => {
     const format = 'lp'; 
     exportLPFile(format, optimizationStore);
   };
 
+  const isExportVisible = computed(() => {
+      return mathematicalSolutionStore.problemKind === 'spezific' || 
+             mathematicalSolutionStore.problemKind === 'file';
+    });
+
   return {
     exportResults,
-    optimizationStore
+    optimizationStore,
+    isExportVisible
   };
 },
 beforeRouteLeave(to, from, next) {
@@ -100,6 +108,7 @@ beforeRouteLeave(to, from, next) {
 .export-icon {
   width: 24px;
   height: 24px;
+  fill: white;
 }
 
 

@@ -23,6 +23,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
     optimalResult:[],
     optimizationStore: useOptimizationStore(),  // Correct initialization of optimizationStore
     walltime: [],
+    problemKind: null,
   }),
   
   // Actions section: methods to modify the state or perform other logic
@@ -42,6 +43,7 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         this.solution = [];
         this.constraints = [];
         this.optimalResult = [];
+        this.walltime=[]
       },
     /**
      * Returns the Array
@@ -60,6 +62,8 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
      * @returns {Promise<void>}
      */
     async solveProblem (problemKind, data) {
+      let highsData;
+      this.problemKind = problemKind;
       if (problemKind === 'spezific') {
         try {
           let lpContent;
@@ -79,20 +83,24 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             alert("Error:missing constraints")
           }
           console.log(lpContent);
-          const result = await highsSolver.solveLP(lpContent); // Solve the LP
-          this.walltime = returnTimeTaken();
-          console.log(result);
+          highsData = await highsSolver.solveLP(lpContent);
+          console.log('Highs'+ highsData)
+          try {
+            this.solution = this.getRawArray(highsData.get('VariableTable'))
+            this.optimalResult = highsData.get('Result')
+            this.constraints = highsData.get('ConstrainTable')
+            this.walltime =highsData.get('Walltime')
+          } catch (error) {
+            console.error('Error:', error);
+          }
+           
+          // TODO: Handle the result and move to the solved result
         } catch (error) {
           console.error('Fehler beim Lösen des LP-Problems:', error);
         }
         
-        try {
-          this.solution = highsSolver.returnVariables(); 
-          console.log(this.solution);
-          this.optimalResult = highsSolver.returnOptimalResult();
-        } catch (error) {
-          console.error('Keine Lösung vorhanden:', error);
-        }
+        
+        
       } else if (problemKind === 'general') {
         this.solution = this.getRawArray(data.get('VariableTable'))
         this.optimalResult =  data.get('Result')
@@ -100,9 +108,27 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
         this.walltime = data.get('Walltime');
         console.log(this.constraints)
         console.log(data.get('Walltime'))
-      } else {
+        
+      } else if (problemKind === 'file') {
+          let lpContent = data;
+          highsData = await highsSolver.solveLP(lpContent);
+          console.log('Highs'+ highsData)
+          try {
+            this.solution = this.getRawArray(highsData.get('VariableTable'))
+            this.optimalResult = highsData.get('Result')
+            this.constraints = highsData.get('ConstrainTable')
+            this.walltime =highsData.get('Walltime')
+          } catch (error) {
+            console.error('Error:', error);
+          }
+      
+    }
+      else {
         alert('Es wurde ein nicht definiertes Problem versucht zu Lösen')
       }
+      console.log(problemKind);
+      return problemKind;
+      
     },
   }
 });

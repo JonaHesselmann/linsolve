@@ -11,6 +11,7 @@ import { computed } from 'vue';
 import { useMathematicalSolution} from '../businesslogic/mathematicalSolutionStore.js';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { ssrLooseContain } from 'vue/server-renderer';
 export default {
   name: 'OptimizationProblemInput',
   data() {
@@ -18,13 +19,15 @@ export default {
             showPopup: false,    // Controls whether the main popup is shown
             showExamplePopup: false, // Controls whether the example popup is shown
             popupContent: "",    // Stores the content to be shown in the main popup
-
+            showFileUploadDiv: false,
+            
             
         };
     },
   setup() {
     const optimizationStore = useOptimizationStore();
     const mathematicalSolutionStore = useMathematicalSolution()
+    const uploadedFileContent = ref("");
 
     const fileInput = ref(null);
     const isMinimizationSelected = computed(() => optimizationStore.selectedOptimization === 'Minimize');
@@ -35,17 +38,15 @@ export default {
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
       if (file) {
-        const fileType = file.name.split('.').pop().toLowerCase();  // Get the file extension
+        const fileType = file.name.split('.').pop().toLowerCase();
         if (fileType === 'lp') {
           const reader = new FileReader();
           reader.onload = () => {
             const fileContent = reader.result;
             console.log("File content loaded:", fileContent);
-
-            
-            
+            uploadedFileContent.value = fileContent; // Hier auf .value zugreifen
           };
-          reader.readAsText(file);  // Read the file content as text
+          reader.readAsText(file);
         } else {
           alert('Nur .lp-Dateien sind erlaubt.');
         }
@@ -57,6 +58,10 @@ export default {
     const solveLP = async () => {
       await mathematicalSolutionStore.solveProblem('spezific');
 
+    };
+
+    const solveFile = async () => {
+      await mathematicalSolutionStore.solveProblem('file', uploadedFileContent.value);
     };
 
     const deleteConstraint = (id) => {
@@ -72,6 +77,8 @@ export default {
       triggerFileUpload,
       handleFileUpload,
       fileInput,
+      uploadedFileContent,
+      solveFile
     }
   },
   watch: {
@@ -88,6 +95,13 @@ export default {
     }
   },
   methods: {
+    toggleFileUploadDiv() {
+    this.showFileUploadDiv = !this.showFileUploadDiv;  // Toggle the visibility of the file upload div
+    if (!this.showFileUploadDiv) {
+      this.uploadedFileContent = "";  // Set the uploaded file content to an empty string
+    }
+  },
+
     updateLowerBound(index, variable) {
       const lowerBound = this.bounds[index].lowerBound;  // Get the current lower bound
       const upperBound = this.bounds[index].upperBound;  // Get the current upper bound
@@ -145,10 +159,11 @@ export default {
 
 <template>
   <div class="input-container">
+    <h2 class="mainTitle">{{ $t("specificProblem") }}</h2>
     <div class="input-container__bounds">
       <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('bounds')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
       <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
       
@@ -184,7 +199,7 @@ export default {
             @click="optimizationStore.selectOptimization('Maximize')">
           {{ $t('maximization') }}
         </button>
-        <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('optimization')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('optimization')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
 
       <div class="input-container__condition-container">
@@ -192,7 +207,7 @@ export default {
           <input type="text" class="input-container__condition" :placeholder="$t('condition')"
                  @input="optimizationStore.setObjectiveFunction($event.target.value), optimizationStore.addVariables($event.target.value)"
                  id="objectiveFunction">
-          <img src="../assets/question.png" alt="Help" class="help-icon"@click="openPopup('condition')">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('condition')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
         </div>
       </div>
 
@@ -203,28 +218,23 @@ export default {
                  :placeholder="$t('constraint')"
                  @input="optimizationStore.updateConstraint(constraint.id, $event.target.value)"
           >
-          <img
-              v-if="index === 0"
-              src="../assets/question.png"
-              alt="Help"
-              class="help-icon"
-              @click="openPopup('constraint')"
-          />
+        <svg v-if="index === 0"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" 
+          @click="openPopup('constraint')">
+          <path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+        </svg>
           <!-- Platzhalter-Image für die erste Nebenbedingung -->
-          <img
-              v-show="index !== 0"
-              src="../assets/trash.png"
-              @click="deleteConstraint(constraint.id)"
-              alt="Löschen"
-              class="delete-icon"
-          />
+          <svg v-show="index !== 0" @click="deleteConstraint(constraint.id)"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor delete-icon" >
+            <path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/>
+          </svg>
         </div>
       </div>
 
       <div class="input-container__bounds_mobile">
         <div class="bounds-header">
       <p>{{ $t('bounds') }}:</p>
-      <img src="../assets/question.png" alt="Help" class="help-icon" @click="openPopup('bounds')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="themeTextColor help-icon" @click="openPopup('bounds')"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
       </div>
         <div class="bound" v-for="(variable, index) in optimizationStore.variables" :key="variable" v-if="optimizationStore.variables.length > 0">
           
@@ -247,20 +257,37 @@ export default {
       </div>
 
       <div class="input-container__last-row">
-        <button class="input-container__main-button" @click="triggerFileUpload">{{ $t('uploadFile') }}</button>
-        <input
-        type="file"
-        ref="fileInput"
-        @change="handleFileUpload"
-        accept=".lp"
-        style="display: none"
-      />
-
+        <button class="input-container__main-button" @click="toggleFileUploadDiv">{{ $t('uploadFile') }}</button>
         <button class="input-container__main-button" @click="optimizationStore.addConstraint()">{{ $t('addConstraint') }}</button>
         <router-link to="/result" class="input-container__main-button" @click="solveLP()">{{ $t('solve')}}</router-link>
       </div>
     </div>
   </div>
+  <div v-if="showFileUploadDiv" class="popupOverlay">
+        <div class="popupContent">
+          <textarea v-model="uploadedFileContent" rows="10" cols="30" :placeholder="$t('fileInputField')" readonly id="uploadedFileArea"></textarea>
+          <div>
+          <button  @click="triggerFileUpload">
+          {{ $t('uploadFile') }}
+          </button>
+         
+          <router-link to="/result"  @click="solveFile" class="router-link">
+          {{ $t('solve') }} </router-link>
+        
+          <button  @click="toggleFileUploadDiv">
+          {{ $t('close') }} </button>
+        </div>
+        <input
+          type="file"
+          ref="fileInput"
+          @change="handleFileUpload"
+          accept=".lp"
+          style="display: none"
+        />
+        </div>
+
+    </div>
+
   <div v-if="showPopup" class="popupOverlay" @click="closePopup">
         <div class="popupContent" @click.stop>
             <p>{{ popupContent }}</p>
@@ -270,16 +297,31 @@ export default {
 </template>
 
 <style scoped>
-*{
+/* *{
   margin-top: 1%;
-}
+} */
 .helperbounds{
   white-space: nowrap;
+}
+
+.popupContent textarea {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+}
+.mainTitle {
+  margin: 0;
+  font-size: 2.5rem;
+  text-align: center;
+  width: 100%;
+  padding: 1rem 0;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 .input-container {
   display: grid;
   grid-template-columns: 2fr 4fr;
-  gap: 150px;
+  gap: 50px 150px;
   width: 100%;
   margin: 0 auto;
   padding: 5%;
@@ -328,7 +370,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 60px;
+  /* padding-top: 60px; */ 
 }
 
 .input-container__first-row {
@@ -344,7 +386,6 @@ export default {
   flex-direction: column;
   align-items: end;
   cursor: pointer;
-  background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
@@ -391,6 +432,69 @@ export default {
   color: white;
 }
 
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.popupContent {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 30rem;
+    text-align: left;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow-wrap: anywhere; 
+    overflow-x: auto; 
+}
+
+.popupContent button {
+    align-self: center;  
+    margin-top: 2rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.popupContent button:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.router-link {
+    align-self: center;  
+    
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;   
+    padding: 0.8rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    
+}
+
+.router-link:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.popupDiv {
+  box-sizing: flex;
+}
+
 .input-container__main-button:hover {
   background-color: rgb(140, 140, 140);
 }
@@ -403,9 +507,9 @@ export default {
 }
 
 .delete-icon {
+  height: 20px;
+  width: 20px;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
   margin-left: 10px;
 }
 
@@ -420,17 +524,16 @@ export default {
 .sticky-buttons {
   position: sticky;
   top: 0;
-  background-color: white;
   z-index: 10;
-  height: 60px;
+  /* height: 60px; */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .help-icon {
-  width: 24px;
-  height: 24px;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   margin-left: 10px;
 }
@@ -492,51 +595,14 @@ export default {
     flex-direction: column;
     gap: 10px;
   }
+  .delete-icon,
   .help-icon {
-  width: 15px;
-  height: 15px;
   cursor: pointer;
   margin-left: 0px;
 }
 }
 
-.popupOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
 
-
-.popupContent {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    width: 80%;
-    max-width: 30rem;
-    text-align: left;
-    white-space: pre-wrap; 
-    word-wrap: break-word; 
-    overflow-wrap: anywhere; 
-    overflow-x: auto; 
-}
-
-.popupContent button {
-    align-self: center;  
-    margin-top: 2rem;   
-    padding: 0.8rem 1.5rem;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-}
 
 </style>
 

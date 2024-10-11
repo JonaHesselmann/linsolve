@@ -27,7 +27,6 @@ export default{
 }
 .mainText{
   font-size: medium;
-  color: #333;
 }
 </style>
 

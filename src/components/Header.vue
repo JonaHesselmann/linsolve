@@ -8,6 +8,7 @@ You should have received a copy of the GNU General Public License along with Lin
 <script>
 import { languageStore } from '../businesslogic/languageStore.js'; 
 import { useDropdownStore } from '../businesslogic/dropdownStore.js'; 
+import { useRouter } from 'vue-router';
 export default {
   name: "Header", 
 
@@ -19,8 +20,10 @@ export default {
     // Accessing the dropdown store to manage the state of the language dropdown
     const dropdown = useDropdownStore();
 
+    // Accessing the current router instance
+    const router = useRouter();
    
-    return { i18nStore, dropdown };
+    return { i18nStore, dropdown, router };
   },
 
  
@@ -33,6 +36,10 @@ export default {
     // Method to toggle the state of the language dropdown menu by calling `toggleDropdown` action from the dropdown store
     toggleLanguageDropdown(){
       this.dropdown.toggleDropdown(); 
+    },
+
+    goHome() {
+      this.router.push("/");
     }
   }
 };
@@ -40,8 +47,8 @@ export default {
 
 <template>
   <header class="header">
-    <img src="../assets/Logo.png" class="logo">
-    <h1 class="title">LinSolve</h1>
+    <img src="../assets/Logo.png" class="logo" @click="goHome()">
+    <h1 class="title" @click="goHome()">LinSolve</h1>
     <img src="../assets/globe.png" alt="language selection" class="globe"  @click="toggleLanguageDropdown()">
     <p class="language" @click="toggleLanguageDropdown()">{{ $t('language') }}</p>
     <div v-if="dropdown.isOpen" class="dropdown-menu">
@@ -84,6 +91,7 @@ body {
   font-size: calc(1.5rem + 1vw);
   text-align: center;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 .globe {
@@ -95,6 +103,7 @@ body {
 
 .language {
   padding-left: 3px;
+  cursor: pointer;
 }
 
 .dropdown-menu {
