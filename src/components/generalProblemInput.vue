@@ -72,8 +72,10 @@ export default {
 
         if (typeof alert === 'function') {
           alert("Missing words: " + missingWords.join(", "));
+          router.push("/result");
         } else {
           console.log("Missing words: " + missingWords.join(", "));
+          router.push("/result");
         }
       } else {
         workwork.onmessage = (e) => {
