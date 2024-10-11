@@ -56,23 +56,40 @@ export default {
 
       // Create a new web worker
       const workwork = new Worker(new URL('./webworker.worker.js', import.meta.url));
+      let missingWords = [];
 
+      if (!problemInput.includes("end")) {
+        missingWords.push("end");
+      }
+      if (!problemInput.includes("maximize") && !problemInput.includes("minimize")) {
+        missingWords.push("maximize or minimize");
+      }
+      if (!problemInput.includes("solve")) {
+        missingWords.push("solve");
+      }
+
+      if (missingWords.length > 0) {
+        this.openPopup()
+        console.log("Missing words:", missingWords.join(", "));
+      } else {
+        workwork.onmessage = (e) => {
+          // Log the data received from the worker
+          console.log(e.data);
+          data = e.data;
+          mathematicalSolutionStore.solveProblem('general', data);
+          router.push("/result");
+        };
+
+        // Handle errors from the worker
+        workwork.onerror = (e) => {
+          console.error(e);
+        };
+
+        // Send the problem input to the worker
+        workwork.postMessage(problemInput);
+      }
       // Handle messages from the worker
-      workwork.onmessage = (e) => {
-        // Log the data received from the worker
-        console.log(e.data);
-        data = e.data;
-        mathematicalSolutionStore.solveProblem('general', data);
-        router.push("/result");
-      };
 
-      // Handle errors from the worker
-      workwork.onerror = (e) => {
-        console.error(e);
-      };
-
-      // Send the problem input to the worker
-      workwork.postMessage(problemInput);
     };
 
     const triggerFileUpload = () => {

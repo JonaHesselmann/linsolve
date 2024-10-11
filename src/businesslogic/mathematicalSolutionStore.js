@@ -76,6 +76,12 @@ export const useMathematicalSolution = defineStore('mathematicalSolution', {
             this.optimizationStore.getProblemBounds, 
             ""
           );
+          if(this.optimizationStore.getObjectiveFunction.length ===0){
+            alert("Error:missing objective function")
+          }
+          if(this.optimizationStore.constraints.length ===0){
+            alert("Error:missing constraints")
+          }
           console.log(lpContent);
           highsData = await highsSolver.solveLP(lpContent);
           console.log('Highs'+ highsData)
