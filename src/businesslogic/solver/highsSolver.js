@@ -36,26 +36,26 @@ var result =0;
 var Timetaken;
 
 async function solveLP(lpContent) {
-    try {
-        // Das LP-Modell in den Solver laden
-        const beginningtime = Date.now();
-        result = await highs.solve(lpContent); // Löst das LP-Problem
-        Timetaken = Date.now() -beginningtime;
-        const solution = new Array();
-        solution.push(result.Status,result.ObjectiveValue);
-        const map = new Map;
-        map.set('Result', solution);
-        map.set('VariableTable', formatSolutionToArray(result));
-        map.set('ConstrainTable', returnConstraints(result));
-        map.set('Walltime', Timetaken);
-        console.log(map);
-        console.log(Timetaken);
-        console.log(formatSolutionToArray(result));
-        return map; // Ergebnis zurückgeben
-    } catch (error) {
-        console.error("Fehler beim Lösen des LP-Problems:", error);
-        throw error;
-    }
+  try {
+    // Das LP-Modell in den Solver laden
+      const beginningtime = Date.now();
+     result = await highs.solve(lpContent); // Löst das LP-Problem
+      Timetaken = Date.now() -beginningtime;
+      const solution = new Array();
+      solution.push(result.Status,result.ObjectiveValue);
+      const map = new Map;
+      map.set('Result', solution);
+      map.set('VariableTable', formatSolutionToArray(result));
+      map.set('ConstrainTable', returnConstraints(result));
+      map.set('WallTime', Timetaken);
+      console.log(map);
+      console.log(Timetaken);
+      console.log(formatSolutionToArray(result));
+    return result; // Ergebnis zurückgeben
+  } catch (error) {
+    console.error("Fehler beim Lösen des LP-Problems:", error);
+    throw error;
+  }
 }
 
 /**
@@ -74,7 +74,7 @@ function returnOptimalResult(){
  * @returns {*[]}
  */
 function returnVariables(){
-    const returns = [];
+  const returns = [];
     for (const columnKey in result.Columns) {
         const column = result.Columns[columnKey];
         returns.push([column.Name, column.Primal]);
@@ -84,7 +84,7 @@ function returnVariables(){
 function returnTimeTaken(){
     return Timetaken;
 }
-function formatSolutionToArray(Sol) {
+function formatSolutionToArray(solution) {
 
     const result = [];
 
@@ -98,8 +98,10 @@ function formatSolutionToArray(Sol) {
         'Dual Value',
     ];
     result.push(columnHeaders);
-    for (const key in Sol.Columns) {
-        const col = Sol.Columns[key];
+
+
+    for (const key in solution.Columns) {
+        const col = solution.Columns[key];
         result.push([
             col.Name,
             col.Type,
@@ -109,6 +111,29 @@ function formatSolutionToArray(Sol) {
             col.Dual,
         ]);
     }
+
+    // Add headers for the rows
+    const rowHeaders = [
+        'Constraint Name',
+        'Lower Bound',
+        'Upper Bound',
+        'Primal Value',
+        'Dual Value',
+    ];
+    result.push(rowHeaders);
+
+    // Process each row
+    for (const row in solution.Rows) {
+        result.push([
+            row.Name,
+            row.Lower === -Infinity ? '-inf' : row.Lower,
+            row.Upper === Infinity ? '+inf' : row.Upper,
+            row.Primal,
+            row.Dual,
+        ]);
+    }
+
+
     return result;
 }
 /**
